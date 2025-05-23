@@ -1,0 +1,6 @@
+{% if request.session.usuario_id %}
+    <li>Bienvenido, {{ request.session.usuario_nombre }}</li>
+    <li><a href="{% url "logout" %}">Cerrar Secion</a></li>
+{% else %}
+    <li><a href="{% url "secion" %}">Inicio de Secion</a></li>
+{% endif %}

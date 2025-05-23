@@ -1,0 +1,395 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'slag/css/layout.css' %}">
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <title>{% block title %} Pagina Principal | SLAG {% endblock %}</title>
+  </head>
+  <body>
+    <header id="arriba" class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid d-flex justify-content-between align-items-center div">
+          
+          <!-- Izquierda: Logo -->
+          <div class="d-flex align-items-center">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="{% url "index" %}">
+              <img
+                class="icono"
+                src="{% static 'slag/images/alipay.svg' %}"
+                alt="icono"
+              />
+            </a>
+          </div>
+      
+          <!-- Centro: SLAG centrado absolutamente -->
+          <div class="position-absolute start-50 translate-middle-x">
+            <h1 class="mb-0 titulo">SLAG</h1>
+          </div>
+      
+          <!-- Derecha: Menú Catálogo -->
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNavDarkDropdown">
+            <div class="usuario">
+              {% if request.session.usuario_id %}
+                <li>Bienvenido {{ request.session.usuario_nombre }}</li>
+              {% else %}
+              <li><a href="{% url "sesion" %}">Inicio de Sesion</a></li>
+              {% endif %}
+            </div>
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">  
+                <button
+                class="btn dropdown-toggle boton-menu"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >
+                Catálogo
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url "dama" %}">Dama</a></li>
+                <li><a class="dropdown-item" href="{% url "caballero" %}">Caballero</a></li>
+                <li><a class="dropdown-item" href="">Otros</a></li>
+                <br>
+                <br>
+                {% if request.session.usuario_id %}
+                  <li><a href="{% url "Logout" %}" class="cerrarsecion">Cerrar Sesion</a></li>
+                {% endif %}
+                  <li><a class="dropdown-item" href="#nosotros">Sobre nosotros</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      
+
+    <!-- main -->
+     <main>
+        {% block content %}
+        <div class="imagenes">
+          <div class="image-box position-relative">
+            <img src="{% static 'slag/images/amirihombre.webp' %}" class="img-fluid" alt="Men's" />
+            <a href="#" class="btn-overlay">MEN'S FEATURED</a>
+          </div>
+        
+          <!-- Tarjeta 2 -->
+          <div class="image-box position-relative">
+            <img src="{% static 'slag/images/amirimujer.webp' %}" class="img-fluid" alt="Women's" />
+            <a href="#" class="btn-overlay">WOMEN'S DENIM</a>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center carrusel">
+          <div id="carouselExampleIndicators" class="carousel slide mx-auto">
+              <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              </div>
+              <div class="carousel-inner">
+                  <div class="carousel-item active">
+                      <img src="{% static 'slag/images/adidas.png' %}" class="d-block w-10 h-auto" alt="...">
+                  </div>
+                  <div class="carousel-item">
+                      <img src="{% static 'slag/images/adidas.png' %}" class="d-block w-10 h-auto" alt="...">
+                  </div>
+                  <div class="carousel-item">
+                      <img src="{% static 'slag/images/adidas.png' %}" class="d-block w-10 h-auto" alt="...">
+                  </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">atras</s>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">siguiente</span>
+              </button>
+          </div>
+        </div>
+        {% endblock %}
+     </main>
+
+    <!-- main -->
+
+
+
+
+
+
+
+
+
+    <footer id="nosotros" class="footer-class pt-5 pb-4">
+      <div class="container text-center">
+        <!-- Logo -->
+        <img src="{% static "slag/images/alipay.svg" %}" alt="logo" class="mb-4"
+        width="100" />
+
+        <!-- Tabs -->
+        <ul
+          class="nav nav-tabs lista"
+          id="myTab"
+          role="tablist"
+        >
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              id="home-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#home-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="home-tab-pane"
+              aria-selected="true"
+            >
+              Inicio
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="profile-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#profile-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="profile-tab-pane"
+              aria-selected="false"
+            >
+              Nosotros
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="contact-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#contact-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="contact-tab-pane"
+              aria-selected="false"
+            >
+              Contactanos
+            </button>
+          </li>
+        </ul>
+
+        <!-- Tab content -->
+        <div class="tab-content" id="myTabContent">
+          <!-- Inicio -->
+          <div
+            class="tab-pane fade show active"
+            id="home-tab-pane"
+            role="tabpanel"
+            aria-labelledby="home-tab"
+          >
+            <p class="lead">"Vista tu esencia, crea tu estilo"</p>
+            <p>
+              En nuestra tienda, cada prenda está pensada para realzar lo mejor
+              de ti. Calidad, comodidad y diseño en piezas únicas que hablan por
+              ti. No sigas tendencias,
+            </p>
+            <p class="crealas">¡créalas!</p>
+
+          </div>
+
+          <!-- Nosotros -->
+          <div
+            class="tab-pane fade"
+            id="profile-tab-pane"
+            role="tabpanel"
+            aria-labelledby="profile-tab"
+          >
+            <p class="lead">"Más que ropa, una forma de expresión"</p>
+            <p>Nacimos del amor por la moda auténtica y accesible...</p>
+
+            <!-- Contenedor responsivo de tarjetas -->
+            <div class="container">
+              <div
+                class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4"
+              >
+                <!-- Tarjeta 1 -->
+                <div class="col">
+                  <div class="card h-100">
+                    <img src="{% static 'slag/images/tiger.jpeg' %}" class="card-img-top" alt="..." />
+                    <div class="card-body">
+                      <h5 class="card-title">Kevin Yulian Castaño Pïneda</h5>
+                      <p class="card-text">
+                        Programador encargado en la parte del
+                        <strong>FrontEnd</strong> apoyando en el
+                        <strong>FrontEnd</strong> apacionado, sueña con
+                        convertirse en un <strong>FullStack</strong> completo.
+                      </p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item kevin-i">
+                        <a href="https://www.instagram.com/kevincas427/"
+                          >@kevincas427</a
+                        >
+                      </li>
+                      <li class="list-group-item kevin-n">+57 322 288 6718</li>
+                      <li class="list-group-item kevin-c">
+                        <a
+                          href="https://mail.google.com/mail/u/2/#inbox?compose=jrjtXFBVZfvwXrKGLTKsjGLzVpwkSFvQtLhhCShmlBGLcxcGWHMKZLBHxwTjslBFWzvDRTdC"
+                          >kevinyulian721@gmail.com</a
+                        >
+                      </li>
+                    </ul>
+                    <div class="card-body">
+                      <a href="#" class="card-link">link</a>
+                      <a href="#" class="card-link">Otro link</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tarjeta 2 -->
+                <div class="col">
+                  <div class="card h-100">
+                    <img src="{% static 'slag/images/piglet.jpeg' %}" class="card-img-top" alt="..." />
+                    <div class="card-body">
+                      <h5 class="card-title">Kevin Alejandro Ramirez Reina</h5>
+                      <p class="card-text">
+                        Encargado en la parte del backend, le gusta la
+                        programacion, hombre de pocas palabras
+                      </p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item ramirez-i">
+                        <a href="https://www.instagram.com/alejo_ramirez06_/"
+                          >@alejo_ramirez06_</a
+                        >
+                      </li>
+                      <li class="list-group-item ramirez-n">
+                        +57 322 888 9868
+                      </li>
+                      <li class="list-group-item ramirez-c">
+                        <a
+                          href="https://mail.google.com/mail/u/2/#inbox?compose=jrjtXFBVZfvwXrKGLTKsjGLzVpwkSFvQtLhhCShmlBGLcxcGWHMKZLBHxwTjslBFWzvDRTdC"
+                          >mikevinramirezreina@gmail.com</a
+                        >
+                      </li>
+                    </ul>
+                    <div class="card-body">
+                      <a href="#" class="card-link">link</a>
+                      <a href="#" class="card-link">Otro link</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tarjeta 3 -->
+                <div class="col">
+                  <div class="card h-100">
+                    <img src="{% static 'slag/images/burro.jpg' %}" class="card-img-top" alt="..." />
+                    <div class="card-body">
+                      <h5 class="card-title">Johan Fabian Oviedo Alfonso</h5>
+                      <p class="card-text">
+                        Apasionado por el futbol programa por pasion, atento a
+                        los trabajos y paciente.
+                      </p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item fabian-i">
+                        <a href="https://www.instagram.com/_johan_oviedo_/"
+                          >@_johan_oviedo_</a
+                        >
+                      </li>
+                      <li class="list-group-item fabian-n">+57 310 870 7026</li>
+                      <li class="list-group-item fabian-c">
+                        Correo no encontrado
+                      </li>
+                    </ul>
+                    <div class="card-body">
+                      <a href="#" class="card-link">link</a>
+                      <a href="#" class="card-link">Otro link</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tarjeta 4 -->
+                <div class="col">
+                  <div class="card h-100">
+                    <img src="{% static 'slag/images/poh.jpg' %}" class="card-img-top" alt="..." />
+                    <div class="card-body">
+                      <h5 class="card-title">Jossie Alejandro Lozada Ardila</h5>
+                      <p class="card-text">
+                        Amante de los videojuegos, le gusta programar
+                        videojuegos, atento en lo que hace y centrado.
+                      </p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item jossie-i">
+                        Instagram no encontrado
+                      </li>
+                      <li class="list-group-item jossie-n">+57 316 6650796</li>
+                      <li class="list-group-item jossie-c">
+                        Correo no encontrado
+                      </li>
+                    </ul>
+                    <div class="card-body">
+                      <a href="#" class="card-link">link</a>
+                      <a href="#" class="card-link">Otro link</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contacto -->
+          <div
+            class="tab-pane fade"
+            id="contact-tab-pane"
+            role="tabpanel"
+            aria-labelledby="contact-tab"
+          >
+            <p class="lead">"Gracias por elegirnos para vestir tu historia"</p>
+            <p>
+              Estamos felices de acompañarte con ropa hecha para durar, sentirse
+              bien y lucir mejor.
+            </p>
+            <form class="text-center mt-3">
+              <div class="mb-3 w-75 mx-auto">
+                <input
+                  type="text"
+                  class="form-control mb-3"
+                  placeholder="Nombre"
+                />
+                <input
+                  type="email"
+                  class="form-control mb-3"
+                  placeholder="Correo electrónico"
+                />
+                <textarea
+                  class="form-control mb-3"
+                  rows="4"
+                  placeholder="Mensaje"
+                ></textarea>
+                <button type="submit" class="boton-animado">Enviar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <hr class="mt-5" />
+        <p class="text-muted small">
+          © 2025 SLAG. Todos los derechos reservados.
+        </p>
+      </div>
+    </footer>
+    <script src="{% static 'slag/js/index.js' %}">
+  </body>
+</html>
