@@ -41,13 +41,18 @@
       
           <!-- Derecha: Menú Catálogo -->
           <div class="collapse navbar-collapse justify-content-end" id="navbarNavDarkDropdown">
-            <div class="usuario">
+            <div id="LoginUser">
               {% if request.session.usuario_id %}
-                <li>Bienvenido {{ request.session.usuario_nombre }}</li>
+              <div class="WelcomUser">Bienvenido {{ request.session.usuario_nombre }}</div>
               {% else %}
-              <li><a href="{% url "sesion" %}">Inicio de Sesion</a></li>
+              <div class="LoginUser"><a class="texto-Login" href="{% url "sesion" %}"><img class="icono" src="{% static 'slag/images/person.svg' %} "
+                alt="icono"
+              /></a></div>
               {% endif %}
             </div>
+            
+
+            
             <ul class="navbar-nav">
               <li class="nav-item dropdown">  
                 <button
@@ -78,19 +83,22 @@
     <!-- main -->
      <main>
         {% block content %}
+
+        <!-- tarjetas -->
         <div class="imagenes">
           <div class="image-box position-relative">
             <img src="{% static 'slag/images/amirihombre.webp' %}" class="img-fluid" alt="Men's" />
-            <a href="#" class="btn-overlay">MEN'S FEATURED</a>
+            <a href="{% url 'caballero' %}" class="btn-overlay">MEN'S FEATURED</a>
           </div>
-        
-          <!-- Tarjeta 2 -->
+          
           <div class="image-box position-relative">
             <img src="{% static 'slag/images/amirimujer.webp' %}" class="img-fluid" alt="Women's" />
-            <a href="#" class="btn-overlay">WOMEN'S DENIM</a>
+            <a href="{% url 'dama' %}" class="btn-overlay">WOMEN'S DENIM</a>
           </div>
         </div>
-
+        <!-- tarjetas -->
+        
+        <!-- carrousel -->
         <div class="d-flex justify-content-center carrusel">
           <div id="carouselExampleIndicators" class="carousel slide mx-auto">
               <div class="carousel-indicators">
@@ -119,6 +127,29 @@
               </button>
           </div>
         </div>
+
+        <section>
+          <div class=" second-section">
+            <div class=" position-relative">
+            <img src="{% static 'slag/images/background_section.webp' %}" class="img-fluid" alt="Men's" />
+              <a href="{% url 'caballero' %}" class="btn-overlay">MEN'S FEATURED</a>
+            </div>
+          </div>
+        </section>
+        <section class="third-section">
+          <div class="imagenes">
+            <div class="image-box position-relative hombre">
+              <img src="{% static 'slag/images/men_bg_section.webp' %}" class="img-fluid" alt="Men's" />
+              <a href="{% url 'caballero' %}" class="btn-overlay">MEN'S FEATURED</a>
+            </div>
+            
+            <div class="image-box position-relative">
+              <img src="{% static 'slag/images/women_bg_section.webp' %}" class="img-fluid" alt="Women's" />
+              <a href="{% url 'dama' %}" class="btn-overlay">WOMEN'S DENIM</a>
+            </div>
+          </div>
+          
+        </section>
         {% endblock %}
      </main>
 
