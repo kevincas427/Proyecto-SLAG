@@ -1,5 +1,6 @@
 body{
   padding-top: 80px;
+  background-color: red;
 }
 
 .navbar {
@@ -127,21 +128,18 @@ main {
 .carrusel {
   padding-top: 30px;
 }
-
-.usuario{
-  display: flex;
-  align-items: inline-block;
-}
-.usuario li{
-  list-style: none;
-  padding-left: 10px;
-}
-.cerrarsecion{
-  text-decoration: none;
+.WelcomUser{
+  color: red !important;
+  border: 2px solid red;
 }
 
-.cerrarsecion:hover{
-  transition: all 0.3s ease;
-  color:rgb(53, 172, 133) ;
+.texto-Login{
+  color: red;
+  border: 2px solid blue;
 }
-
+.second-section{
+  margin-top: 40px;
+}
+.hombre{
+  margin-top: 40px;
+}
