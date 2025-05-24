@@ -4,42 +4,45 @@ from slag.models import *
 from django.db import IntegrityError
 from django.contrib.auth import login,logout,authenticate
 # Create your views here.
-
 def sesion(request):
-    action = request.POST.get("action")
-
     if request.method == "GET":
         return render(request, "slag/sesion.html")
-
+    
+    action = request.POST.get("action")
+    
     if action == "register":
         if request.POST['password1'] == request.POST['password2']:
-            try:
-                # Verificamos si ya existe un usuario con ese email
-                if Usuario.objects.filter(email=request.POST['email']).exists():
-                    return render(request, "slag/sesion.html", {
-                        'error': 'El usuario ya existe'
-                    })
-                
-                usuario = Usuario(
-                    nombre=request.POST['username'],
-                    email=request.POST['email'],
-                    telefono = request.POST['Celular'],
-                    direccion = request.POST['Direccion'],
-                    FechaNa = request.POST['Fecha_N'],
-                    clave = request.POST['password2'], 
-                )
-                usuario.save()
-                request.session['usuario_id'] = usuario.id  # Guardamos la sesión
-                return redirect("sesion")
-            except IntegrityError:
-                return render(request, "slag/sesion.html", {
-                    'error': 'Error al guardar el usuario'
+            if len(request.POST['password1']) >= 8 and any(c.isupper() for c in request.POST['password1']) == True:
+                    try:
+                            # Verificamos si ya existe un usuario con ese email
+                            if Usuario.objects.filter(email=request.POST['email']).exists():
+                                return render(request, "slag/sesion.html", {
+                                    'error': 'El usuario ya existe'
+                                })
+                            
+                            usuario = Usuario(
+                                nombre=request.POST['username'],
+                                email=request.POST['email'],
+                                telefono = request.POST['Celular'],
+                                direccion = request.POST['Direccion'],
+                                FechaNa = request.POST['Fecha_N'],
+                                clave = request.POST['password2'], 
+                            )
+                            usuario.save()
+                            request.session['usuario_id'] = usuario.id  # Guardamos la sesión
+                            return redirect("sesion")
+                    except IntegrityError:
+                        return render(request, "slag/sesion.html", {
+                                'error': 'Error al guardar el usuario'
+                            })
+            else: 
+                return render(request,"slag/sesion.html",{
+                'Contra_Segura': 'La contraseña debe tener al menos 8 caracteres y una mayuscula'
                 })
         else:
             return render(request, "slag/sesion.html", {
-                'error': 'Las contraseñas no coinciden'
-            })
-
+                            'error': 'Las contraseñas no coinciden',
+                        })
     elif action == "login":
         nombre = request.POST['username']
         clave = request.POST['contraseña']
