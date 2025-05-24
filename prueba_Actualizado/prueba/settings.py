@@ -76,12 +76,12 @@ WSGI_APPLICATION = 'prueba.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '',
-        'USER': '',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'proyecto',
+        'USER': 'root',
         'PASSWORD': '',
-        'HOST':'localhost',
-        'PORT':''
+        'HOST':'127.0.0.1',
+        'PORT':'3309'
     }
 }
 
