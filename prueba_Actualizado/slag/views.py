@@ -3,6 +3,7 @@ from .forms import RegistroForm
 from slag.models import *
 from django.db import IntegrityError
 from django.contrib.auth import login,logout,authenticate
+from django.http import JsonResponse
 # Create your views here.
 
 def sesion(request):
@@ -17,7 +18,7 @@ def sesion(request):
                 # Verificamos si ya existe un usuario con ese email
                 if Usuario.objects.filter(email=request.POST['email']).exists():
                     return render(request, "slag/sesion.html", {
-                        'error1': 'El usuario ya existe'
+                        'error2': 'El usuario ya existe'
                     })
                 
                 usuario = Usuario(

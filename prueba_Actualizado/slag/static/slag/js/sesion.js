@@ -12,34 +12,16 @@ btnsignup.addEventListener("click", () => {
   container.classList.add("toggle");
 });
 
-// document.getElementById('form-sesion').addEventListener('submit', async function(e) {
-//   e.preventDefault();
 
-//   const password1 = document.getElementById('password1')
-//   const password2 = document.getElementById('password2')
-
-//   const response = await fetch('/sesion/',{
-//     method : 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body : JSON.stringify({password1,password2})
-
-//   });
-//   const data = await response.json()
-
-//   if(data.error1){
-//     document.getElementById('mensaje-error').textContent = data.error1;
-//   }else{
-//     alert('Cuenta agregada correctamente')
-//   }
-// })
-
-let = formulario = document
+document
   .getElementById("form-sesion")
   .addEventListener("submit", async function (e) {
     const password1 = document.getElementById("password").value;
     const password2 = document.getElementById("password2").value;
+    const error = document.getElementById("error").value;
+
+    if (error == "El usuario ya existe")
+      alert("EL usuario Con Este Email ya corresponde a una cuenta");
 
     if (password1 != password2) {
       e.preventDefault();
@@ -52,9 +34,16 @@ let = formulario = document
     } else if (!/[0-9]/.test(password1) || !/[^A-Za-z0-9]/.test(password1)) {
       e.preventDefault();
       alert("La contraseña debe tener almenos un simbolo y un numero");
-    } else {
-      form.style.cssText = `
-        box-shadow: 0 0 10px rgb(128, 202, 106);
-`;
+    }
+  });
+
+
+  window.addEventListener('DOMContentLoaded',() => {
+    const error = document.getElementById('mensage-error2');
+    const mensaje = error.dataset.error;
+
+    if (mensaje){
+      alert('El Correo ya se encuentra vinculado a una cuenta existente');
+      error.style.display = "block";
     }
   });

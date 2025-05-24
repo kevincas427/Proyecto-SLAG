@@ -30,7 +30,8 @@
           </div>
           <a href="{%url 'Olvido'%}">¿Olvidaste tu contraseña?</a>
           {{error}}
-          <button name="action" value="login">Iniciar Sesion</button>
+          <p id="mensage-error2" data-error={{ error2|escape }}></p>
+          <button typr="submit" name="action" value="login">Iniciar Sesion</button>
         </form>
       </div>
       <div class="container-form">
@@ -90,7 +91,9 @@
               id="password2"
             />
           </div>
+          <div id="error">
           {{error1}}
+          </div>
           <button type="submit" name="action" value="register">
             Registrarse
           </button>
