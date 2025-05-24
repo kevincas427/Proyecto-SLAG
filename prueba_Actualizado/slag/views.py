@@ -51,7 +51,7 @@ def sesion(request):
             return redirect("index")
         except Usuario.DoesNotExist:
             return render(request, "slag/sesion.html", {
-                'error': 'Email o usuario incorrecto'
+                'error1': 'Email o usuario incorrecto'
             })
 def signout(request):
     logout(request)
