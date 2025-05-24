@@ -38,18 +38,19 @@ def sesion(request):
             })
 
     elif action == "login":
-        nombre = request.POST['username']
-        clave = request.POST['contraseña']
+        nombreL = request.POST['usernameLogin']
+        claveL = request.POST['contraseña']
 
         try:
-            usuario = Usuario.objects.get(nombre=nombre,clave=clave)
+            usuario = Usuario.objects.get(nombre=nombreL,clave=claveL)
             request.session['usuario_id'] = usuario.id
             request.session['usuario_nombre'] = usuario.nombre
-            return redirect("index")
+            return render(request, "slag/index.html")
         except Usuario.DoesNotExist:
             return render(request, "slag/sesion.html", {
                 'error': 'Email o usuario incorrecto'
             })
+            
 def signout(request):
     logout(request)
     return redirect('index')
@@ -63,5 +64,5 @@ def dama(request):
     return render(request, 'slag/dama.html')
 def caballero(request):
     return render(request, 'slag/caballero.html')
-def Olvido(request):
-    return render(request,'Olvido.html')
+def olvido(request):
+    return render(request, 'slag/olvido.html')

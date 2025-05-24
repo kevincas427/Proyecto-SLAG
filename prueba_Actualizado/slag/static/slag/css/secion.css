@@ -57,6 +57,7 @@ body{                                       /* Este es el body*/
     padding: 8px;
     cursor: pointer;
 }
+
 .container-form span{                           /*Esta es la seccion del mensaje use su correo y contraseña*/
     font-size: 12px;
     margin-bottom: 15px;
@@ -172,10 +173,11 @@ button{
 .social-networks ion-icon:hover{
     font-size: 30px;
     transition: all 0.3s ease;
+    border:1px solid #ec8fcf;
 }
 .Container-input:hover{
     font-size: 30px;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     border: 2px solid #ec8fcf;
 }
 

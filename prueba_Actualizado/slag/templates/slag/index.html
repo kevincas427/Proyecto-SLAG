@@ -43,7 +43,7 @@
           <div class="collapse navbar-collapse justify-content-end" id="navbarNavDarkDropdown">
             <div id="LoginUser">
               {% if request.session.usuario_id %}
-              <div class="WelcomUser">Bienvenido {{ request.session.usuario_nombre }}</div>
+              <div class="WelcomUser">Bienvenid@ {{ request.session.usuario_nombre }}</div>
               {% else %}
               <div class="LoginUser"><a class="texto-Login" href="{% url "sesion" %}"><img class="icono" src="{% static 'slag/images/person.svg' %} "
                 alt="icono"

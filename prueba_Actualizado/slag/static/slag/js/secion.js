@@ -25,14 +25,14 @@ document
       return;
     }
     if (!/[A-Z]/.test(password)) {
-        error.textContent = "La contraseña debe tener por lo menos una mayuscula";
-        return;
-    };
-    if (!/[0-9]/.test(password)){
-        error.textContent = "La contraseña debe tener por lo menos un numero";
-        return;
+      error.textContent = "La contraseña debe tener por lo menos una mayuscula";
+      return;
     }
-    if (password != password2){
-        error.textContent = "Las contraseñas deben de coincidir"
+    if (!/[0-9]/.test(password)) {
+      error.textContent = "La contraseña debe tener por lo menos un numero";
+      return;
+    }
+    if (password != password2) {
+      error.textContent = "Las contraseñas deben de coincidir";
     }
   });
