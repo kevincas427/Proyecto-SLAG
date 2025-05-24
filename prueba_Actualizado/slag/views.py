@@ -23,6 +23,9 @@ def sesion(request):
                 usuario = Usuario(
                     nombre=request.POST['username'],
                     email=request.POST['email'],
+                    telefono = request.POST['Celular'],
+                    direccion = request.POST['Direccion'],
+                    FechaNa = request.POST['Fecha_N'],
                     clave = request.POST['password2'], 
                 )
                 usuario.save()
