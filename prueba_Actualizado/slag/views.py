@@ -17,7 +17,7 @@ def sesion(request):
                 # Verificamos si ya existe un usuario con ese email
                 if Usuario.objects.filter(email=request.POST['email']).exists():
                     return render(request, "slag/sesion.html", {
-                        'error': 'El usuario ya existe'
+                        'error1': 'El usuario ya existe'
                     })
                 
                 usuario = Usuario(
@@ -33,11 +33,11 @@ def sesion(request):
                 return redirect("sesion")
             except IntegrityError:
                 return render(request, "slag/sesion.html", {
-                    'error': 'Error al guardar el usuario'
+                    'error1': 'Error al guardar el usuario'
                 })
         else:
             return render(request, "slag/sesion.html", {
-                'error': 'Las contraseñas no coinciden'
+                'error1': 'Las contraseñas no coinciden'
             })
 
     elif action == "login":
