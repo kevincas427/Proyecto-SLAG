@@ -10,6 +10,9 @@ class Producto(models.Model):
     Imagen = models.ImageField(upload_to='slag/static/slag/images/',verbose_name='Imagen',null=True)
     # date_ini=models.DateTimeField(auto_now_add=True)
     # date_upt=models.DateField(auto_now=True)
+    def __str__(self):
+        fila = "Nombre:" + " " + self.Name_Prod 
+        return fila
     class Meta:
         db_table = 'producto'
         managed = False  ## usar tabla Producto ya creada 
