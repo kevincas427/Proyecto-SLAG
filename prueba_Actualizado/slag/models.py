@@ -18,8 +18,8 @@ class Usuario(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=45,verbose_name='Nombre Usuario')
     email = models.CharField(max_length=45,verbose_name='Email Usuario')
-    telefono = models.CharField(max_length=20,verbose_name="Numero Telefono Usuario")
     direccion = models.TextField(max_length=45,verbose_name="Direccion Residencia Usuario")
+    telefono = models.CharField(max_length=20,verbose_name="Numero Telefono Usuario")
     FechaNa = models.DateField(verbose_name="Fecha Nacimiento CLiente")
     clave = models.CharField(max_length=45,verbose_name='Contraseña Usuario')
     
@@ -32,5 +32,5 @@ class Categoria(models.Model):
     Nom_Cate = models.TextField(max_length=45)
     class Meta:
         db_table = 'categoria'
-        managed = False  # usar tabla Usuario ya creada 
+        managed = False  # usar tabla Cateoria ya creada 
 # Create your models here.
