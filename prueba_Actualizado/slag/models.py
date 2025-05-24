@@ -18,7 +18,11 @@ class Usuario(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=45,verbose_name='Nombre Usuario')
     email = models.CharField(max_length=45,verbose_name='Email Usuario')
+    telefono = models.CharField(max_length=20,verbose_name="Numero Telefono Usuario")
+    direccion = models.TextField(max_length=45,verbose_name="Direccion Residencia Usuario")
+    FechaNa = models.DateField(verbose_name="Fecha Nacimiento CLiente")
     clave = models.CharField(max_length=45,verbose_name='Contraseña Usuario')
+    
 
     class Meta:
         db_table = 'usuario'
