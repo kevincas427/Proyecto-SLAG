@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE html>
+<!--
+	Interphase by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Nosotros | SLAG</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+    <!--[if lte IE 8
+      ]><script src="{% static 'slag/js/html5shiv.js' %}"></script
+    ><![endif]-->
+    <script src="{% static 'slag/js/jquery.min.js' %}"></script>
+    <script src="{% static 'slag/js/skel.min.js' %}"></script>
+    <script src="{% static 'slag/js/skel-layers.min.js' %}"></script>
+    <script src="{% static 'slag/js/init.js' %}"></script>
+    <noscript>
+      <link rel="stylesheet" href="{% static 'slag/css/skel.css' %}" /><link
+        rel="stylesheet"
+        href="{% static 'slag/css/style.css' %}" /><link
+        rel="stylesheet"
+        href="{% static 'slag/css/style-xlarge.css' %}"
+    /></noscript>
+    <link rel="stylesheet" href="{% static 'slag/css/style.css' %}" />
+	
+    <!--[if lte IE 8
+      ]><link rel="stylesheet" href="{% static 'slag/css/v8.css' %}"
+    /><![endif]-->
+  </head>
+  <body class="landing">
+    <!-- Header -->
+    <header id="header" class="navbar navbar-expand-lg fixed-top encabezado">
+      <h1><a class="slag" href="{%url 'index' %}">SLAG</a></h1>
+
+      <nav id="nav">
+        <div id="LoginUser">
+          {% if request.session.usuario_id %}
+          <div class="WelcomUser">{{ request.session.usuario_nombre }}</div>
+          {% endif %}
+        </div>
+      </nav>
+    </header>
+    <!-- Banner -->
+    <section id="banner">
+      <h2>SLAG</h2>
+      <p>No solo somos tendencia.</p>
+    </section>
+    <!-- primero -->
+    <section id="one" class="wrapper style1 align-center">
+      <div class="container">
+        <header>
+          <h2>Brindamos lo mejor porque es lo que somos</h2>
+          <p>
+            Nuestos servicios cada vez estan en constante actualizacion para
+            brindarte la mejor experiencia.
+          </p>
+        </header>
+        <div class="row 200%">
+          <section class="4u 12u$(small)">
+            <i class="icon big rounded fa-clock-o"></i>
+            <p>Tiempos de respuesta cortos para que puedas seguir comprando.</p>
+          </section>
+          <section class="4u 12u$(small)">
+            <i class="icon big rounded fa-comments"></i>
+            <p>
+              Soporte con alguno de nosotros, donde te brindaremos de la mejor
+              informacion de nuestros productos y mas.
+            </p>
+          </section>
+          <section class="4u$ 12u$(small)">
+            <i class="icon big rounded fa-user"></i>
+            <p>
+              Tu informacion y tu es importante para nosotros por eso te
+              brindamos la ayuda que necesites.
+            </p>
+          </section>
+        </div>
+      </div>
+    </section>
+    <!-- Two -->
+    <section id="two" class="wrapper style2 align-center">
+      <div class="container">
+        <header>
+          <h2>Encuentranos donde quieras!!</h2>
+          <p>
+            Nuestro sitio web esta en el top de los mejores, por eso no debes
+            dudar en buscarnos, estamos presentes en todo colombia.
+          </p>
+        </header>
+        <div class="row">
+          <section class="feature 6u 12u$(small)">
+            <img
+              class="image fit"
+              src="{% static 'slag/images/pic01.jpg' %}"
+              alt=""
+              width="576"
+              height="200"
+            />
+            <h3 class="title">No solo es Vestimenta</h3>
+            <p>
+              Estamos vistiendo personas de todas partes por eso no debes
+              quedarte fuera de la moda.
+            </p>
+          </section>
+          <section class="feature 6u$ 12u$(small)">
+            <img
+              class="image fit"
+              src="{% static 'slag/images/pic02.jpg' %}"
+              alt=""
+              width="576"
+              height="200"
+            />
+            <h3 class="title">Se puede vestir bien con nostros?</h3>
+            <p>
+              Tenemos las mejores tendecias de moda actuales y futuras, con
+              precios accesibles para todo publico, no te quedes atras
+              refrescate con SLAG.
+            </p>
+          </section>
+        </div>
+      </div>
+    </section>
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="container">
+        <div class="row">
+          <section class="4u 6u(medium) 12u$(small)">
+            <h3>SLAG</h3>
+            <p>No solo somos tendencia!</p>
+            <ul class="alt">
+              <li><a href="">Sobre nostros.</a></li>
+              <li><a href="{% url 'index' %}">Ver nuestra pagina.</a></li>
+              <li>
+                <a href="{% url 'dama' %}">Dama</a>
+              </li>
+              <li><a href="{% url 'caballero' %}">CABALLERO</a></li>
+            </ul>
+          </section>
+          <section class="4u 6u$(medium) 12u$(small)">
+            <h3>Servicios!</h3>
+            <p>Estamos dispuestos a ayudarte 24/7.</p>
+            <ul class="alt">
+              <li>
+                <a href="https://wa.me/573222886718" target="_blank"
+                  >Trabaja con nosotros.</a
+                >
+              </li>
+              <li><a href="#">Puntos Fisicos.</a></li>
+              <li><a href="#">Promociones.</a></li>
+            </ul>
+          </section>
+          <section class="4u$ 12u$(medium) 12u$(small)">
+            <h3>Contactanos</h3>
+            <ul class="icons">
+              <li>
+                <a href="" class="icon rounded fa-twitter"
+                  ><span class="label">Twitter</span></a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.facebook.com/kevin.cas.27312"
+                  target="_blank"
+                  rel="noopenerr noreferrer"
+                  class="icon rounded fa-facebook"
+                  ><span class="label">Facebook</span></a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://github.com/kevincas427/Proyecto-SLAG"
+                  target="_blank"
+                  rel="noopenerr noreferrer"
+                  class="icon rounded fa-github"
+                  ><span class="label">Pinterest</span></a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/kevincas427/?next=%2F"
+                  target="_blank"
+                  rel="noopenerr noreferrer"
+                  class="icon rounded fa-instagram"
+                  ><span class="label">Instagram</span></a
+                >
+              </li>
+            </ul>
+            <ul class="tabular">
+              <li>
+                <h3>Direccion</h3>
+                Picaleña<br />
+                Centro industria y construccion
+              </li>
+              <li>
+                <h3>Correo</h3>
+                <a
+                  href="https://mail.google.com/mail/u/0/?hl=es#inbox?compose=GTvVlcSMTtXvRzflhFnPZchDSjqLhGqTTnpjTLrzgGmkkLdCmjwKNLlMDHBGLmnSXPjnVQVzMQVjw"
+                  >Kevinyulian721@gmail.com</a
+                >
+              </li>
+              <li>
+                <h3>Telefono</h3>
+                +57 (322) 288-6718
+              </li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

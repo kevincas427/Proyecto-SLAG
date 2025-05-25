@@ -69,3 +69,9 @@ def caballero(request):
     return render(request, 'slag/caballero.html')
 def Olvido(request):
     return render(request,'Olvido.html')
+def nosotros(request):
+    return render(request, 'slag/nosotros.html')
+def generic(request):
+    return render(request, 'slag/generic.html' )
+def elements(request):
+    return render(request, 'slag/elements.html' )
