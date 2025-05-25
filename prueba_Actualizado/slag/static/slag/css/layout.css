@@ -1,13 +1,15 @@
 body{
   padding-top: 80px;
+  background-color: #e4e1de;
 }
 .encabezado {
-  background-color: #ffffff69;
+  background-color: #ffffff3f;
 }
 
 .icono {
   height: 30px;
   margin-left: 10px;
+  color: #790808;
 }
 
 .icono:hover {
@@ -19,6 +21,7 @@ body{
   font-size: 50px;
   font-family: italic;
   font-weight: bold;
+  color: #790808;
 }
 
 .boton-menu {
@@ -31,7 +34,7 @@ body{
 
 .boton-menu:hover {
   font-size: 30px;
-  color: rgb(189, 89, 42);
+  color: #790808;
   border: none;
 }
 
@@ -55,7 +58,7 @@ body{
 }
 
 .dropdown-item:hover {
-  color: rgb(189, 89, 42);
+  color: #3f1111;
 }
 
 main {
@@ -97,8 +100,8 @@ main {
 }
 
 .btn-overlay:hover {
-  background-color: rgba(255, 255, 255, 0.8);
-  color: black;
+  background-color: #e4e1de9f;
+  color: #3f1111;
 }
 
 .nav {
@@ -106,9 +109,7 @@ main {
   margin-bottom: 4px;
 }
 
-.nav:hover {
-  color: aqua;
-}
+
 
 .lista {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
@@ -140,7 +141,7 @@ main {
   transition: all 0.2s ease;
 }
 .nav-link:hover{
-  color:rgb(189, 89, 42);
+  color:#790808;
   border: none;
   font-size: 35px;
 }
@@ -154,16 +155,21 @@ main {
   width: 100%;
   height: auto;
   object-fit: cover;
-  border:1px solid rgb(189, 89, 42);
+  border:1px solid #3f1111;
 
 }
 .product-title {
   font-weight: 600;
   font-size: 0.9rem;
   margin-top: 10px;
+  color: #790808;
 }
 .product-price {
   color: #000;
   font-weight: bold;
   font-size: 0.9rem;
+}
+
+h5{
+  color: #790808;
 }

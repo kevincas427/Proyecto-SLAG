@@ -101,6 +101,7 @@ button{
     background-color:#3F1111;
     color:white;
 }
+.container-Welcome but
 
 .sign-up{
     transform: translateX(-100%);
@@ -164,8 +165,12 @@ button{
 
 .container-Welcome button{
     border: 2px solid white;
+    background-color: transparent;
+}
+.container-Welcome button:hover{
     background-color: #E4E1DE;
     color: #3F1111;
+    font-weight: bold;
 }
 
 .container.toggle .Welcome-sign-in{
@@ -189,6 +194,7 @@ button{
 
 button:hover{
     font-size: 20px;
+    font-weight: bold;
     width: 190px;
     height:60px;
     transition: all 0.3s ease;
@@ -197,4 +203,5 @@ a:hover{
     color: #790808;
     font-size: 15px;
     transition: all 0.2s ease;
+    font-weight: bold;
 }
