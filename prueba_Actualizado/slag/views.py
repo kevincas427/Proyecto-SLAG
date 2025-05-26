@@ -3,7 +3,11 @@ from .forms import RegistroForm
 from slag.models import *
 from django.db import IntegrityError
 from django.contrib.auth import login,logout,authenticate
-from django.http import JsonResponse
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.contrib import messages
+from .utils import *
+
 # Create your views here.
 
 def sesion(request):
@@ -67,11 +71,66 @@ def dama(request):
     return render(request, 'slag/dama.html')
 def caballero(request):
     return render(request, 'slag/caballero.html')
-def Olvido(request):
-    return render(request,'Olvido.html')
 def nosotros(request):
     return render(request, 'slag/nosotros.html')
 def generic(request):
     return render(request, 'slag/generic.html' )
 def elements(request):
     return render(request, 'slag/elements.html' )
+
+
+
+def olvido(request):
+    if request.method == 'POST':
+        email = request.POST.get('correo')
+        try:
+            usuario = Usuario.objects.get(email=email)
+            codigo1 = generar_codigo()
+            request.session['codigo']=codigo1
+            request.session['usuario'] = usuario.id
+            request.session['correo'] = email
+           
+            send_mail(
+                'codigo de recuperacion | SLAG',
+                f'tu codigo es: {codigo1} Recuerdalo',
+                'kevinyulian721@gmail.com',
+                [email],
+                fail_silently=False,
+            )          
+            return redirect('codigo')
+        except Usuario.DoesNotExist:
+            return render(request, 'slag/olvido.html',{
+                'error3': 'El correo no se encuentra Registrado'
+            })  
+    return render(request, 'slag/olvido.html')
+
+def codigo(request):
+    if request.method == 'POST':
+        code_insert = request.POST.get('codigo')
+        new_password = request.POST.get('new_password')
+        codigo_generado = request.session.get('codigo')
+        email = request.session.get('correo')
+        if len(new_password) < 8:
+            messages.error(request, 'La contraseña debe tener almenos 8 caracteres')
+        if not any(C.isupper() for C in new_password):
+            messages.error(request, 'La contraseña debe tener al menos una mayuscula')
+        
+        if code_insert == codigo_generado:
+            user = Usuario.objects.get(email=email)
+            user.clave = new_password
+            user.save()
+            return redirect('sesion')
+        else:
+            messages.error(request, 'codigo ingresado incorrecto')
+            
+    return render(request, 'slag/codigo.html')
+        
+
+
+    
+   
+
+
+               
+                
+                

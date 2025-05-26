@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login Page</title>
+    <title>Login Page | SLAG</title>
     <link rel="stylesheet" href="{% static 'slag/css/secion.css' %}" />
   </head>
   <body>
@@ -31,11 +31,11 @@
           <a href="{%url 'Olvido'%}">¿Olvidaste tu contraseña?</a>
           {{error}}
           <p id="mensage-error2" data-error={{ error2|escape }}></p>
-          <button typr="submit" name="action" value="login">Iniciar Sesion</button>
+          <button type="submit" name="action" value="login">Iniciar Sesion</button>
         </form>
       </div>
       <div class="container-form">
-        <form class="sign-up" method="post" id="form-sesion">
+        <form class="sign-up" method="POST" id="form-sesion">
           {% csrf_token %}
           <h2>Registrarse</h2>
           <div class="social-networks">

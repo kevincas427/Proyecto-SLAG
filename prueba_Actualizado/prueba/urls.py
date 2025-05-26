@@ -25,8 +25,9 @@ urlpatterns = [
     path('caballero', views.caballero, name="caballero"),
     path('sesion/',views.sesion, name='sesion'),
     path('logout/',views.signout,name='Logout'),
-    path('Olvido/',views.Olvido,name='Olvido'),
     path('nosotros/',views.nosotros,name='nosotros'),
     path('generic/',views.generic,name='generic'),
     path('elements/',views.elements,name='elements'),
+    path('olvido/',views.olvido,name='Olvido'),
+    path('codigo/',views.codigo,name='codigo'),
 ]
