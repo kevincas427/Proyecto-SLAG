@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
 from .forms import RegistroForm
 from slag.models import *
 from django.db import IntegrityError
@@ -131,11 +132,10 @@ def codigo(request):
             
     return render(request, 'slag/codigo.html')
         
-
-
-    
-   
-
+        
+def detalle(request, producto_id):
+    producto = get_object_or_404(Producto, id_Prod = producto_id)
+    return render(request, 'Detalle_Producto.html', {'producto': producto})
 
                
                 
