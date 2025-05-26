@@ -74,13 +74,13 @@
                       <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'dama' %}">Dama</a></li>
                         <li><a class="dropdown-item" href="{% url 'caballero' %}">Caballero</a></li>
-                        <li><a class="dropdown-item" href="#">Otros</a></li>
+                        <li><a class="dropdown-item" href="">Otros</a></li>
                         <li><hr class="dropdown-divider"></li>
             
                         {% if request.session.usuario_id %}
                           <li><a class="dropdown-item cerrarsecion" href="{% url 'Logout' %}">Cerrar Sesión</a></li>
                         {% endif %}
-                        <li><a class="dropdown-item" href="#nosotros">Sobre nosotros</a></li>
+                        <li><a class="dropdown-item" href="{% url 'nosotros' %}">Sobre nosotros</a></li>
                       </ul>
                     </li>
             
