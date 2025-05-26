@@ -7,7 +7,7 @@ class Producto(models.Model):
     talla_prod = models.TextField(max_length=5,verbose_name='Talla Producto')
     categoria_id_Cate = models.TextField(max_length=45,verbose_name='Categoria Producto')
     Cost_Prom = models.DecimalField(max_digits=10,decimal_places=3,verbose_name='Costo Promocion (Si APLICA)',null=False)
-    Imagen = models.ImageField(upload_to='slag/static/slag/images/',verbose_name='Imagen',null=True)
+    Imagen = models.ImageField(upload_to='slag/images/',verbose_name='Imagen',null=True)
     # date_ini=models.DateTimeField(auto_now_add=True)
     # date_upt=models.DateField(auto_now=True)
     def __str__(self):

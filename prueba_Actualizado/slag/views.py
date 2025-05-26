@@ -68,9 +68,15 @@ def inicio(request):
 def index(request):
     return render(request, 'slag/index.html')
 def dama(request):
-    return render(request, 'slag/dama.html')
+    Productos = Producto.objects.all()
+    return render(request, 'slag/dama.html',{
+        'Productos': Productos
+    })
 def caballero(request):
-    return render(request, 'slag/caballero.html')
+    Productos = Producto.objects.all()
+    return render(request, 'slag/caballero.html',{
+        'Productos': Productos
+    })
 def nosotros(request):
     return render(request, 'slag/nosotros.html')
 def generic(request):
