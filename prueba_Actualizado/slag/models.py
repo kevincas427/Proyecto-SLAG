@@ -2,9 +2,8 @@ from django.db import models
 class Producto(models.Model):
     id_Prod = models.AutoField(primary_key=True)
     Name_Prod = models.TextField(max_length=45, verbose_name='Nombre Producto')
-    Desc_Prod = models.TextField(max_length=45,verbose_name='Descripcion Producto')
+    Desc_Prod = models.TextField(max_length=200,verbose_name='Descripcion Producto')
     prev_prod= models.DecimalField(max_digits=10,decimal_places=3,verbose_name='Precio Productoo')
-    talla_prod = models.TextField(max_length=5,verbose_name='Talla Producto')
     categoria_id_Cate = models.TextField(max_length=45,verbose_name='Categoria Producto')
     Cost_Prom = models.DecimalField(max_digits=10,decimal_places=3,verbose_name='Costo Promocion (Si APLICA)',null=False)
     Imagen = models.ImageField(upload_to='slag/images/',verbose_name='Imagen',null=True)
@@ -35,5 +34,20 @@ class Categoria(models.Model):
     Nom_Cate = models.TextField(max_length=45)
     class Meta:
         db_table = 'categoria'
-        managed = False  # usar tabla Usuario ya creada 
+        managed = False  # usar tabla Usuario ya creada
+
+class Tallas(models.Model):
+    id = models.AutoField(primary_key=True)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, db_column="producto_id", verbose_name="ID del producto")
+    talla = models.CharField(max_length=5, verbose_name="Talla del producto", null=False)
+    cantidad = models.IntegerField(verbose_name="Cantidad Producto:", null=False)
+
+    def __str__(self):
+        return f"Producto: {self.producto.Name_Prod} - Talla: {self.talla}"
+
+    class Meta:
+        db_table = 'tallas'
+        managed = False  # Si la tabla ya existe y no quieres que Django la modifique
+     
 # Create your models here.
+

@@ -32,7 +32,7 @@ urlpatterns = [
     path('elements/',views.elements,name='elements'),
     path('olvido/',views.olvido,name='Olvido'),
     path('codigo/',views.codigo,name='codigo'),
-    path('Detalle/<int:producto_id>',views.detalle,name="Detalle"),
+    path('Detalle/<slug:pk>',views.detalle,name="Detalle"),
 ]
 
 if settings.DEBUG:
