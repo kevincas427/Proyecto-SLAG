@@ -7,18 +7,19 @@
       rel="stylesheet"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
-    />
-    <script
+      />
+      <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
-    ></script>
-    <link rel="stylesheet" href="{% static "slag/css/Detalle.css" %}">
-    <link rel="stylesheet" href="{% static "slag/css/layout.css" %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+      ></script>
+      <link rel="stylesheet" href="{% static "slag/css/Detalle.css" %}">
+      <link rel="stylesheet" href="{% static "slag/css/layout.css" %}">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 {% endblock %}
-{% block title %}{{Productos.Name_Prod}}{% endblock %}
 
+{% block title %}{{Productos.Name_Prod}}{% endblock %}
+      
 {% block content %}
     <main class="main-container">
         <div class="container-img">
@@ -28,10 +29,13 @@
             <div class="container-precio">
                 <span> 
                     {% if Productos.Cost_Prom > 0 %}
-                    <p class="details__precio_decuento">${{Precio_Descuento|intcomma}}</p>
-                        <p class="details__precio_anterior">${{Productos.prev_prod|intcomma}} Descuento: {{Productos.Cost_Prom}}%</p>
+                    <div class="Precio-Con-Descuento">
+                        <p class="details__precio_decuento">${{Precio_Descuento|intcomma}} </p>
+                        <p class="Descuento">-{{Productos.Cost_Prom}}%</p>
+                    </div>
+                    <p class="details__precio_anterior1">${{Productos.prev_prod|intcomma}}</p>
                     {% else %}
-                        <p class="details__precio_anterior">${{Productos.prev_prod|intcomma}}</p>
+                    <p class="details__precio_anterior">${{Productos.prev_prod|intcomma}}</p>
                     {% endif %}
                 </span>
                 <i class="bi bi-chevron-right"></i>
@@ -42,7 +46,7 @@
                     <select name="Talla" id="Talla"> 
                         <option disabled selected value="">Escoge una opcion</option>
                         {% for Tallas in Talla %}
-                            <option value="{{Tallas.talla}}">{{Tallas.talla}}</option>
+                        <option value="{{Tallas.talla}}">{{Tallas.talla}}</option>
                         {%endfor%}
                     </select>
                 </div>
@@ -50,52 +54,54 @@
             </div>
             <div class="container-add-carro">
                 <div class="container-cantidad">
-                    <input type="number" placeholder="1" min="1" class="input-cantidad">
+                    <input 
+                    type="number" 
+                    placeholder="1" 
+                    min="1" 
+                    class="input-cantidad"
+                    />
                     <div class="btn-incremento-decremento">
-                        <i class="bi bi-chevron-up"></i>
-                        <i class="bi bi-chevron-down"></i>
+                        <i class="bi bi-chevron-up" id="incremento"></i>
+                        <i class="bi bi-chevron-down " id="decremento"></i>
                     </div>
                 </div>
                 <button class="add-carro"><i class="bi bi-plus-lg"> Añadir al Carrito </i></button>
             </div>
             <div class="container-description">
-                <div class="title-description">
+                <div class="title-description hidden">
                     <h4>Descripcion</h4>
                     <i class="bi bi-chevron-down"></i>
-            </div>
-            <div class="text-description">
+                </div>
+                <div class="text-description">
                     <p>{{Productos.Desc_Prod}}</p>
-            </div>  
-           <div class="container-social">
-            <span>Share</span>
-            <div class="container-btton-social">
-                <a href="#"><i class="bi bi-envelope"></i></a>
-                <a href="#"><i class="bi bi-facebook"></i></a>
-                <a href="#"><i class="bi bi-whatsapp"></i></a>
-                <a href="#"><i class="bi bi-instagram"></i></a>
+                </div>  
+                <div class="container-social">
+                    <span>Share</span>
+                    <div class="container-btton-social">
+                        <a href="#"><i class="bi bi-envelope"></i></a>
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+                
             </div>
-           </div>
-
-        </div>
-</main>
-<section class="container-related-productos">
-    <h4>Productos Relacionados</h4>
-    <div class="card-list-productos">
-        <div class="card">
-            <div class="card-imagen">
-                <img src="/Proyecto-SLAG/prueba_Actualizado/slag/images/burro.jpg">
+        </main>
+        <section class="container-related-productos">
+            <h4>Productos Relacionados</h4>
+            <div class="card-list-productos">
+                <div class="card">
+                    <div class="card-imagen">
             <div class="info-card">
                 <div class="text-product">
-                        <h3></h3>
+                    <h3></h3>
                         <p class="Categoria"></p>
                     </div>
                     <div class="price"></div>
                 </div>
             </div>
         </div>
-</section>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-<script src="{% static "slag/js/Detalle.js" %}" ></script>
-</body>
+    </section>
+<script src="{% static 'slag/js/Detalle.js' %}"></script>
 {%endblock%}
-    
+
