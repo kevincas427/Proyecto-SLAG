@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from slag import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,4 +32,8 @@ urlpatterns = [
     path('elements/',views.elements,name='elements'),
     path('olvido/',views.olvido,name='Olvido'),
     path('codigo/',views.codigo,name='codigo'),
+    path('Detalle/<slug:pk>',views.detalle,name="Detalle"),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,6 +1,6 @@
 {% extends "slag/index.html" %} 
 {% load static %}
-
+{% load humanize %}
 {% block title %} DAMA | SLAG {% endblock %}
 
 
@@ -10,53 +10,22 @@
 <center><h5>MENS'S DENIM</h5></center>
 
 <div class="container py-5">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4">
-      
-      <!-- Tarjeta 1 -->
-      <div class="col">
-        <div class="card product-card">
-          <img src="{% static 'slag/images/nacional.jpg' %}" alt="Carpenter Jean">
-          <div class="card-body">
-            <div class="product-title">MEN'S CARPENTER JEAN</div>
-            <div class="product-price">$890 USD</div>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4">
+    {% for Producto  in  Productos %}
+    {% if Producto.categoria_id_Cate == 1 %}
+    <!-- Tarjeta 1 -->
+          <div class="col">
+            <div class="card product-card">
+                <a href="{% url 'Detalle' Producto.id_Prod %}"><img src="{{Producto.Imagen.url}}" alt="{{Producto.Name_Prod}}"></a>
+              <div class="card-body">
+                <div class="product-title">{{Producto.Name_Prod}}</div>
+                <div class="product-price">${{Producto.prev_prod|intcomma}}</div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-
-      <!-- Tarjeta 2 -->
-      <div class="col">
-        <div class="card product-card">
-          <img src="{% static 'slag/images/nacional.jpg' %}" alt="MX1 Jean">
-          <div class="card-body">
-            <div class="product-title">MEN'S MX1</div>
-            <div class="product-price">$1,090 USD</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tarjeta 3 -->
-      <div class="col">
-        <div class="card product-card">
-          <img src="{% static 'slag/images/nacional.jpg' %}" alt="Cargo Jean">
-          <div class="card-body">
-            <div class="product-title">MEN'S BAGGY CARGO JEAN</div>
-            <div class="product-price">$990 USD</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tarjeta 4 -->
-      <div class="col">
-        <div class="card product-card">
-          <img src="{% static 'slag/images/nacional.jpg' %}" alt="Kick Flare Jean">
-          <div class="card-body">
-            <div class="product-title">MEN'S KICK FLARE</div>
-            <div class="product-price">$630 USD</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
+        {% endif %}
+      {% endfor %}
+</div>
     <section>
         <section>
             <div class=" second-section">

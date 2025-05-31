@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'slag',
 ]
 
@@ -77,7 +78,7 @@ WSGI_APPLICATION = 'prueba.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'proyecto SLAG',
+        'NAME': 'proyecto',
         'USER': 'root',
         'PASSWORD': '',
         'HOST':'127.0.0.1',

@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
+from django.http import HttpResponse, HttpResponseNotFound
 from .forms import RegistroForm
 from slag.models import *
 from django.db import IntegrityError
@@ -68,9 +69,30 @@ def inicio(request):
 def index(request):
     return render(request, 'slag/index.html')
 def dama(request):
-    return render(request, 'slag/dama.html')
+    # Filtrar tallas con cantidad > 0 y categoría 2
+    tallas_filtradas = Tallas.objects.filter(    
+        cantidad__gt=0, #__gt significa "greater than" (mayor que).
+        producto__categoria_id_Cate=2
+    ).select_related('producto') #selec_related funcion que hace consulta SQL con Join
+
+    # Obtener productos únicos con set asi evita que se muestren segun la cantida de tallas disponibles
+    productos_mostrados = set() #
+    productos = []
+
+    for talla in tallas_filtradas:
+        producto = talla.producto
+        if producto.id_Prod not in productos_mostrados:
+            productos.append(producto)
+            productos_mostrados.add(producto.id_Prod)
+
+    return render(request, 'slag/dama.html', {
+        'Productos': productos
+    })
 def caballero(request):
-    return render(request, 'slag/caballero.html')
+    Productos = Producto.objects.all()
+    return render(request, 'slag/caballero.html',{
+        'Productos': Productos
+    })
 def nosotros(request):
     return render(request, 'slag/nosotros.html')
 def generic(request):
@@ -120,11 +142,19 @@ def codigo(request):
             
     return render(request, 'slag/codigo.html')
         
-
-
+        
+def detalle(request,pk):
+    Productos = get_object_or_404(Producto, id_Prod = pk)
+    Talla = Tallas.objects.filter(producto_id=pk)
+    precio_Original = Productos.prev_prod
+    Precio_Descuento = Productos.Cost_Prom 
+    Precio_Final = precio_Original - (precio_Original*Precio_Descuento/100)
+    return render(request, 'Detalle_Producto.html',{
+        'Talla': Talla,
+        'Productos': Productos,
+        'Precio_Descuento': Precio_Final
+    })
     
-   
-
 
                
                 
