@@ -12,7 +12,6 @@ btnsignup.addEventListener("click", () => {
   container.classList.add("toggle");
 });
 
-
 document
   .getElementById("form-sesion")
   .addEventListener("submit", async function (e) {

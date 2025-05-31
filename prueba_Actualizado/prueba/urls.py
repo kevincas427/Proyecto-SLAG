@@ -33,6 +33,8 @@ urlpatterns = [
     path('olvido/',views.olvido,name='Olvido'),
     path('codigo/',views.codigo,name='codigo'),
     path('Detalle/<slug:pk>',views.detalle,name="Detalle"),
+    path('agregar/',views.agregar_al_carrito,name="agregar_al_carrito"),
+    path('carrito/',views.ver_carrito,name="ver_carrito"),
 ]
 
 if settings.DEBUG:

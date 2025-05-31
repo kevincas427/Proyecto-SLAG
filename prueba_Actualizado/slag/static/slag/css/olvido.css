@@ -11,10 +11,10 @@
 }
 body{
     background-position: center;
-    background:linear-gradient(#3f1111, #790808);
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
+    background-image: url(../images/personasdefondo.jpg);
 
 }
 a{

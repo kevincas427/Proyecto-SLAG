@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.contrib import messages
 from .utils import *
+from .models import Producto
 
 # Create your views here.
 
@@ -155,7 +156,44 @@ def detalle(request,pk):
         'Precio_Descuento': Precio_Final
     })
     
+def bolso(request,pk):
+    productos = get_object_or_404(Producto, id_Prod = pk)
+    precio_original = productos.prev_prod
+    precio_descuento = productos.Cost_Prom
+    Precio_Final = precio_original - (precio_original*precio_descuento/100)
+    imagen = productos.Imagen
+    return render(request, 'bolso.html',{
+        'productos':productos,
+        'precio_original': precio_original,
+        'precio_descuento': precio_descuento,
+        'Precio_Final': precio_descuento,
+        'Precio_Final':Precio_Final,
+        'imagen':imagen
+    })
+
+    
+    
+    
+
+def agregar_al_carrito(request):
+    return render (request)
 
                
+               
+def ver_carrito(request):
+    carrito = request.session.get('carrito',{})
+    productos = []
+    total = 0
+    
+    for id_Prod,cantidad in carrito.items():
+        producto = get_object_or_404(Producto.id_Prod)
+        subtotal = Producto.prev_prod * cantidad
+        productos.append({
+            'producto': producto,
+            'cantidad': cantidad,
+            'subtotal': subtotal
+        })
+        total += subtotal
+    return render(request, 'slag/bolso.html',{'productos': productos, 'total': total})
                 
                 
