@@ -109,12 +109,7 @@ def codigo(request):
         code_insert = request.POST.get('codigo')
         new_password = request.POST.get('new_password')
         codigo_generado = request.session.get('codigo')
-        email = request.session.get('correo')
-        if len(new_password) < 8:
-            messages.error(request, 'La contraseña debe tener almenos 8 caracteres')
-        if not any(C.isupper() for C in new_password):
-            messages.error(request, 'La contraseña debe tener al menos una mayuscula')
-        
+        email = request.session.get('correo')        
         if code_insert == codigo_generado:
             user = Usuario.objects.get(email=email)
             user.clave = new_password
