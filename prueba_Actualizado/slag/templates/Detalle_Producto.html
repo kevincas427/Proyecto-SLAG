@@ -26,6 +26,9 @@
             <img src="{{ Productos.Imagen.url }}" alt="{{ Producto.Name_Prod }}">
         </div>
         <div class="container-info-producto">
+            <div class="container-Nombre">
+                <h1 class="Nombre_Producto">{{Productos.Name_Prod}}</h1>
+            </div>
             <div class="container-precio">
                 <span> 
                     {% if Productos.Cost_Prom > 0 %}
@@ -50,7 +53,6 @@
                         {%endfor%}
                     </select>
                 </div>
-                <button class="btn-limpiar">Limpiar</button>
             </div>
             <div class="container-add-carro">
                 <div class="container-cantidad">
@@ -66,6 +68,7 @@
                     </div>
                 </div>
                 <button class="add-carro"><i class="bi bi-plus-lg"> Añadir al Carrito </i></button>
+                <button class="btn-limpiar">Limpiar</button>
             </div>
             <div class="container-description">
                 <div class="title-description hidden">
