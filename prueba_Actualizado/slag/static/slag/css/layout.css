@@ -174,3 +174,15 @@ h5{
   color: #790808;
 }
 
+
+
+.icono-bag {
+  border:none;
+  background: transparent;
+  text-decoration: none;
+}
+.icono-href{
+  text-decoration: none;
+  color: #3f1111;
+
+}
