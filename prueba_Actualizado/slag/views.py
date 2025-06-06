@@ -2,13 +2,13 @@ from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponse, HttpResponseNotFound
 from .forms import RegistroForm
 from slag.models import *
-from django.db import IntegrityError
+from django.db import IntegrityError, models
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.contrib import messages
 from .utils import *
-from .models import Producto
+from .models import Producto, Usuario, Carrito
 
 # Create your views here.
 
@@ -156,44 +156,31 @@ def detalle(request,pk):
         'Precio_Descuento': Precio_Final
     })
     
-def bolso(request,pk):
-    productos = get_object_or_404(Producto, id_Prod = pk)
-    precio_original = productos.prev_prod
-    precio_descuento = productos.Cost_Prom
-    Precio_Final = precio_original - (precio_original*precio_descuento/100)
-    imagen = productos.Imagen
-    return render(request, 'bolso.html',{
-        'productos':productos,
-        'precio_original': precio_original,
-        'precio_descuento': precio_descuento,
-        'Precio_Final': precio_descuento,
-        'Precio_Final':Precio_Final,
-        'imagen':imagen
+
+
+def agregar_producto(request,id_Prod):
+    carrito = Carrito(request)
+    producto = Producto.objects.get(id_Prod= id_Prod)
+    carrito.agregar(producto)
+    return render(request, 'slag/carrito.html',{
+        'id_Prod': producto.id_Prod
     })
+    
+def eliminar_producto(request,producto_id):
+    carrito = Carrito(request)
+    producto = Producto.objects.get(id=producto_id)
+    carrito.eliminar(producto)
+    return redirect('slag:index')
+
+def restar_producto(request, producto_id):
+    carrito = Carrito(request)
+    producto = Producto.objects.get(id=producto_id)
+    carrito.restar(producto)
+    return redirect('slag:index')
+
+def limpiar_carrito(request):
+    carrito = Carrito(request)
+    carrito.limpiar()
+    return redirect('slag:index')
 
     
-    
-    
-
-def agregar_al_carrito(request):
-    return render (request)
-
-               
-               
-def ver_carrito(request):
-    carrito = request.session.get('carrito',{})
-    productos = []
-    total = 0
-    
-    for id_Prod,cantidad in carrito.items():
-        producto = get_object_or_404(Producto.id_Prod)
-        subtotal = Producto.prev_prod * cantidad
-        productos.append({
-            'producto': producto,
-            'cantidad': cantidad,
-            'subtotal': subtotal
-        })
-        total += subtotal
-    return render(request, 'slag/bolso.html',{'productos': productos, 'total': total})
-                
-                

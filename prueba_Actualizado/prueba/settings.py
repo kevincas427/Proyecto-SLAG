@@ -64,6 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'slag.context_proceso.total_carrito',
             ],
         },
     },
@@ -86,6 +87,9 @@ DATABASES = {
     }
 }
 
+# configuracion de login
+
+LOGIN_URL = '/sesion/'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -135,3 +139,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'kevinyulian721@gmail.com'
 EMAIL_HOST_PASSWORD = 'gsjz lvof lzlr tsyo' 
+

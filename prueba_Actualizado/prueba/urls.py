@@ -15,10 +15,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from slag import views
 from django.conf import settings
 from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,8 +34,11 @@ urlpatterns = [
     path('olvido/',views.olvido,name='Olvido'),
     path('codigo/',views.codigo,name='codigo'),
     path('Detalle/<slug:pk>',views.detalle,name="Detalle"),
-    path('agregar/',views.agregar_al_carrito,name="agregar_al_carrito"),
-    path('carrito/',views.ver_carrito,name="ver_carrito"),
+    path('carrito/<int:id_Prod>',views.agregar_producto, name="agregar"),
+    path('eliminar/<int:id_Prod>',views.eliminar_producto, name="eliminar"),
+    path('restar/<int:id_Prod>',views.restar_producto, name="restar"),
+    path('limpiar/',views.limpiar_carrito, name="limpiar"),
+    
 ]
 
 if settings.DEBUG:
