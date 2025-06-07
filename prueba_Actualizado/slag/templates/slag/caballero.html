@@ -13,7 +13,8 @@
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4">
     {% for Producto  in  Productos %}
     {% if Producto.categoria_id_Cate == 1 %}
-    <!-- Tarjeta 1 -->
+
+    <!-- Tarjetas de productos -->
           <div class="col">
             <div class="card product-card">
                 <a href="{% url 'Detalle' Producto.id_Prod %}"><img src="{{Producto.Imagen.url}}" alt="{{Producto.Name_Prod}}"></a>

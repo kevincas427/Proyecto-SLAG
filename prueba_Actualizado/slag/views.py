@@ -156,15 +156,18 @@ def detalle(request,pk):
         'Precio_Descuento': Precio_Final
     })
     
+def carrito(request, id):
+    carrito = Carrito(request)
+    return render(request, 'carrito.html', {'carrito':carrito})
 
 
 def agregar_producto(request,id_Prod):
     carrito = Carrito(request)
-    producto = Producto.objects.get(id_Prod= id_Prod)
+    producto = get_object_or_404(Producto, id_Prod = id_Prod)
+    productos = carrito.carrito.values()
     carrito.agregar(producto)
-    return render(request, 'slag/carrito.html',{
-        'id_Prod': producto.id_Prod
-    })
+    carrito.guardar_cambios()
+    return redirect('Maincarro')
     
 def eliminar_producto(request,producto_id):
     carrito = Carrito(request)

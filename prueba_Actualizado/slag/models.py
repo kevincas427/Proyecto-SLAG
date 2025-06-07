@@ -51,18 +51,10 @@ class Tallas(models.Model):
         db_table = 'tallas'
         managed = False  # Si la tabla ya existe y no quieres que Django la modifique
      
-class CarroBase(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    def __str__(self):
-        return f"Carro de {self.usuario.nombre}"
 
-    
 class Carrito(models.Model):
-    usuario_id = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='carritos')
-    producto_id = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='carritos')
-    carro = models.ForeignKey(CarroBase, on_delete=models.CASCADE,related_name="carritos")
-    cantidad = models.PositiveIntegerField(default=1)
-    acumulado = models.PositiveIntegerField(default=0)
+    usuario_id = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='usuarios')
+    creado = models.DateTimeField(auto_now_add=True)
     
     def __init__(self,request):
         self.session = request.session
@@ -112,11 +104,14 @@ class Carrito(models.Model):
     
     def __str__(self):
         return f"{self.producto.Name_Prod} X {self.cantidad}"
-    
 
-            
-    class Meta:
-        db_table = 'carro_producto'
-    
 # Create your models here.
+
+class ItemCarrito(models.Model):
+    carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE, related_name='items')
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField(default=1)
+    
+    def subtotal(self):
+        return self.producto.prev_prod * self.cantidad
 

@@ -1,48 +1,79 @@
 {% extends "slag/index.html" %} {% load static %} {% load humanize %} 
-{% block title %} CARRITO | SLAG {% endblock %} {% block content %}
-{% comment %} <div class="alert alert-primary" role="alert">
-<table class="table table-border">
+{% block title %} CARRITO | SLAG {% endblock %} {% block content %} 
+{% comment %}
+<div class="alert alert-primary" role="alert">
+  <table class="table table-border">
     <thead>
-        <tr>
-            <th scope="row" colspan="4" class="text-center">CARRITO</th>
-        </tr>
-        <tr>
-            <th scope="col">NOMBRE</th>
-            <th scope="col">PRECIO</th>
-            <th scope="col">CANTIDAD</th>
-        </tr>    
+      <tr>
+        <th scope="row" colspan="4" class="text-center">CARRITO</th>
+      </tr>
+      <tr>
+        <th scope="col">NOMBRE</th>
+        <th scope="col">PRECIO</th>
+        <th scope="col">CANTIDAD</th>
+      </tr>
     </thead>
     <tbody>
-        {% if request.session.carrito.items %}
-        {% for clave, valor in request.session.carrito.items %}
-        <tr>
-            <td>{{valor.nombre}}</td>
-            <td>{{valor.precio}}</td>
-            <td>{{valor.acumulado}}</td>
-        </tr>
-        {% endfor %}
-        {% else %}
-        <tr>
-            <td colspan="3">
-                <div class="alert alert-danger text-center">sin productos</div>
-            </td>
-        </tr>
-        {% endif %}
-        <tr>
-            <th scope="row">TOTAL:</th>
-            <th colspan="2">{{total_carrito}}</th>
-        </tr>
+      {% if request.session.carrito.items %} {% for clave, valor in
+      request.session.carrito.items %}
+      <tr>
+        <td>{{valor.nombre}}</td>
+        <td>{{valor.precio}}</td>
+        <td>{{valor.acumulado}}</td>
+      </tr>
+      {% endfor %} {% else %}
+      <tr>
+        <td colspan="3">
+          <div class="alert alert-danger text-center">sin productos</div>
+        </td>
+      </tr>
+      {% endif %}
+      <tr>
+        <th scope="row">TOTAL:</th>
+        <th colspan="2">{{total_carrito}}</th>
+      </tr>
     </tbody>
-</table>
-<hr>
+  </table>
+  <hr />
 </div>
 <div class="row text-center">
-    <div class="col-o"><a href="{% url 'limpiar' %}" class="btn btn-danger">limpiar</a></div>
-    <div class="col-o"><a href="#" class="btn btn-success">guardar</a></div>
+  <div class="col-o">
+    <a href="{% url 'limpiar' %}" class="btn btn-danger">limpiar</a>
+  </div>
+  <div class="col-o"><a href="#" class="btn btn-success">guardar</a></div>
 </div>
- {% endcomment %}
- <center><h3>Atrevete a llevar lo que te gusta</h3></center>
+{% endcomment %}
+{% if carrito %}
+<table>
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio unitario</th>
+            <th>Subtotal</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in producto %}
+        <tr>
+            <td>{{ item.Name_Prod }}</td>
+            <td>{{ item.cantidad }}</td>
+            <td>${{ item.precio }}</td>
+            <td>${{ item.precio|floatformat:2|add:item.cantidad }}</td> <!-- opcional -->
+            {% comment %} <td>
+                <a href="{% url 'restar' item.producto_id %}">➖</a>
+                <a href="{% url 'agregar' item.producto_id %}">➕</a>
+                <a href="{% url 'eliminar' item.producto_id %}">🗑️</a>
+            </td> {% endcomment %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Total: ${{ total|floatformat:2 }}</h3>
+{% else %}
+<p>Tu carrito está vacío.</p>
+{% endif %}
 
 {% endblock %}
-
-
