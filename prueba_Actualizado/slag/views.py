@@ -156,34 +156,73 @@ def detalle(request,pk):
         'Precio_Descuento': Precio_Final
     })
     
-def carrito(request, id):
-    carrito = Carrito(request)
-    return render(request, 'carrito.html', {'carrito':carrito})
+# def carrito(request, id):
+#     carrito = Carrito(request)
+#     return render(request, 'carrito.html', {'carrito':carrito})
 
 
-def agregar_producto(request,id_Prod):
-    carrito = Carrito(request)
-    producto = get_object_or_404(Producto, id_Prod = id_Prod)
-    productos = carrito.carrito.values()
-    carrito.agregar(producto)
-    carrito.guardar_cambios()
-    return redirect('Maincarro')
+# def agregar_producto(request,id_Prod):
+#     carrito = Carrito(request)
+#     producto = get_object_or_404(Producto, id_Prod = id_Prod)
+#     productos = carrito.carrito.values()
+#     carrito.agregar(producto)
+#     carrito.guardar_cambios()
+#     return redirect('Maincarro')
     
-def eliminar_producto(request,producto_id):
-    carrito = Carrito(request)
-    producto = Producto.objects.get(id=producto_id)
-    carrito.eliminar(producto)
-    return redirect('slag:index')
+# def eliminar_producto(request,producto_id):
+#     carrito = Carrito(request)
+#     producto = Producto.objects.get(id=producto_id)
+#     carrito.eliminar(producto)
+#     return redirect('slag:index')
 
-def restar_producto(request, producto_id):
-    carrito = Carrito(request)
-    producto = Producto.objects.get(id=producto_id)
-    carrito.restar(producto)
-    return redirect('slag:index')
+# def restar_producto(request, producto_id):
+#     carrito = Carrito(request)
+#     producto = Producto.objects.get(id=producto_id)
+#     carrito.restar(producto)
+#     return redirect('slag:index')
 
-def limpiar_carrito(request):
-    carrito = Carrito(request)
-    carrito.limpiar()
-    return redirect('slag:index')
+# def limpiar_carrito(request):
+#     carrito = Carrito(request)
+#     carrito.limpiar()
+#     return redirect('slag:index')
 
+def agregar_producto(request):
+    if request.method == 'POST':
+        dato  = request.POST
+        producto_id = dato.get('producto_id')
+        cantidad = int(dato.get('cantidad',1))
+        
+        producto = get_object_or_404(Producto, id_Prod = producto_id)
+        
+        if cantidad > Producto.stock:
+            return render (request, 'slag/Detalle_Prodcuto.html',{
+                'error5' : 'La cantidad que quieres llevar es insuficiente en el stock, cantidad de stock: {Producto.stock}'
+            })
+        carro, creado = Carrito.objects.get_or_create(Usuario = request.Usuario)
+        item, item_creado = ItemCarrito.objects.get_or_create(carro = carro, producto = producto)
+        if not item_creado:
+            item.cantidad += cantidad
+        else:
+            item.cantidad = cantidad
+        
+        item.save()
+        return render(request, 'slag/Detalle_Producto.html',{
+            'mensage': 'Producto agregado con exito al carrito '
+        })
+    else:
+        return render(request, 'slag/Detalle_Producto.html',{
+            'mensage_error':'Debes de iniciar secion primero para poder agregar productos al carrito'
+        })
+        
     
+def vista_carrito(request):
+    if not request.user.is_authenticated:
+        return redirect('sesion')
+    cart, _ = Carrito.objects.get_or_create(Usuario = request.Usuario)
+    items = cart.items.select_related('producto')
+    total = sum(item.subtotal() for item in items)
+    return render(request, 'slag/carrito.html',{
+        'items': items,
+        'total': total
+    })
+        
