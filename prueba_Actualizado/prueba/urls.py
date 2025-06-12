@@ -33,13 +33,9 @@ urlpatterns = [
     path('elements/',views.elements,name='elements'),
     path('olvido/',views.olvido,name='Olvido'),
     path('codigo/',views.codigo,name='codigo'),
-    path('Detalle/<slug:pk>',views.detalle,name="Detalle"),
-    path('Maincarro/<int:id>',views.carrito,name="Maincarro"),
-    path('carrito/<int:id_Prod>',views.agregar_producto, name="agregar"),
-    path('eliminar/<int:id_Prod>',views.eliminar_producto, name="eliminar"),
-    path('restar/<int:id_Prod>',views.restar_producto, name="restar"),
-    path('limpiar/',views.limpiar_carrito, name="limpiar"),
-    
+    path('Detalle/<slug:pk>',views.detalle,name="Detalle"),    
+    path('carrito/',views.vista_carrito, name="carrito"),
+
 ]
 
 if settings.DEBUG:

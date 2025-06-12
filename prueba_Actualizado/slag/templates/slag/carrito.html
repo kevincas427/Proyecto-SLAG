@@ -43,7 +43,7 @@
   <div class="col-o"><a href="#" class="btn btn-success">guardar</a></div>
 </div>
 {% endcomment %}
-{% if carrito %}
+{% comment %} {% if carrito %}
 <table>
     <thead>
         <tr>
@@ -66,7 +66,7 @@
                 <a href="{% url 'agregar' item.producto_id %}">➕</a>
                 <a href="{% url 'eliminar' item.producto_id %}">🗑️</a>
             </td> {% endcomment %}
-        </tr>
+        {% comment %} </tr>
         {% endfor %}
     </tbody>
 </table>
@@ -76,4 +76,9 @@
 <p>Tu carrito está vacío.</p>
 {% endif %}
 
-{% endblock %}
+{% comment %} {% endblock %} {% endcomment %}
+
+<h2> Tu Carrito </h2>
+<ul>
+  {% for item in items %}
+  <li> {{ item.pProducto.Name_Prod }} - {{ item.cantidad }}</li>

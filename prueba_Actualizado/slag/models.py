@@ -9,6 +9,7 @@ class Producto(models.Model):
     categoria_id_Cate = models.TextField(max_length=45,verbose_name='Categoria producto')
     Cost_Prom = models.DecimalField(max_digits=10,decimal_places=3,verbose_name='Costo Promocion (Si APLICA)',null=False)
     Imagen = models.ImageField(upload_to='slag/images/',verbose_name='Imagen',null=True)
+    stock = models.PositiveSmallIntegerField()
     # date_ini=models.DateTimeField(auto_now_add=True)
     # date_upt=models.DateField(auto_now=True)
     def __str__(self):
@@ -53,7 +54,7 @@ class Tallas(models.Model):
      
 
 class Carrito(models.Model):
-    usuario_id = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='usuarios')
+    usuario_id = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True, blank=True)
     creado = models.DateTimeField(auto_now_add=True)
     
     def __init__(self,request):
@@ -105,7 +106,6 @@ class Carrito(models.Model):
     def __str__(self):
         return f"{self.producto.Name_Prod} X {self.cantidad}"
 
-# Create your models here.
 
 class ItemCarrito(models.Model):
     carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE, related_name='items')
@@ -115,3 +115,4 @@ class ItemCarrito(models.Model):
     def subtotal(self):
         return self.producto.prev_prod * self.cantidad
 
+# Create your models here.
