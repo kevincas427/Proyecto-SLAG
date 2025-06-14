@@ -35,6 +35,7 @@ urlpatterns = [
     path('codigo/',views.codigo,name='codigo'),
     path('Detalle/<slug:pk>',views.detalle,name="Detalle"),    
     path('carrito/',views.vista_carrito, name="carrito"),
+    path('agregar/',views.agregar_producto, name="agregar_al_carro"),
 
 ]
 

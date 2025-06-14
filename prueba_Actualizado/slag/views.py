@@ -1,14 +1,10 @@
 from django.shortcuts import render, redirect,get_object_or_404
-from django.http import HttpResponse, HttpResponseNotFound
-from .forms import RegistroForm
 from slag.models import *
-from django.db import IntegrityError, models
+from django.db import IntegrityError
 from django.contrib.auth import login,logout,authenticate
-from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.contrib import messages
 from .utils import *
-from .models import Producto, Usuario, Carrito
 
 # Create your views here.
 
@@ -146,7 +142,7 @@ def codigo(request):
         
 def detalle(request,pk):
     Productos = get_object_or_404(Producto, id_Prod = pk)
-    Talla = Tallas.objects.filter(producto_id=pk)
+    Talla = Tallas.objects.filter(producto=pk)
     precio_Original = Productos.prev_prod
     Precio_Descuento = Productos.Cost_Prom 
     Precio_Final = precio_Original - (precio_Original*Precio_Descuento/100)
@@ -156,73 +152,69 @@ def detalle(request,pk):
         'Precio_Descuento': Precio_Final
     })
     
-# def carrito(request, id):
-#     carrito = Carrito(request)
-#     return render(request, 'carrito.html', {'carrito':carrito})
+def agregar_producto(request,):
 
-
-# def agregar_producto(request,id_Prod):
-#     carrito = Carrito(request)
-#     producto = get_object_or_404(Producto, id_Prod = id_Prod)
-#     productos = carrito.carrito.values()
-#     carrito.agregar(producto)
-#     carrito.guardar_cambios()
-#     return redirect('Maincarro')
-    
-# def eliminar_producto(request,producto_id):
-#     carrito = Carrito(request)
-#     producto = Producto.objects.get(id=producto_id)
-#     carrito.eliminar(producto)
-#     return redirect('slag:index')
-
-# def restar_producto(request, producto_id):
-#     carrito = Carrito(request)
-#     producto = Producto.objects.get(id=producto_id)
-#     carrito.restar(producto)
-#     return redirect('slag:index')
-
-# def limpiar_carrito(request):
-#     carrito = Carrito(request)
-#     carrito.limpiar()
-#     return redirect('slag:index')
-
-def agregar_producto(request):
-    if request.method == 'POST':
+    if request.method == 'POST' and "usuario_id" in request.session:
         dato  = request.POST
         producto_id = dato.get('producto_id')
         cantidad = int(dato.get('cantidad',1))
+        talla = dato.get('Talla')
         
-        producto = get_object_or_404(Producto, id_Prod = producto_id)
+        Productos = get_object_or_404(Producto, id_Prod = producto_id)
+        talla_obj = get_object_or_404(Tallas, id = talla) 
         
-        if cantidad > Producto.stock:
-            return render (request, 'slag/Detalle_Prodcuto.html',{
-                'error5' : 'La cantidad que quieres llevar es insuficiente en el stock, cantidad de stock: {Producto.stock}'
+        if cantidad > talla_obj.cantidad:
+            return render (request, 'Detalle_Producto.html',{
+                'error5' : f'La cantidad que quieres llevar es insuficiente en el stock',
+                'Productos' : Productos,
+                'Talla' : Tallas.objects.filter(producto = Productos),
             })
-        carro, creado = Carrito.objects.get_or_create(Usuario = request.Usuario)
-        item, item_creado = ItemCarrito.objects.get_or_create(carro = carro, producto = producto)
+            
+        usuario_id = request.session.get("usuario_id")
+        usuario = get_object_or_404(Usuario, id = usuario_id)
+        
+        carro, creado = Carrito.objects.get_or_create(usuario_id = usuario)
+        
+        item, item_creado = ItemCarrito.objects.get_or_create(
+            carrito = carro,
+            producto = Productos,
+            talla = talla_obj
+            )
         if not item_creado:
             item.cantidad += cantidad
         else:
             item.cantidad = cantidad
         
         item.save()
-        return render(request, 'slag/Detalle_Producto.html',{
-            'mensage': 'Producto agregado con exito al carrito '
+        return render(request, 'Detalle_Producto.html',{
+            'mensage': 'Producto agregado con exito al carrito ',
+            'Productos' : Productos,
+            'Talla' : Tallas.objects.filter(producto = Productos)
         })
     else:
-        return render(request, 'slag/Detalle_Producto.html',{
-            'mensage_error':'Debes de iniciar secion primero para poder agregar productos al carrito'
+        return render(request, 'Detalle_Producto.html', {
+        'mensage_error':'Debes iniciar sesión para agregar productos al carrito',
+        'Productos': get_object_or_404(Producto, id_Prod=request.POST.get('producto_id')),
+        'Talla': Tallas.objects.filter(producto_id=request.POST.get('producto_id'))
         })
-        
     
 def vista_carrito(request):
-    if not request.user.is_authenticated:
-        return redirect('sesion')
-    cart, _ = Carrito.objects.get_or_create(Usuario = request.Usuario)
-    items = cart.items.select_related('producto')
-    total = sum(item.subtotal() for item in items)
-    return render(request, 'slag/carrito.html',{
-        'items': items,
-        'total': total
+    if "usuario_id" in request.session:
+        usuario_id = request.session.get("usuario_id")
+        usuario = get_object_or_404(Usuario, id = usuario_id)
+        
+        cart= Carrito.objects.filter(usuario_id= usuario).first()
+        if not cart:
+            return render(request, 'carrito.html',{
+                'mensaje': 'Tu carrito esta vacio'
+            })
+        items = ItemCarrito.objects.filter(carrito = cart).select_related('producto','talla')
+        total_general = sum(item.producto.prev_prod * item.cantidad for item in items)
+        return render(request, 'slag/carrito.html',{
+            'items': items,
+            'total_general': total_general
+            
     })
+    else:
+        return redirect('sesion')
         

@@ -110,6 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -139,4 +140,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'kevinyulian721@gmail.com'
 EMAIL_HOST_PASSWORD = 'gsjz lvof lzlr tsyo' 
+
+
+
 
