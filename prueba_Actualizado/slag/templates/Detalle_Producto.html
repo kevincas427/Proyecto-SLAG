@@ -7,12 +7,12 @@
       rel="stylesheet"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
-      />
-      <script
+    />
+    <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
-      ></script>
+    ></script>
       <link rel="stylesheet" href="{% static "slag/css/Detalle.css" %}">
       <link rel="stylesheet" href="{% static "slag/css/layout.css" %}">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -43,42 +43,53 @@
                 </span>
                 <i class="bi bi-chevron-right"></i>
             </div>
-            <div class="container-detalles">
-                <div class="form-gruop">
-                    <label for="Talla">TALLA </label>
-                    <select name="Talla" id="Talla"> 
-                        <option disabled selected>Escoge una opcion</option>
-                        {% for Tallas in Talla %}
-                        <option value="{{Tallas.talla}}">{{Tallas.talla}}</option>
-                        {%endfor%}
-                    </select>
-                </div>
-            </div>
-            <div class="container-add-carro">
-                <div class="container-cantidad">
-                    <input 
-                    type="number" 
-                    placeholder="" 
-                    min="1" 
-                    class="input-cantidad"
-                    value=""
-                    name="quantity"
-                    />
-                    <div class="btn-incremento-decremento">
-                        <i class="bi bi-chevron-up" id="incremento"></i>
-                        <i class="bi bi-chevron-down " id="decremento"></i>
-                    </div>
-                </div>
 
-                <a href="{% url 'carrito'  %}">
-                    <button class="add-carro"><i class="bi bi-plus-lg"> Añadir al Carrito </i></button>
-                </a>
-                <button class="btn-limpiar">Limpiar</button>
+            <div class="container-add-carro">
+
+                <form action="{% url 'agregar_al_carro' %}" method="POST" class="form-carrito" id="formulario">
+
+                    {% csrf_token %}
+                    
+                    <input type="hidden" name="producto_id" value="{{ Productos.id_Prod }}">
+
+                    <div class="container-detalles">
+                        <div class="form-gruop">
+                            <label for="Talla">TALLA </label>
+                            <select name="Talla" id="Talla" class="talla"> 
+                                <option id="opcion_tallas" disabled selected >Escoge una opcion</option>
+                                {% for Tallas in Talla %}
+                                <option value="{{Tallas.id}}">{{Tallas.talla}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="container-cantidad">
+                        <input 
+                            type="number" 
+                            min="1" 
+                            value="1" 
+                            name="cantidad"
+                            class="input-cantidad"
+                            required
+                        />
+                        <div class="btn-incremento-decremento">
+                            <i class="bi bi-chevron-up" id="incremento"></i>
+                            <i class="bi bi-chevron-down" id="decremento"></i>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="add-carro">
+                        <i class="bi bi-plus-lg"> Añadir al Carrito </i>
+                    </button>
+                    <button type="reset" class="btn-limpiar">Limpiar</button>
+                </form>
             </div>
-            <div class="container-description">
-                <div class="title-description hidden">
-                    <h4>Descripcion</h4>
-                    <i class="bi bi-chevron-down"></i>
+
+<div class="container-description">
+    <div class="title-description hidden">
+        <h4>Descripcion</h4>
+        <i class="bi bi-chevron-down"></i>
                 </div>
                 <div class="text-description">
                     <p>{{Productos.Desc_Prod}}</p>
@@ -100,16 +111,18 @@
             <div class="card-list-productos">
                 <div class="card">
                     <div class="card-imagen">
-            <div class="info-card">
-                <div class="text-product">
-                    <h3></h3>
-                        <p class="Categoria"></p>
+                        <div class="info-card">
+                            <div class="text-product">
+                                <h3></h3>
+                                <p class="Categoria"></p>
+                            </div>
+                            <div class="price"></div>
+                        </div>
                     </div>
-                    <div class="price"></div>
                 </div>
-            </div>
-        </div>
-    </section>
+            </section>
+            {{mensage_error}}
+            
 <script src="{% static 'slag/js/Detalle.js' %}"></script>
 {%endblock%}
 

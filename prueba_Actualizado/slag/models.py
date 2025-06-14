@@ -32,6 +32,7 @@ class Usuario(models.Model):
     class Meta:
         db_table = 'usuario'
         managed = False  # usar tabla Usuario ya creada 
+        
 class Categoria(models.Model):
     id_cate = models.AutoField(primary_key=True)
     Nom_Cate = models.TextField(max_length=45)
@@ -50,32 +51,40 @@ class Tallas(models.Model):
 
     class Meta:
         db_table = 'tallas'
-        managed = False  # Si la tabla ya existe y no quieres que Django la modifique
+        # managed = False  # Si la tabla ya existe y no quieres que Django la modifique
      
 
 class Carrito(models.Model):
     usuario_id = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True, blank=True)
     creado = models.DateTimeField(auto_now_add=True)
-    
+
+class CarritoSession: 
+       
     def __init__(self,request):
         self.session = request.session
         carrito = self.session.get('carrito')
+        
         if not carrito:
             carrito = self.session['carrito'] = {}
         self.carrito = carrito
     
-    def agregar(self,producto):
+
+    def agregar(self,producto,id,cantidad = 1):
+        producto = Producto.objects.get(id_prod = id)
         id = str(producto.id_Prod)
+                
         if id not in self.carrito.keys():
             self.carrito[id] = {
                 'producto_id' : producto.id_Prod,
                 'nombre' : producto.Name_Prod,
                 'precio' : producto.prev_prod,
-                'cantidad' : 1,
+                'cantidad' : cantidad,
             }
         else:
-            self.carrito[id]['cantidad'] = 1
+            self.carrito[id]['cantidad'] += cantidad
             self.carrito[id]['precio'] += producto.prev_prod
+            
+        self.guardar_cambios()
     
     def guardar_cambios(self):
         self.session['carrito'] = self.carrito
@@ -99,20 +108,32 @@ class Carrito(models.Model):
     def limpiar(self):
         self.session['carrito'] = {}
         self.session.modified = True
+        self.guardar_cambios()
     
     def subtotal(self):
-        return self.producto.prev_prod * self.cantidad
+        return sum(
+            item['precio'] * item['cantidad'] for item in self.carrito.items()
+        )
     
+    
+    def __iter__(self):
+        for key, value in self.carrito.items():
+            yield value
+
     def __str__(self):
         return f"{self.producto.Name_Prod} X {self.cantidad}"
+    
+    
 
 
 class ItemCarrito(models.Model):
     carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE, related_name='items')
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, null=True, blank=True)
+    talla = models.ForeignKey(Tallas, verbose_name=(""), on_delete=models.CASCADE)
     cantidad = models.PositiveIntegerField(default=1)
     
     def subtotal(self):
         return self.producto.prev_prod * self.cantidad
+    
 
 # Create your models here.
