@@ -187,7 +187,7 @@ def agregar_producto(request,):
         
         item.save()
         return render(request, 'Detalle_Producto.html',{
-            'mensage': 'Producto agregado con exito al carrito ',
+            'mensage_agregar':'',
             'Productos' : Productos,
             'Talla' : Tallas.objects.filter(producto = Productos)
         })
@@ -204,17 +204,16 @@ def vista_carrito(request):
         usuario = get_object_or_404(Usuario, id = usuario_id)
         
         cart= Carrito.objects.filter(usuario_id= usuario).first()
-        if not cart:
-            return render(request, 'carrito.html',{
-                'mensaje': 'Tu carrito esta vacio'
-            })
         items = ItemCarrito.objects.filter(carrito = cart).select_related('producto','talla')
         total_general = sum(item.producto.prev_prod * item.cantidad for item in items)
         return render(request, 'slag/carrito.html',{
             'items': items,
             'total_general': total_general
             
-    })
+        })
     else:
         return redirect('sesion')
         
+
+def pago(request):
+    return render(request, 'slag/pago.html')

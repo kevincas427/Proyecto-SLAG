@@ -4,6 +4,7 @@ const BtonIncremento = document.getElementById("incremento");
 const BtonDecremento = document.getElementById("decremento");
 const Limpiar = document.querySelector(".btn-limpiar")
 
+
 let valueByDefault = parseInt(InputCantidad.value) || 1;
 InputCantidad.value = valueByDefault; 
 
@@ -25,20 +26,11 @@ Limpiar.addEventListener('click', () =>{
     InputCantidad.value =  valueByDefault
 });
 
-
-document.addEventListener("DOMContentLoaded", function (){
-    const formulario = document.getElementById('formulario');
-    const talla = document.getElementById('Talla');
-
-    formulario.addEventListener("submit", function(e){
-        if(talla.value == ""){
-            e.preventDefault();
-            alert("Porfavor esocoja una talla para poder agregar el producto al carrito");
-            talla.focus();
-
-        }
-    });
+document.getElementById('formulario').addEventListener('submit', function(event) {
+    const selectTalla = document.getElementById('Talla');
+    // Verifica si la opción seleccionada es la predeterminada (sin valor)
+    if (selectTalla.selectedIndex === 0) {
+        alert('Por favor, escoge una talla antes de añadir al carrito.');
+        event.preventDefault(); // Evita que el formulario se envíe
+    }
 });
-
-
-
