@@ -79,9 +79,12 @@
                         </div>
                     </div>
                     
-                    <button type="submit" class="add-carro">
+                    <button type="submit" class="add-carro" id="boton-carro">
                         <i class="bi bi-plus-lg"> Añadir al Carrito </i>
                     </button>
+                    <div class="mensageError">
+                        {{mensage_error}}
+                    </div>
                     <button type="reset" class="btn-limpiar">Limpiar</button>
                 </form>
             </div>
@@ -121,8 +124,7 @@
                     </div>
                 </div>
             </section>
-            {{mensage_error}}
-            
 <script src="{% static 'slag/js/Detalle.js' %}"></script>
 {%endblock%}
+
 
