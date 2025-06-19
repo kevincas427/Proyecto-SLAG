@@ -37,6 +37,7 @@ urlpatterns = [
     path('carrito/',views.vista_carrito, name="carrito"),
     path('agregar/',views.agregar_producto, name="agregar_al_carro"),
     path('pago/',views.pago, name='pago'),
+    path('eliminar/<int:item_id>',views.elimiar_producto, name='eliminar_producto'),
 
 ]
 

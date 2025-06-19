@@ -193,7 +193,6 @@ def agregar_producto(request,):
                 'Productos' : Productos,
                 'Talla' : Tallas.objects.filter(producto = Productos),
             })
-            
         usuario_id = request.session.get("usuario_id")
         usuario = get_object_or_404(Usuario, id = usuario_id)
         
@@ -204,11 +203,16 @@ def agregar_producto(request,):
             producto = Productos,
             talla = talla_obj
             )
+        
         if not item_creado:
             item.cantidad += cantidad
+            item.save()
         else:
             item.cantidad = cantidad
+            item.save()
         
+        
+        talla_obj.save()
         item.save()
         return render(request, 'Detalle_Producto.html',{
             'mensage_agregar':'',
@@ -238,6 +242,19 @@ def vista_carrito(request):
     else:
         return redirect('sesion')
         
+        
+def elimiar_producto(request,item_id):
+    if "usuario_id" in request.session:
+        usuario_id = request.session.get("usuario_id")
+        item = get_object_or_404(ItemCarrito, id=item_id)
+        
+        if item.carrito.usuario_id.id == usuario_id:
+            item.talla.cantidad += item.cantidad
+            item.talla.save()
+            item.delete()
+            
+    return redirect("carrito")
+    
 
 def pago(request):
     return render(request, 'slag/pago.html')
