@@ -81,14 +81,38 @@ def dama(request):
         if producto.id_Prod not in productos_mostrados:
             productos.append(producto)
             productos_mostrados.add(producto.id_Prod)
+            precio_original = producto.prev_prod
+            descuento = producto.Cost_Prom or 0
+            producto.precio_final = int(precio_original * (100 - descuento) / 100)
 
     return render(request, 'slag/dama.html', {
         'Productos': productos
     })
 def caballero(request):
     Productos = Producto.objects.all()
-    return render(request, 'slag/caballero.html',{
-        'Productos': Productos
+    # Filtrar tallas con cantidad > 0 y categoría 2
+    tallas_filtradas = Tallas.objects.filter(    
+        cantidad__gt=0, #__gt significa "greater than" (mayor que).
+        producto__categoria_id_Cate=1
+    ).select_related('producto') #selec_related funcion que hace consulta SQL con Join
+
+    # Obtener productos únicos con set asi evita que se muestren segun la cantidad de tallas disponibles
+    productos_mostrados = set() #
+    productos = []
+
+    for talla in tallas_filtradas:
+        producto = talla.producto
+        if producto.id_Prod not in productos_mostrados:
+            productos.append(producto)
+            productos_mostrados.add(producto.id_Prod)
+            
+            precio_original = producto.prev_prod
+            descuento = producto.Cost_Prom or 0
+            producto.precio_final = int(precio_original * (100 - descuento) / 100)
+            
+        
+    return render(request, 'slag/caballero.html', {
+        'Productos': productos
     })
 def nosotros(request):
     return render(request, 'slag/nosotros.html')
@@ -169,7 +193,6 @@ def agregar_producto(request,):
                 'Productos' : Productos,
                 'Talla' : Tallas.objects.filter(producto = Productos),
             })
-            
         usuario_id = request.session.get("usuario_id")
         usuario = get_object_or_404(Usuario, id = usuario_id)
         
@@ -180,11 +203,16 @@ def agregar_producto(request,):
             producto = Productos,
             talla = talla_obj
             )
+        
         if not item_creado:
             item.cantidad += cantidad
+            item.save()
         else:
             item.cantidad = cantidad
+            item.save()
         
+        
+        talla_obj.save()
         item.save()
         return render(request, 'Detalle_Producto.html',{
             'mensage_agregar':'',
@@ -214,6 +242,19 @@ def vista_carrito(request):
     else:
         return redirect('sesion')
         
+        
+def elimiar_producto(request,item_id):
+    if "usuario_id" in request.session:
+        usuario_id = request.session.get("usuario_id")
+        item = get_object_or_404(ItemCarrito, id=item_id)
+        
+        if item.carrito.usuario_id.id == usuario_id:
+            item.talla.cantidad += item.cantidad
+            item.talla.save()
+            item.delete()
+            
+    return redirect("carrito")
+    
 
 def pago(request):
     return render(request, 'slag/pago.html')

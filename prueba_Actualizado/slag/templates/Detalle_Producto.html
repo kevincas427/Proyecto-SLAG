@@ -58,7 +58,10 @@
                             <select name="Talla" id="Talla" class="talla"> 
                                 <option id="opcion_tallas" disabled selected >Escoge una opcion</option>
                                 {% for Tallas in Talla %}
-                                <option value="{{Tallas.id}}">{{Tallas.talla}}</option>
+                                    {% if Tallas.cantidad <= 0 %}
+                                    {% else %}
+                                        <option value="{{Tallas.id}}">{{Tallas.talla}} ({{Tallas.cantidad}}disponibles)</option>
+                                    {% endif %}
                                 {%endfor%}
                             </select>
                         </div>
