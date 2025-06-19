@@ -182,10 +182,14 @@ def agregar_producto(request,):
         
         if not item_creado:
             item.cantidad += cantidad
+            item.save()
         else:
             item.cantidad = cantidad
+            item.save()
         
-        talla_obj.cantidad -= cantidad
+        # talla_obj.cantidad -= cantidad
+        
+        
         talla_obj.save()
         item.save()
         return render(request, 'Detalle_Producto.html',{
@@ -221,12 +225,10 @@ def elimiar_producto(request,item_id):
     if "usuario_id" in request.session:
         usuario_id = request.session.get("usuario_id")
         item = get_object_or_404(ItemCarrito, id=item_id)
-        talla_obj = get_object_or_404(Tallas, id = item_id) 
-
-        
-        
         
         if item.carrito.usuario_id.id == usuario_id:
+            item.talla.cantidad += item.cantidad
+            item.talla.save()
             item.delete()
             
     return redirect("carrito")

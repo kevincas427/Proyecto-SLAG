@@ -60,7 +60,7 @@
                                 {% for Tallas in Talla %}
                                     {% if Tallas.cantidad <= 0 %}
                                     {% else %}
-                                        <option value="{{Tallas.id}}">{{Tallas.talla}}</option>
+                                        <option value="{{Tallas.id}}">{{Tallas.talla}} ({{Tallas.cantidad}}disponibles)</option>
                                     {% endif %}
                                 {%endfor%}
                             </select>
