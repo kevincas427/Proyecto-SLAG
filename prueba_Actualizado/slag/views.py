@@ -81,14 +81,38 @@ def dama(request):
         if producto.id_Prod not in productos_mostrados:
             productos.append(producto)
             productos_mostrados.add(producto.id_Prod)
+            precio_original = producto.prev_prod
+            descuento = producto.Cost_Prom or 0
+            producto.precio_final = int(precio_original * (100 - descuento) / 100)
 
     return render(request, 'slag/dama.html', {
         'Productos': productos
     })
 def caballero(request):
     Productos = Producto.objects.all()
-    return render(request, 'slag/caballero.html',{
-        'Productos': Productos
+    # Filtrar tallas con cantidad > 0 y categoría 2
+    tallas_filtradas = Tallas.objects.filter(    
+        cantidad__gt=0, #__gt significa "greater than" (mayor que).
+        producto__categoria_id_Cate=1
+    ).select_related('producto') #selec_related funcion que hace consulta SQL con Join
+
+    # Obtener productos únicos con set asi evita que se muestren segun la cantidad de tallas disponibles
+    productos_mostrados = set() #
+    productos = []
+
+    for talla in tallas_filtradas:
+        producto = talla.producto
+        if producto.id_Prod not in productos_mostrados:
+            productos.append(producto)
+            productos_mostrados.add(producto.id_Prod)
+            
+            precio_original = producto.prev_prod
+            descuento = producto.Cost_Prom or 0
+            producto.precio_final = int(precio_original * (100 - descuento) / 100)
+            
+        
+    return render(request, 'slag/caballero.html', {
+        'Productos': productos
     })
 def nosotros(request):
     return render(request, 'slag/nosotros.html')
