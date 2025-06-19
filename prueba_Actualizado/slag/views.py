@@ -187,8 +187,6 @@ def agregar_producto(request,):
             item.cantidad = cantidad
             item.save()
         
-        # talla_obj.cantidad -= cantidad
-        
         
         talla_obj.save()
         item.save()
