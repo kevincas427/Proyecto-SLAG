@@ -249,8 +249,6 @@ def elimiar_producto(request,item_id):
         item = get_object_or_404(ItemCarrito, id=item_id)
         
         if item.carrito.usuario_id.id == usuario_id:
-            item.talla.cantidad += item.cantidad
-            item.talla.save()
             item.delete()
             
     return redirect("carrito")
