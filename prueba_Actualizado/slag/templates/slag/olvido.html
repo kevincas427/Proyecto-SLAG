@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'slag/css/olvido.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+  </head>
+  <body>
+
+    {% comment %} formulario para la recuperacion de contraseña {% endcomment %}
+    
+    <form method="POST">
+      {% csrf_token %}
+      <div class="container">
+        <div class="login_container">
+          <div class="login_title">
+            <span>Recupera tu contraseña</span>
+          </div>
+
+          <div class="input_wrapper">
+            <input type="email" id="user" class="input_field" name="correo" />
+            <label for="user" class="label">Correo</label>
+          </div>
+          <div class="input_wrapper">
+            <h2>
+              No dudamos que seas tu, ingresa tu correo y actualizaremos los datos
+            </h2>
+          </div>
+
+          <div class="input_boton">
+            <button type="submit" name="accion" class="input-submit" value="recuperar"/>Enviar Email</button>
+          </div>
+          {{error3}}
+        </div>
+      </div>
+  </form>
+  </body>
+</html>

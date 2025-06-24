@@ -11,7 +11,7 @@ body{                                       /* Este es el body*/
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #F0F4F3;
+    background-image:url(../images/fondo.jpg);
 }
 
 .container{                                 /* Este es el div con la clase container*/
@@ -19,7 +19,7 @@ body{                                       /* Este es el body*/
     height:500px;
     display: flex;
     position: relative;
-    background-color: white;
+    background-color:#c9cccb48;
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 0 10px rgb(0, 0,0,0.3);
@@ -56,6 +56,7 @@ body{                                       /* Este es el body*/
     border-radius: 6px;
     padding: 8px;
     cursor: pointer;
+    background-color:#3f11114b;
 }
 .container-form span{                           /*Esta es la seccion del mensaje use su correo y contraseña*/
     font-size: 12px;
@@ -71,7 +72,7 @@ body{                                       /* Este es el body*/
     align-items: center;
     gap:8px;
     padding:0 15px;
-    background-color: #EEEEEE;
+    background-color: #eeeeee44;
 }
 
 .Container-input input{                            /*Diseño de la acomodacion de el texto dentro de las casillas*/
@@ -79,7 +80,8 @@ body{                                       /* Este es el body*/
     outline:none;
     height: 100%;
     width: 100%;
-    background-color: inherit;
+    background-color:transparent;
+
 }
 
 .container-form a{                                  /*Diseñamos el enlace de olvidaste tu contraseña*/
@@ -97,9 +99,10 @@ button{
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
-    background-color: #e9bada;
+    background-color:#3f1111af;
     color:white;
 }
+.container-Welcome but
 
 .sign-up{
     transform: translateX(-100%);
@@ -114,7 +117,7 @@ button{
 }  
 
 .container-Welcome{
-    background-color:#e9bada;
+    background-color:#3F1111;
     position: absolute;
     width: 50%;
     height: 100%;
@@ -129,7 +132,7 @@ button{
 .container.toggle .container-Welcome{
     transform: translateX(0);
     border-radius: 0 50% 50% 0;
-    background-color: #ec8fcf;
+    background-color:#3F1111;
 }
 
 .container-Welcome .Welcome{
@@ -149,6 +152,11 @@ button{
 
 .container-Welcome h3{
     font-size: 40px;
+    color: #E4E1DE;
+}
+
+.container-Welcome p{
+    color: #E4E1DE;
 }
 
 .container-Welcome p{
@@ -159,6 +167,11 @@ button{
 .container-Welcome button{
     border: 2px solid white;
     background-color: transparent;
+}
+.container-Welcome button:hover{
+    background-color: #E4E1DE;
+    color: #3F1111;
+    font-weight: bold;
 }
 
 .container.toggle .Welcome-sign-in{
@@ -171,22 +184,25 @@ button{
 
 .social-networks ion-icon:hover{
     font-size: 30px;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+    border: 2px solid #790808;
 }
 .Container-input:hover{
     font-size: 30px;
     transition: all 0.3s ease;
-    border: 2px solid #ec8fcf;
+    border: 1px solid #790808;
 }
 
 button:hover{
     font-size: 20px;
+    font-weight: bold;
     width: 190px;
     height:60px;
     transition: all 0.3s ease;
 }
 a:hover{
-    color: #ec8fcf;
+    color: #790808;
     font-size: 15px;
     transition: all 0.2s ease;
+    font-weight: bold;
 }

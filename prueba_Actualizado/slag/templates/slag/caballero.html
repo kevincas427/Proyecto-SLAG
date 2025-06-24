@@ -1,8 +1,43 @@
 {% extends "slag/index.html" %} 
+{% load static %}
+{% load humanize %}
+{% block title %} CABALLERO | SLAG {% endblock %}
 
-{% block title %} DAMA | SLAG {% endblock %}
+
+
 
 {% block content %}
+<center><h5>MENS'S DENIM</h5></center>
+
+<div class="container py-5">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4">
+    {% for Producto  in  Productos %}
+    {% if Producto.categoria_id_Cate == 1 %}
+
+    <!-- Tarjetas de productos -->
+          <div class="col">
+            <div class="card product-card">
+                <a href="{% url 'Detalle' Producto.id_Prod %}"><img src="{{Producto.Imagen.url}}" alt="{{Producto.Name_Prod}}"></a>
+              <div class="card-body">
+                <div class="product-title">{{Producto.Name_Prod}}</div>
+                <div class="product-price">${{Producto.prev_prod|intcomma}}</div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+</div>
+    <section>
+        <section>
+            <div class=" second-section">
+              <div class=" position-relative">
+              <img src="{% static 'slag/images/gucci.jpg' %}" class="img-fluid" alt="Men's" />
+              </div>
+            </div>
+          </section>
+    </section>
+  </div>
+
 
     
 {% endblock %}

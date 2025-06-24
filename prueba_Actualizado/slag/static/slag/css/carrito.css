@@ -1,0 +1,95 @@
+
+.vacio{
+    justify-content: center;
+    text-align: center;
+}
+.vacio button{
+    color: white;
+    background-color: black;
+    border: none;
+    font-size: 25px;
+    border-radius: 4px;
+}
+.vacio button:hover{
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0);
+    color: #790808;
+}
+
+.vacio p{
+    font-size: 20px;
+}
+hr{
+    padding-bottom: 40px;
+}
+
+.img-carro{
+    width: 100%;
+}
+.contenedor-items{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+}
+.item-carro{
+    flex: 1 1 250px;
+    max-width: 400px;
+    min-width: 200px;
+    display: flex;
+    padding: 15px;
+    box-sizing: border-box;
+    border:0.5px solid rgba(0, 0, 0, 0.295);
+    background-color: #fff;
+
+}
+.info-carro{
+    padding: 10px;
+}
+.btn-pago{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:10px
+    
+}
+.btn-pago button{
+    border:none;
+}
+
+.msg-vacio{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #790808;
+    font-family: initial;
+    font-weight: bold;
+    font-size: 30px;
+    padding: 20px;
+}
+
+.msg-vacio button{
+    border: none;
+    font-size: 20px;
+}
+
+.msg-vacio button:hover{
+    transition: all 0.3s ease;
+    background-color: #790808;
+    border:none
+}
+
+.btn-pago button{
+    font-size: 20px;
+}
+
+.btn-pago button:hover{
+    transition: all 0.3s ease;
+    background-color: #790808;
+
+
+}
+

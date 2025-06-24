@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'slag/css/olvido.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+  </head>
+  <body>
+
+    {% comment %} formulario para renovar contraseña mediante un codigo especial {% endcomment %}
+    
+    <form method="POST" id="formulario">
+      {% csrf_token %}
+      <div class="container">
+        <div class="login_container">
+          <div class="login_title">
+            <span>Codigo</span>
+          </div>
+
+          <div class="input_wrapper">
+            <input type="number" id="user" class="input_field" name="codigo" />
+            <label for="user" class="label">Codigo</label>
+          </div>
+
+          <div class="input_wrapper">
+            <input type="text" id="password" class="input_field" name="new_password" />
+            <label for="user" class="label">Contraseña</label>
+          </div>
+          <div class="input_wrapper">
+            <h2>
+                Ingrea el codigo que te hemos enviado y actualiza tu contraseña
+            </h2>
+          </div>
+
+          <div class="input_boton">
+            <button type="submit" name="accion1" class="input-submit" value="recuperar"/>Cambiar contraseña</button>
+          </div>
+          {% for message in messages %}
+              <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+      </div>
+  </form>
+  <script src="{% static 'slag/js/codigo.js' %}"></script>
+</body>
+</html>

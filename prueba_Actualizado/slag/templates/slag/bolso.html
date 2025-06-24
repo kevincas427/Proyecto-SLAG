@@ -1,0 +1,32 @@
+{% extends "slag/index.html" %} 
+{% load static %}
+{% load humanize %}
+{% block title %} BOLSO | SLAG {% endblock %}
+
+
+{% block content %}
+<center><h2>Mira lo que tienes al alcance de tus manos con tan solo un !click!</h2></center>
+
+<table>
+    <tr>
+        <th>producto</th>
+        <th>cantidad</th>
+        <th>precio</th>
+        <th>subtotal</th>
+    </tr>
+    
+    {% for item in items %}
+    <tr>
+        <td>{{ item.producto.Name_Prod }}</td>
+        <td>{{ item.cantidad }}</td>
+        <td>{{ item.produto.prev_prod }}</td>
+        <td>{{ item.subtotal }}</td>
+    </tr>
+    {% endfor %}
+        
+
+</table>
+
+<p><strong>Total: ${{ total }}</strong></p>
+
+{% endblock %}
