@@ -164,6 +164,28 @@ main {
   margin-top: 10px;
   color: #790808;
 }
+.product-Descuento{
+  margin-top: 5px;
+  font-size: 10px;
+  border-radius: 3px;
+  padding: 0px 2px;
+  background-color: red;
+  color: white;
+  height: 15px;
+  margin-left: 2px;
+}
+.product-Final{
+  margin-left: 95px;
+}
+.Precio_Descuento{
+  display: flex;
+  
+}
+
+.product-price {
+  text-decoration: line-through;
+  color: #000;
+}
 .product-price {
   color: #000;
   font-weight: bold;

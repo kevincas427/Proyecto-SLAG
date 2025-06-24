@@ -176,55 +176,66 @@ def detalle(request,pk):
         'Precio_Descuento': Precio_Final
     })
     
-def agregar_producto(request,):
+def agregar_producto(request, producto_id):
+    Productos = get_object_or_404(Producto, id_Prod=producto_id)
+    precio_Original = Productos.prev_prod
+    Precio_Descuento = Productos.Cost_Prom 
+    Precio_Final = precio_Original - (precio_Original * Precio_Descuento / 100)
 
     if request.method == 'POST' and "usuario_id" in request.session:
-        dato  = request.POST
-        producto_id = dato.get('producto_id')
-        cantidad = int(dato.get('cantidad',1))
-        talla = dato.get('Talla')
+        dato = request.POST
+        cantidad = int(dato.get('cantidad', 1))
+        talla_id = dato.get('Talla')
         
-        Productos = get_object_or_404(Producto, id_Prod = producto_id)
-        talla_obj = get_object_or_404(Tallas, id = talla) 
-        
+        talla_obj = get_object_or_404(Tallas, id=talla_id)
+
         if cantidad > talla_obj.cantidad:
-            return render (request, 'Detalle_Producto.html',{
-                'error5' : f'La cantidad que quieres llevar es insuficiente en el stock',
-                'Productos' : Productos,
-                'Talla' : Tallas.objects.filter(producto = Productos),
+            return render(request, 'Detalle_Producto.html', {
+                'error5': 'La cantidad que quieres llevar supera el stock disponible',
+                'Productos': Productos,
+                'Talla': Tallas.objects.filter(producto=Productos),
+                'Precio_Descuento': Precio_Final
             })
+
         usuario_id = request.session.get("usuario_id")
-        usuario = get_object_or_404(Usuario, id = usuario_id)
-        
-        carro, creado = Carrito.objects.get_or_create(usuario_id = usuario)
-        
-        item, item_creado = ItemCarrito.objects.get_or_create(
-            carrito = carro,
-            producto = Productos,
-            talla = talla_obj
-            )
-        
-        if not item_creado:
+        usuario = get_object_or_404(Usuario, id=usuario_id)
+
+        carro, creado = Carrito.objects.get_or_create(usuario_id=usuario)
+
+        # Buscar si ya existe el ítem
+        item = ItemCarrito.objects.filter(
+            carrito=carro,
+            producto=Productos,
+            talla=talla_obj
+        ).first()
+
+        if item:
             item.cantidad += cantidad
-            item.save()
         else:
-            item.cantidad = cantidad
-            item.save()
-        
-        
-        talla_obj.save()
+            item = ItemCarrito.objects.create(
+                carrito=carro,
+                producto=Productos,
+                talla=talla_obj,
+                cantidad=cantidad
+            )
+
         item.save()
-        return render(request, 'Detalle_Producto.html',{
-            'mensage_agregar':'',
-            'Productos' : Productos,
-            'Talla' : Tallas.objects.filter(producto = Productos)
+
+        return render(request, 'Detalle_Producto.html', {
+            'mensage_agregar': 'Producto agregado exitosamente',
+            'Productos': Productos,
+            'Talla': Tallas.objects.filter(producto=Productos),
+            'Precio_Descuento': Precio_Final
         })
+
     else:
         return render(request, 'Detalle_Producto.html', {
-        'mensage_error':'Debes iniciar sesión para agregar productos al carrito',
-        'Productos': get_object_or_404(Producto, id_Prod=request.POST.get('producto_id')),
-        'Talla': Tallas.objects.filter(producto_id=request.POST.get('producto_id'))
+            'mensage_error': 'Debes iniciar sesión para agregar productos al carrito',
+            'Productos': Productos,
+            'Talla': Tallas.objects.filter(producto=Productos),
+            'Precio_Descuento': Precio_Final
         })
+
     
 def vista_carrito(request):
     if "usuario_id" in request.session:
@@ -243,14 +254,17 @@ def vista_carrito(request):
         return redirect('sesion')
         
         
-def elimiar_producto(request,item_id):
+def elimiar_producto(request, item_id):
     if "usuario_id" in request.session:
         usuario_id = request.session.get("usuario_id")
-        item = get_object_or_404(ItemCarrito, id=item_id)
-        
-        if item.carrito.usuario_id.id == usuario_id:
+        usuario = get_object_or_404(Usuario, id=usuario_id)
+
+        carrito = Carrito.objects.filter(usuario_id=usuario).first()
+
+        item = ItemCarrito.objects.filter(id=item_id, carrito=carrito).first()
+        if item:
             item.delete()
-            
+
     return redirect("carrito")
     
 

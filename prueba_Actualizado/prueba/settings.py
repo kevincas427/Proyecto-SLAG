@@ -32,6 +32,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django_light',
+    'admin_tools_stats',
+    'django_nvd3',
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -140,16 +144,3 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'kevinyulian721@gmail.com'
 EMAIL_HOST_PASSWORD = 'gsjz lvof lzlr tsyo' 
-
-
->>>>>>> Stashed changes
-
-
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
