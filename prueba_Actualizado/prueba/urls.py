@@ -36,10 +36,13 @@ urlpatterns = [
     path('Detalle/<slug:pk>',views.detalle,name="Detalle"),    
     path('carrito/',views.vista_carrito, name="carrito"),
     path('agregar/',views.agregar_producto, name="agregar_al_carro"),
-    path('pago/',views.pago, name='pago'),
     path('eliminar/<int:item_id>',views.elimiar_producto, name='eliminar_producto'),
-
+    path('pagar/', views.iniciar_pago, name='iniciar_pago'),
+    path('pago/exito/', views.pagoexitoso, name='pago_exitoso'),
+    path('pago/fallo/', views.pagofallido, name='error_pago'),
+    path('pago/pendiente/', views.pagopendiente, name='pago_pendiente'),
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
