@@ -1,0 +1,12 @@
+{% extends "slag/index.html" %} {% load static %} {% load humanize %} 
+{% block title %} CARRITO | SLAG {% endblock %} {% block content %}
+<h2>Error al iniciar pago</h2>
+<p>{{ error }}</p>
+
+{% if detalles %}
+  <pre>{{ detalles }}</pre>
+{% endif %}
+
+<a href="{% url 'carrito' %}">Volver al carrito</a>
+
+{% endblock %}
