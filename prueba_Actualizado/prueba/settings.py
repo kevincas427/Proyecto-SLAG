@@ -142,21 +142,4 @@ EMAIL_HOST_USER = 'kevinyulian721@gmail.com'
 EMAIL_HOST_PASSWORD = 'gsjz lvof lzlr tsyo' 
 
 
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
 MERCADO_PAGO_ACCESS_TOKEN = 'APP_USR-4878978036374600-062010-ae1a29714a24a96921b39f0949a52f7d-2509945394'
-
-
-
->>>>>>> pagos
-
-
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
