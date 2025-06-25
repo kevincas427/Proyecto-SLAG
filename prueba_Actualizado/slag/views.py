@@ -136,7 +136,7 @@ def olvido(request):
             send_mail(
                 'codigo de recuperacion | SLAG',
                 f'tu codigo es: {codigo1} Recuerdalo',
-                'kevinyulian721@gmail.com',
+                'slag4270921@gmail.com',
                 [email],
                 fail_silently=False,
             )          
@@ -244,11 +244,18 @@ def vista_carrito(request):
         
         cart= Carrito.objects.filter(usuario_id= usuario).first()
         items = ItemCarrito.objects.filter(carrito = cart).select_related('producto','talla')
+        for item in items:
+            Precio_Base = item.producto.prev_prod
+            Precio_Descuento = item.producto.Cost_Prom
+            Precio_Final = Precio_Base - (Precio_Base * Precio_Descuento / 100)
+        
+        total_general_Desc = sum(Precio_Final * item.cantidad for item in items)
+        
         total_general = sum(item.producto.prev_prod * item.cantidad for item in items)
         return render(request, 'slag/carrito.html',{
             'items': items,
-            'total_general': total_general
-            
+            'total_general': total_general,
+            'total_general_Desc': total_general_Desc,
         })
     else:
         return redirect('sesion')
