@@ -138,7 +138,7 @@ def olvido(request):
             send_mail(
                 'codigo de recuperacion | SLAG',
                 f'tu codigo es: {codigo1} Recuerdalo',
-                'kevinyulian721@gmail.com',
+                'slag4270921@gmail.com',
                 [email],
                 fail_silently=False,
             )          
@@ -148,7 +148,13 @@ def olvido(request):
                 'error3': 'El correo no se encuentra Registrado'
             })  
     return render(request, 'slag/olvido.html')
-
+def Factura(request):
+    email = request.POST.get('correo')
+    try:
+        item = ItemCarrito.objects.all()
+        usuario = Usuario.objects.get(email=email)
+    except:
+        pass
 def codigo(request):
     if request.method == 'POST':
         code_insert = request.POST.get('codigo')
@@ -178,9 +184,18 @@ def detalle(request,pk):
         'Precio_Descuento': Precio_Final
     })
     
-def agregar_producto(request,):
+def agregar_producto(request, producto_id):
+    Productos = get_object_or_404(Producto, id_Prod=producto_id)
+    precio_Original = Productos.prev_prod
+    Precio_Descuento = Productos.Cost_Prom 
+    Precio_Final = precio_Original - (precio_Original * Precio_Descuento / 100)
 
     if request.method == 'POST' and "usuario_id" in request.session:
+<<<<<<< HEAD
+        dato = request.POST
+        cantidad = int(dato.get('cantidad', 1))
+        talla_id = dato.get('Talla')
+=======
         dato  = request.POST
         producto_id = dato.get('producto_id')
         cantidad = int(dato.get('cantidad',1))
@@ -190,14 +205,33 @@ def agregar_producto(request,):
         
         Productos = get_object_or_404(Producto, id_Prod = producto_id)
         talla_obj = get_object_or_404(Tallas, id = talla) 
+>>>>>>> 9e3dd75230e18ff246733f8b30f2ef38d57e1e7c
         
+        talla_obj = get_object_or_404(Tallas, id=talla_id)
+
         if cantidad > talla_obj.cantidad:
-            return render (request, 'Detalle_Producto.html',{
-                'error5' : f'La cantidad que quieres llevar es insuficiente en el stock',
-                'Productos' : Productos,
-                'Talla' : Tallas.objects.filter(producto = Productos),
+            return render(request, 'Detalle_Producto.html', {
+                'error5': 'La cantidad que quieres llevar supera el stock disponible',
+                'Productos': Productos,
+                'Talla': Tallas.objects.filter(producto=Productos),
+                'Precio_Descuento': Precio_Final
             })
+
         usuario_id = request.session.get("usuario_id")
+<<<<<<< HEAD
+        usuario = get_object_or_404(Usuario, id=usuario_id)
+
+        carro, creado = Carrito.objects.get_or_create(usuario_id=usuario)
+
+        # Buscar si ya existe el ítem
+        item = ItemCarrito.objects.filter(
+            carrito=carro,
+            producto=Productos,
+            talla=talla_obj
+        ).first()
+
+        if item:
+=======
         usuario = get_object_or_404(Usuario, id = usuario_id)
         
         carro, creado = Carrito.objects.get_or_create(usuario_id = usuario)
@@ -209,26 +243,40 @@ def agregar_producto(request,):
             talla = talla_obj
             )
         if not item_creado:
+>>>>>>> 9e3dd75230e18ff246733f8b30f2ef38d57e1e7c
             item.cantidad += cantidad
-            item.save()
         else:
-            item.cantidad = cantidad
-            item.save()
-        
-        
-        talla_obj.save()
+            item = ItemCarrito.objects.create(
+                carrito=carro,
+                producto=Productos,
+                talla=talla_obj,
+                cantidad=cantidad
+            )
+
         item.save()
+<<<<<<< HEAD
+
+        return render(request, 'Detalle_Producto.html', {
+            'mensage_agregar': 'Producto agregado exitosamente',
+            'Productos': Productos,
+            'Talla': Tallas.objects.filter(producto=Productos),
+            'Precio_Descuento': Precio_Final
+=======
         return render(request, 'Detalle_Producto.html',{
             'mensage_agregar':'',
             'Productos' : Productos,
             'Talla' : Tallas.objects.filter(producto = Productos),
+>>>>>>> 9e3dd75230e18ff246733f8b30f2ef38d57e1e7c
         })
+
     else:
         return render(request, 'Detalle_Producto.html', {
-        'mensage_error':'Debes iniciar sesión para agregar productos al carrito',
-        'Productos': get_object_or_404(Producto, id_Prod=request.POST.get('producto_id')),
-        'Talla': Tallas.objects.filter(producto_id=request.POST.get('producto_id'))
+            'mensage_error': 'Debes iniciar sesión para agregar productos al carrito',
+            'Productos': Productos,
+            'Talla': Tallas.objects.filter(producto=Productos),
+            'Precio_Descuento': Precio_Final
         })
+
     
 def vista_carrito(request):
     if "usuario_id" in request.session:
@@ -237,6 +285,16 @@ def vista_carrito(request):
         
         cart= Carrito.objects.filter(usuario_id= usuario).first()
         items = ItemCarrito.objects.filter(carrito = cart).select_related('producto','talla')
+<<<<<<< HEAD
+        for item in items:
+            Precio_Base = item.producto.prev_prod
+            Precio_Descuento = item.producto.Cost_Prom
+            Precio_Final = Precio_Base - (Precio_Base * Precio_Descuento / 100)
+        
+        total_general_Desc = sum(Precio_Final * item.cantidad for item in items)
+        
+        total_general = sum(item.producto.prev_prod * item.cantidad for item in items)
+=======
         
                 # ...código existente...
         total_general = sum(
@@ -244,24 +302,28 @@ def vista_carrito(request):
             Decimal('0.00')
         ).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
         # ...código existente...
+>>>>>>> 9e3dd75230e18ff246733f8b30f2ef38d57e1e7c
         return render(request, 'slag/carrito.html',{
             'items': items,
-            'total_general': total_general
-            
+            'total_general': total_general,
+            'total_general_Desc': total_general_Desc,
         })
         
     else:
         return redirect('sesion')
         
         
-def elimiar_producto(request,item_id):
+def elimiar_producto(request, item_id):
     if "usuario_id" in request.session:
         usuario_id = request.session.get("usuario_id")
-        item = get_object_or_404(ItemCarrito, id=item_id)
-        
-        if item.carrito.usuario_id.id == usuario_id:
+        usuario = get_object_or_404(Usuario, id=usuario_id)
+
+        carrito = Carrito.objects.filter(usuario_id=usuario).first()
+
+        item = ItemCarrito.objects.filter(id=item_id, carrito=carrito).first()
+        if item:
             item.delete()
-            
+
     return redirect("carrito")
     
     

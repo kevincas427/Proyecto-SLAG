@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
+    path('admin_tools_stats/', include('admin_tools_stats.urls')),
     path('admin/', admin.site.urls),
     path('', views.index, name="index"),
     path('dama', views.dama, name="dama"),
@@ -35,7 +36,12 @@ urlpatterns = [
     path('codigo/',views.codigo,name='codigo'),
     path('Detalle/<slug:pk>',views.detalle,name="Detalle"),    
     path('carrito/',views.vista_carrito, name="carrito"),
+<<<<<<< HEAD
+    path('agregar/<slug:producto_id>',views.agregar_producto, name="agregar_al_carro"),
+    path('pago/',views.pago, name='pago'),
+=======
     path('agregar/',views.agregar_producto, name="agregar_al_carro"),
+>>>>>>> 9e3dd75230e18ff246733f8b30f2ef38d57e1e7c
     path('eliminar/<int:item_id>',views.elimiar_producto, name='eliminar_producto'),
     path('pagar/', views.iniciar_pago, name='iniciar_pago'),
     path('pago/exito/', views.pagoexitoso, name='pago_exitoso'),
