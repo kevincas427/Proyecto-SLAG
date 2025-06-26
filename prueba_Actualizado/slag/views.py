@@ -5,10 +5,8 @@ from django.contrib.auth import login,logout,authenticate
 from django.core.mail import send_mail
 from django.contrib import messages
 from .utils import *
-import mercadopago
 from django.conf import settings
-import pprint
-
+from decimal import Decimal, ROUND_HALF_UP
 
 # Create your views here.
 
@@ -204,12 +202,12 @@ def agregar_producto(request,):
         
         carro, creado = Carrito.objects.get_or_create(usuario_id = usuario)
         
+        
         item, item_creado = ItemCarrito.objects.get_or_create(
             carrito = carro,
             producto = Productos,
             talla = talla_obj
             )
-        
         if not item_creado:
             item.cantidad += cantidad
             item.save()
@@ -223,7 +221,7 @@ def agregar_producto(request,):
         return render(request, 'Detalle_Producto.html',{
             'mensage_agregar':'',
             'Productos' : Productos,
-            'Talla' : Tallas.objects.filter(producto = Productos)
+            'Talla' : Tallas.objects.filter(producto = Productos),
         })
     else:
         return render(request, 'Detalle_Producto.html', {
@@ -239,12 +237,19 @@ def vista_carrito(request):
         
         cart= Carrito.objects.filter(usuario_id= usuario).first()
         items = ItemCarrito.objects.filter(carrito = cart).select_related('producto','talla')
-        total_general = sum(item.producto.prev_prod * item.cantidad for item in items)
+        
+                # ...código existente...
+        total_general = sum(
+            ((Decimal(str(item.producto.prev_prod)) * Decimal(item.cantidad)) for item in items),
+            Decimal('0.00')
+        ).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+        # ...código existente...
         return render(request, 'slag/carrito.html',{
             'items': items,
             'total_general': total_general
             
         })
+        
     else:
         return redirect('sesion')
         
