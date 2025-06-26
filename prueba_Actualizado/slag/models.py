@@ -38,7 +38,7 @@ class Categoria(models.Model):
     Nom_Cate = models.TextField(max_length=45)
     class Meta:
         db_table = 'categoria'
-        managed = False  # usar tabla Usuario ya creada
+        managed = False  # usar tabla Categoria ya creada
 
 class Tallas(models.Model):
     id = models.AutoField(primary_key=True)
@@ -51,7 +51,7 @@ class Tallas(models.Model):
 
     class Meta:
         db_table = 'tallas'
-        # managed = False  # Si la tabla ya existe y no quieres que Django la modifique
+        # managed = False  # Si la tabla ya existe 
      
 
 class Carrito(models.Model):

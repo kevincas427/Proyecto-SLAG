@@ -146,7 +146,13 @@ def olvido(request):
                 'error3': 'El correo no se encuentra Registrado'
             })  
     return render(request, 'slag/olvido.html')
-
+def Factura(request):
+    email = request.POST.get('correo')
+    try:
+        item = ItemCarrito.objects.all()
+        usuario = Usuario.objects.get(email=email)
+    except:
+        pass
 def codigo(request):
     if request.method == 'POST':
         code_insert = request.POST.get('codigo')
