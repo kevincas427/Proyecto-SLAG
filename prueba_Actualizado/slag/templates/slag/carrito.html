@@ -57,11 +57,14 @@
     {% endfor %}
     </div>
     <div class="btn-pago">
-        <a href="{% url 'pago' %}">
+        <a href="{% url 'iniciar_pago' %}">
             <button type="button" class="btn btn-dark">Realizar compra</button>
         </a>
     </div>
-    {% else %}
+    <div class="precio-total">
+        <h1>${{total_general}}</h1>
+    </div>
+{% else %}
     <div class="msg-vacio">
         <h2 class="msg-vacio">Tu carrito esta vacio </h2>
         <a href ="{% url 'index' %}">

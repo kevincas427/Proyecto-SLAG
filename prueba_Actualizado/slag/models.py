@@ -1,6 +1,7 @@
 
 
 from django.db import models
+
 class Producto(models.Model):
     id_Prod = models.AutoField(primary_key=True)
     Name_Prod = models.TextField(max_length=200, verbose_name='Nombre producto')

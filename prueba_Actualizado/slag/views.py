@@ -5,6 +5,8 @@ from django.contrib.auth import login,logout,authenticate
 from django.core.mail import send_mail
 from django.contrib import messages
 from .utils import *
+from django.conf import settings
+from decimal import Decimal, ROUND_HALF_UP
 
 # Create your views here.
 
@@ -189,9 +191,21 @@ def agregar_producto(request, producto_id):
     Precio_Final = precio_Original - (precio_Original * Precio_Descuento / 100)
 
     if request.method == 'POST' and "usuario_id" in request.session:
+<<<<<<< HEAD
         dato = request.POST
         cantidad = int(dato.get('cantidad', 1))
         talla_id = dato.get('Talla')
+=======
+        dato  = request.POST
+        producto_id = dato.get('producto_id')
+        cantidad = int(dato.get('cantidad',1))
+        if cantidad <= 0:
+            cantidad = 1
+        talla = dato.get('Talla')
+        
+        Productos = get_object_or_404(Producto, id_Prod = producto_id)
+        talla_obj = get_object_or_404(Tallas, id = talla) 
+>>>>>>> 9e3dd75230e18ff246733f8b30f2ef38d57e1e7c
         
         talla_obj = get_object_or_404(Tallas, id=talla_id)
 
@@ -204,6 +218,7 @@ def agregar_producto(request, producto_id):
             })
 
         usuario_id = request.session.get("usuario_id")
+<<<<<<< HEAD
         usuario = get_object_or_404(Usuario, id=usuario_id)
 
         carro, creado = Carrito.objects.get_or_create(usuario_id=usuario)
@@ -216,6 +231,19 @@ def agregar_producto(request, producto_id):
         ).first()
 
         if item:
+=======
+        usuario = get_object_or_404(Usuario, id = usuario_id)
+        
+        carro, creado = Carrito.objects.get_or_create(usuario_id = usuario)
+        
+        
+        item, item_creado = ItemCarrito.objects.get_or_create(
+            carrito = carro,
+            producto = Productos,
+            talla = talla_obj
+            )
+        if not item_creado:
+>>>>>>> 9e3dd75230e18ff246733f8b30f2ef38d57e1e7c
             item.cantidad += cantidad
         else:
             item = ItemCarrito.objects.create(
@@ -226,12 +254,19 @@ def agregar_producto(request, producto_id):
             )
 
         item.save()
+<<<<<<< HEAD
 
         return render(request, 'Detalle_Producto.html', {
             'mensage_agregar': 'Producto agregado exitosamente',
             'Productos': Productos,
             'Talla': Tallas.objects.filter(producto=Productos),
             'Precio_Descuento': Precio_Final
+=======
+        return render(request, 'Detalle_Producto.html',{
+            'mensage_agregar':'',
+            'Productos' : Productos,
+            'Talla' : Tallas.objects.filter(producto = Productos),
+>>>>>>> 9e3dd75230e18ff246733f8b30f2ef38d57e1e7c
         })
 
     else:
@@ -250,6 +285,7 @@ def vista_carrito(request):
         
         cart= Carrito.objects.filter(usuario_id= usuario).first()
         items = ItemCarrito.objects.filter(carrito = cart).select_related('producto','talla')
+<<<<<<< HEAD
         for item in items:
             Precio_Base = item.producto.prev_prod
             Precio_Descuento = item.producto.Cost_Prom
@@ -258,11 +294,21 @@ def vista_carrito(request):
         total_general_Desc = sum(Precio_Final * item.cantidad for item in items)
         
         total_general = sum(item.producto.prev_prod * item.cantidad for item in items)
+=======
+        
+                # ...código existente...
+        total_general = sum(
+            ((Decimal(str(item.producto.prev_prod)) * Decimal(item.cantidad)) for item in items),
+            Decimal('0.00')
+        ).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+        # ...código existente...
+>>>>>>> 9e3dd75230e18ff246733f8b30f2ef38d57e1e7c
         return render(request, 'slag/carrito.html',{
             'items': items,
             'total_general': total_general,
             'total_general_Desc': total_general_Desc,
         })
+        
     else:
         return redirect('sesion')
         
@@ -280,6 +326,75 @@ def elimiar_producto(request, item_id):
 
     return redirect("carrito")
     
+    
+def iniciar_pago(request):
+    import pprint
+    try:
+        if "usuario_id" not in request.session:
+            return redirect('sesion')
 
-def pago(request):
-    return render(request, 'slag/pago.html')
+        usuario_id = request.session.get("usuario_id")
+        usuario = get_object_or_404(Usuario, id=usuario_id)
+
+        carrito = Carrito.objects.filter(usuario_id=usuario).first()
+        if not carrito:
+            return render(request, 'slag/carrito.html', {
+                'mensaje': 'Tu carrito está vacío'
+            })
+
+        items = ItemCarrito.objects.filter(carrito=carrito).select_related('producto')
+        if not items:
+            return render(request, 'slag/carrito.html', {
+                'mensaje': 'No hay productos en el carrito'
+            })
+
+        sdk = mercadopago.SDK(settings.MERCADO_PAGO_ACCESS_TOKEN)
+
+        items_data = []
+        for item in items:
+            items_data.append({
+                "title": item.producto.Name_Prod,
+                "quantity": int(item.cantidad),
+                "unit_price": float(item.producto.prev_prod),
+                "currency_id": "COP"
+            })
+
+        preference_data = {
+            "items": items_data,
+            "back_urls": {
+                "success": request.build_absolute_uri('/pago/exito/'),
+                "failure": request.build_absolute_uri('/pago/fallido/'),
+                "pending": request.build_absolute_uri('/pago/pendiente/')
+            },
+            "auto_return": "approved"
+        }
+
+        preference_response = sdk.preference().create(preference_data)
+        pprint.pprint(preference_response)
+        preference = preference_response.get("response", {})
+
+        if "init_point" in preference:
+            return redirect(preference["init_point"])
+        else:
+            return render(request, 'slag/errorpago.html', {
+                "error": preference.get("message", "No se pudo generar el pago"),
+                "detalles": preference
+            })
+
+    except Exception as e:
+        return render(request, 'slag/errorpago.html', {
+            'error': str(e)
+        })
+
+
+
+def pagoexitoso(request):
+    carrito = CarritoSession(request)
+    carrito.limpiar()
+    return render(request, 'slag/exito.html')
+
+def pagofallido(request):
+    return render (request, 'slag/errorpago.html')
+
+def pagopendiente(request):
+    return render(request, 'slag/pendiente.html')
