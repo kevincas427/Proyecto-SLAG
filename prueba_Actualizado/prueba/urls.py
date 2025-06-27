@@ -37,10 +37,7 @@ urlpatterns = [
     path('carrito/',views.vista_carrito, name="carrito"),
     path('agregar/',views.agregar_producto, name="agregar_al_carro"),
     path('eliminar/<int:item_id>',views.elimiar_producto, name='eliminar_producto'),
-    path('pagar/', views.iniciar_pago, name='iniciar_pago'),
-    path('pago/exito/', views.pagoexitoso, name='pago_exitoso'),
-    path('pago/fallo/', views.pagofallido, name='error_pago'),
-    path('pago/pendiente/', views.pagopendiente, name='pago_pendiente'),
+
 ]
 
 

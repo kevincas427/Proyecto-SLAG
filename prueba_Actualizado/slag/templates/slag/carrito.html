@@ -39,15 +39,15 @@
             id="delete"
         >
             {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Quitar del carrito</button>
+            <button type="submit" class="boton">Quitar del carrito</button>
         </form>
         </div>
     </div>
     {% endfor %}
     </div>
     <div class="btn-pago">
-        <a href="{% url 'iniciar_pago' %}">
-            <button type="button" class="btn btn-dark">Realizar compra</button>
+        <a href="#">
+            <button type="button" class="boton-comprar">Realizar compra</button>
         </a>
     </div>
     <div class="precio-total">
