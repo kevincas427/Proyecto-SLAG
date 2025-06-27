@@ -177,28 +177,26 @@ def detalle(request, pk):
         'Precio_Descuento': Precio_Final
     })
 
-def agregar_producto(request, producto_id):
-    Productos = get_object_or_404(Producto, id_Prod=producto_id)
-    precio_Original = Productos.prev_prod
-    Precio_Descuento = Productos.Cost_Prom or 0
-    Precio_Final = precio_Original - (precio_Original * Precio_Descuento / 100)
+def agregar_producto(request):
 
     if request.method == 'POST' and "usuario_id" in request.session:
         dato = request.POST
-        producto_id = dato.get('producto_id', producto_id)
+        producto_id = dato.get('producto_id')
         cantidad = int(dato.get('cantidad', 1))
+       
+
         if cantidad <= 0:
             cantidad = 1
         talla_id = dato.get('Talla')
 
+        Productos = get_object_or_404(Producto, id_Prod=producto_id)
         talla_obj = get_object_or_404(Tallas, id=talla_id)
 
         if cantidad > talla_obj.cantidad:
             return render(request, 'Detalle_Producto.html', {
                 'error5': 'La cantidad que quieres llevar supera el stock disponible',
                 'Productos': Productos,
-                'Talla': Tallas.objects.filter(producto=Productos),
-                'Precio_Descuento': Precio_Final
+                'Talla': Tallas.objects.filter(producto=Productos)
             })
 
         usuario_id = request.session.get("usuario_id")
@@ -222,16 +220,14 @@ def agregar_producto(request, producto_id):
         return render(request, 'Detalle_Producto.html', {
             'mensage_agregar': 'Producto agregado exitosamente',
             'Productos': Productos,
-            'Talla': Tallas.objects.filter(producto=Productos),
-            'Precio_Descuento': Precio_Final
+            'Talla': Tallas.objects.filter(producto=Productos)
         })
 
     else:
         return render(request, 'Detalle_Producto.html', {
             'mensage_error': 'Debes iniciar sesión para agregar productos al carrito',
             'Productos': Productos,
-            'Talla': Tallas.objects.filter(producto=Productos),
-            'Precio_Descuento': Precio_Final
+            'Talla': Tallas.objects.filter(producto=Productos)
         })
 
 def vista_carrito(request):
