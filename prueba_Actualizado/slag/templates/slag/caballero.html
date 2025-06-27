@@ -8,25 +8,29 @@
 
 {% block content %}
 <center><h5>MENS'S DENIM</h5></center>
-
 <div class="container py-5">
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4">
-    {% for Producto  in  Productos %}
-    {% if Producto.categoria_id_Cate == 1 %}
-
-    <!-- Tarjetas de productos -->
-          <div class="col">
-            <div class="card product-card">
-                <a href="{% url 'Detalle' Producto.id_Prod %}"><img src="{{Producto.Imagen.url}}" alt="{{Producto.Name_Prod}}"></a>
-              <div class="card-body">
-                <div class="product-title">{{Producto.Name_Prod}}</div>
-                <div class="product-price">${{Producto.prev_prod|intcomma}}</div>
-              </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4">
+      {% for Producto in Productos %}
+        <div class="col">
+        <div class="card product-card">
+        <a href="{% url 'Detalle' Producto.id_Prod %}">
+          <img src="{{ Producto.Imagen.url }}" alt="{{ Producto.Name_Prod }}"></a>
+          <div class="card-body">
+          <div class="product-title">{{ Producto.Name_Prod }}</div>
+          {% if Producto.Cost_Prom > 0 %}
+            <div class="Precio_Descuento">
+              <div class="product-Final">${{ Producto.precio_final|intcomma }}</div>
+              <div class="product-Descuento">{{ Producto.Cost_Prom|intcomma }}%</div>
             </div>
-          </div>
-        {% endif %}
-      {% endfor %}
-</div>
+            <div class="product-price">${{ Producto.prev_prod|intcomma }}</div>
+          {% else %}
+             <div class="product-price1">${{ Producto.prev_prod|intcomma }}</div>
+          {%endif%}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
     <section>
         <section>
             <div class=" second-section">

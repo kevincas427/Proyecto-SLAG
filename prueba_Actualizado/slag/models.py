@@ -4,8 +4,8 @@ from django.db import models
 
 class Producto(models.Model):
     id_Prod = models.AutoField(primary_key=True)
-    Name_Prod = models.TextField(max_length=45, verbose_name='Nombre producto')
-    Desc_Prod = models.TextField(max_length=200,verbose_name='Descripcion producto')
+    Name_Prod = models.TextField(max_length=200, verbose_name='Nombre producto')
+    Desc_Prod = models.TextField(max_length=400,verbose_name='Descripcion producto')
     prev_prod= models.DecimalField(max_digits=10,decimal_places=3,verbose_name='Precio Productoo')
     categoria_id_Cate = models.TextField(max_length=45,verbose_name='Categoria producto')
     Cost_Prom = models.DecimalField(max_digits=10,decimal_places=3,verbose_name='Costo Promocion (Si APLICA)',null=False)
@@ -39,7 +39,7 @@ class Categoria(models.Model):
     Nom_Cate = models.TextField(max_length=45)
     class Meta:
         db_table = 'categoria'
-        managed = False  # usar tabla Usuario ya creada
+        managed = False  # usar tabla Categoria ya creada
 
 class Tallas(models.Model):
     id = models.AutoField(primary_key=True)
@@ -52,7 +52,7 @@ class Tallas(models.Model):
 
     class Meta:
         db_table = 'tallas'
-        # managed = False  # Si la tabla ya existe y no quieres que Django la modifique
+        # managed = False  # Si la tabla ya existe 
      
 
 class Carrito(models.Model):
