@@ -33,7 +33,7 @@
                 <span> 
                     {% if Productos.Cost_Prom > 0 %}
                     <div class="Precio-Con-Descuento">
-                        <p class="details__precio_decuento">${{Precio_Descuento|intcomma}} </p>
+                        <p class="details__precio_decuento">${{Precio_original|intcomma}} </p>
                         <p class="Descuento">-{{Productos.Cost_Prom}}%</p>
                     </div>
                     <p class="details__precio_anterior1">${{Productos.prev_prod|intcomma}}</p>

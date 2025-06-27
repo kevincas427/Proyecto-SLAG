@@ -15,62 +15,91 @@
 <link rel="stylesheet" href="{% static "slag/css/layout.css" %}"> 
 {% if items %}
 <div class="contenedor-items">
-    {% for item in items %}
+    {% for i in items %}
     <div class="item-carro">
         <div class="img-carro">
-        <img
-            src="{{ item.producto.Imagen.url }}"
-            alt="{{ item.producto.Name_Prod }}"
-            class="img-carro"
-        />
+            <img
+                src="{{ i.item.producto.Imagen.url }}"
+                alt="{{ i.item.producto.Name_Prod }}"
+                class="img-carro"
+            />
         </div>
         <div class="info-carro">
-        <h3>{{ item.producto.Name_Prod }}</h3>
-        <p class="talla">Talla: {{ item.talla.talla }}</p>
-        {% if item.producto.Cost_Prom > 0  %}
-            <p class="precio">
-                Precio Base: ${{ item.producto.prev_prod|intcomma }}
-            </p>
-            <p class="Descuento"> 
-                Descuento: {{item.producto.Cost_Prom }}%
-            </p> 
-            <p class="cantidad">Cantidad: {{ item.cantidad }}</p>
-            <p class="subtotal">Subtotal: ${{ total_general_Desc|intcomma}}</p>
-        {% else %}
-        <p class="precio">
-            Precio Unitario: ${{ item.producto.prev_prod|intcomma }}
-        </p>
-        <p class="cantidad">Cantidad: {{ item.cantidad }}</p>
-        <p class="subtotal">Subtotal: ${{ item.subtotal|intcomma }}</p>
-        {% endif %}
-        <form
-            method="POST"
-            action="{% url 'eliminar_producto' item.id %}"
-            style="display: inline"
-            id="delete"
-        >
-            {% csrf_token %}
-            <button type="submit" class="boton">Quitar del carrito</button>
-        </form>
+            <h3>{{ i.item.producto.Name_Prod }}</h3>
+            <p class="talla">Talla: {{ i.item.talla.talla }}</p>
+
+            {% if i.descuento_aplicado > 0 %}
+                <p class="precio">
+                    Precio Base: <del>${{ i.precio_sin_descuento|intcomma }}</del>
+                </p>
+                <p class="descuento">
+                    Descuento: {{ i.descuento_aplicado }}%
+                </p>
+                <p class="precio-descuento">
+                    Precio con descuento: ${{ i.precio_unitario|intcomma }}
+                </p>
+            {% else %}
+                <p class="precio">
+                    Precio Unitario: ${{ i.precio_unitario|intcomma }}
+                </p>
+            {% endif %}
+
+            <p class="cantidad">Cantidad: {{ i.item.cantidad }}</p>
+            <p class="subtotal">Subtotal: ${{ i.total_item|intcomma }}</p>
+
+            <form
+                method="POST"
+                action="{% url 'eliminar_producto' i.item.id %}"
+                style="display: inline"
+            >
+                {% csrf_token %}
+                <button type="submit" class="boton">Quitar del carrito</button>
+            </form>
         </div>
     </div>
     {% endfor %}
-    </div>
-    <div class="btn-pago">
-        <a href="#">
-            <button type="button" class="boton-comprar">Realizar compra</button>
-        </a>
-    </div>
-    <div class="precio-total">
-        <h1>${{total_general}}</h1>
-    </div>
-{% else %}
-    <div class="msg-vacio">
-        <h2 class="msg-vacio">Tu carrito esta vacio </h2>
-        <a href ="{% url 'index' %}">
-            <button type="button" class="btn btn-dark">Comprar</button>
-        </a>
-    </div>
+</div>
 
-{% endif %} 
+<div class="btn-pago">
+    <a href="#">
+        <button type="button" class="boton-comprar">Realizar compra</button>
+    </a>
+</div>
+
+<div class="precio-total">
+    <h1>Total: ${{ total_general|intcomma }}</h1>
+</div>
+
+{% else %}
+<div class="msg-vacio">
+    <h2 class="msg-vacio">Tu carrito está vacío</h2>
+    <a href="{% url 'index' %}">
+        <button type="button" class="btn btn-dark">Comprar</button>
+    </a>
+</div>
+{% endif %}
+
 {% endblock %}
+{% comment %} {% for i in items %}
+<tr>
+  <td>{{ i.item.producto.Name_Prod }}</td>
+  <td>{{ i.item.cantidad }}</td>
+  <td>
+    {% if i.descuento_aplicado > 0 %}
+      <del>${{ i.precio_sin_descuento }}</del> ${{ i.precio_unitario }}
+    {% else %}
+      ${{ i.precio_unitario }}
+    {% endif %}
+  </td>
+  <td>${{ i.total_item }}</td>
+</tr>
+{% endfor %}
+
+<tr><th colspan="3">Total:</th><th>${{ total_general }}</th></tr>
+
+ {% endcomment %}
+
+
+
+
+
