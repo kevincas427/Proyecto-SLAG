@@ -85,9 +85,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'proyecto',
         'USER': 'root',
-        'PASSWORD': 'kevincas427',
+        'PASSWORD':'',
         'HOST':'127.0.0.1',
-        'PORT':'3309'
+        'PORT':'3306'
     }
 }
 
@@ -142,13 +142,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-<<<<<<< HEAD
 EMAIL_HOST_USER = 'slag4270921@gmail.com'
 EMAIL_HOST_PASSWORD = 'gnic nmnz ummu kjwy' 
-=======
 EMAIL_HOST_USER = 'kevinyulian721@gmail.com'
 EMAIL_HOST_PASSWORD = 'gsjz lvof lzlr tsyo' 
 
 
 MERCADO_PAGO_ACCESS_TOKEN = 'APP_USR-4878978036374600-062010-ae1a29714a24a96921b39f0949a52f7d-2509945394'
->>>>>>> 9e3dd75230e18ff246733f8b30f2ef38d57e1e7c

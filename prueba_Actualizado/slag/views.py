@@ -245,7 +245,9 @@ def agregar_producto(request, producto_id):
         if not item_creado:
 >>>>>>> 9e3dd75230e18ff246733f8b30f2ef38d57e1e7c
             item.cantidad += cantidad
+            item.save()
         else:
+<<<<<<< Updated upstream
             item = ItemCarrito.objects.create(
                 carrito=carro,
                 producto=Productos,
@@ -255,6 +257,13 @@ def agregar_producto(request, producto_id):
 
         item.save()
 <<<<<<< HEAD
+=======
+            item.save()
+            item.cantidad = cantidad
+
+        talla_obj.save()
+        item.save() 
+>>>>>>> Stashed changes
 
         return render(request, 'Detalle_Producto.html', {
             'mensage_agregar': 'Producto agregado exitosamente',
@@ -325,6 +334,7 @@ def elimiar_producto(request, item_id):
             item.delete()
 
     return redirect("carrito")
+<<<<<<< Updated upstream
     
     
 def iniciar_pago(request):
@@ -398,3 +408,6 @@ def pagofallido(request):
 
 def pagopendiente(request):
     return render(request, 'slag/pendiente.html')
+=======
+
+>>>>>>> Stashed changes

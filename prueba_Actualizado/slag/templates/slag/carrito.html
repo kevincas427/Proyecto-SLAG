@@ -27,22 +27,11 @@
         <div class="info-carro">
         <h3>{{ item.producto.Name_Prod }}</h3>
         <p class="talla">Talla: {{ item.talla.talla }}</p>
-        {% if item.producto.Cost_Prom > 0  %}
-            <p class="precio">
-                Precio Base: ${{ item.producto.prev_prod|intcomma }}
-            </p>
-            <p class="Descuento"> 
-                Descuento: {{item.producto.Cost_Prom }}%
-            </p> 
-            <p class="cantidad">Cantidad: {{ item.cantidad }}</p>
-            <p class="subtotal">Subtotal: ${{ total_general_Desc|intcomma}}</p>
-        {% else %}
         <p class="precio">
             Precio Unitario: ${{ item.producto.prev_prod|intcomma }}
         </p>
         <p class="cantidad">Cantidad: {{ item.cantidad }}</p>
         <p class="subtotal">Subtotal: ${{ item.subtotal|intcomma }}</p>
-        {% endif %}
         <form
             method="POST"
             action="{% url 'eliminar_producto' item.id %}"
@@ -57,7 +46,7 @@
     {% endfor %}
     </div>
     <div class="btn-pago">
-        <a href="{% url 'iniciar_pago' %}">
+        <a href="#">
             <button type="button" class="btn btn-dark">Realizar compra</button>
         </a>
     </div>
