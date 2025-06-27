@@ -56,7 +56,7 @@ hr{
 }
 .btn-pago button{
     border:none;
-    background-color: #00ff1534;
+    background-color: #fff;
 }
 
 .msg-vacio{
@@ -89,24 +89,22 @@ hr{
 
 .btn-pago button:hover{
     transition: all 0.3s ease;
-    background-color: #790808;
+    background-color: black;
+    color:#fff
 
 
 }
 
 .info-carro button {
-    border: 1px solid #e4e1de9f;
-    color: #790808;
+    border: none;
     background-color: transparent;
-    font-size: 20px;
-    font-family:italic;
-    font-weight: bold;
 }
-
 .info-carro button:hover{
     transition: all 0.3s ease;
-    background-color: #e4e1de9f;
-    color: rgb(139, 60, 116);
-    border: 1px solid red;
-    border-radius: 10px;
+    color: red;
+}
+
+section{
+    margin: 20px;
+    border:2px solid red;
 }

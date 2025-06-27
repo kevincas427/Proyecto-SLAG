@@ -225,7 +225,7 @@ def agregar_producto(request,producto_id):
             'mensage_agregar': 'Producto agregado exitosamente',
             'Productos': Productos,
             'Talla': Tallas.objects.filter(producto=Productos),
-            'Precio_Descuento': Precio_Final
+            'Precio_original': Precio_Final
         })
 
     else:
@@ -233,7 +233,7 @@ def agregar_producto(request,producto_id):
             'mensage_error': 'Debes iniciar sesión para agregar productos al carrito',
             'Productos': Productos,
             'Talla': Tallas.objects.filter(producto=Productos),
-            'Precio_Descuento': Precio_Final
+            'Precio_original': Precio_Final
         })
 
 from decimal import Decimal, ROUND_HALF_UP
