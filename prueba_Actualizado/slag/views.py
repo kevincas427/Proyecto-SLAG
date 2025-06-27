@@ -177,7 +177,11 @@ def detalle(request, pk):
         'Precio_Descuento': Precio_Final
     })
 
-def agregar_producto(request):
+def agregar_producto(request,producto_id):
+    Productos = get_object_or_404(Producto, id_Prod=producto_id)
+    precio_Original = Productos.prev_prod
+    Precio_Descuento = Productos.Cost_Prom or 0
+    Precio_Final = precio_Original - (precio_Original * Precio_Descuento / 100)
 
     if request.method == 'POST' and "usuario_id" in request.session:
         dato = request.POST
@@ -189,7 +193,6 @@ def agregar_producto(request):
             cantidad = 1
         talla_id = dato.get('Talla')
 
-        Productos = get_object_or_404(Producto, id_Prod=producto_id)
         talla_obj = get_object_or_404(Tallas, id=talla_id)
 
         if cantidad > talla_obj.cantidad:
@@ -220,14 +223,16 @@ def agregar_producto(request):
         return render(request, 'Detalle_Producto.html', {
             'mensage_agregar': 'Producto agregado exitosamente',
             'Productos': Productos,
-            'Talla': Tallas.objects.filter(producto=Productos)
+            'Talla': Tallas.objects.filter(producto=Productos),
+            'Precio_Descuento': Precio_Final
         })
 
     else:
         return render(request, 'Detalle_Producto.html', {
             'mensage_error': 'Debes iniciar sesión para agregar productos al carrito',
             'Productos': Productos,
-            'Talla': Tallas.objects.filter(producto=Productos)
+            'Talla': Tallas.objects.filter(producto=Productos),
+            'Precio_Descuento': Precio_Final
         })
 
 def vista_carrito(request):

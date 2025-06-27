@@ -6,4 +6,7 @@ admin.site.register(Categoria)
 admin.site.register(Tallas)
 admin.site.register(Carrito)
 admin.site.register(ItemCarrito)
+admin.site.register(Pedido)
+admin.site.register(DetallePedido)
+admin.site.register(Transportadora)
 # Register your models here.

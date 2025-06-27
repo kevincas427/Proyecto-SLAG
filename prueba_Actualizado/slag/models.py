@@ -52,7 +52,7 @@ class Tallas(models.Model):
 
     class Meta:
         db_table = 'tallas'
-        # managed = False  # Si la tabla ya existe 
+        managed = False  # Si la tabla ya existe 
      
 
 class Carrito(models.Model):
@@ -135,6 +135,46 @@ class ItemCarrito(models.Model):
     
     def subtotal(self):
         return self.producto.prev_prod * self.cantidad
+class Pago(models.Model):
+    id_Pago = models.IntegerField(primary_key=True,max_length=11, db_column='Id_Pago')
+    nom_metpa = models.CharField(max_length=45, db_column='nom_metpa')
     
+class Formas_Envio(models.Model):
+    ide_Fore = models.IntegerField(primary_key=True,max_length=11, db_column='Ide_Fore')
+    nom_Fore = models.CharField(max_length=45, db_column='Nom_Fore')
+    
+class Transportadora(models.Model):
+    ide_Trans = models.IntegerField(primary_key=True,max_length=11, db_column='Ide_Trans')
+    nom_Trans = models.CharField(max_length=45, db_column='Nom_Trans')
+    Tel_Trans = models.CharField(max_length=45, db_column='Tel_Trans')
+    Dir_Trans = models.CharField(max_length=45, db_column='Dir_Trans')
+    
+class Pedido(models.Model):
+    id = models.AutoField(primary_key=True, db_column='Id_Pedi')
+    fecha_pedido = models.DateField(db_column='Date_Pedi')
+    fecha_entrega = models.CharField(max_length=45,db_column='Date_ent')
+    pago = models.ForeignKey(Pago, on_delete=models.CASCADE, db_column='pago_Id_Pago')
+    forma_envio = models.ForeignKey(Formas_Envio, on_delete=models.CASCADE, db_column='Formas_Envio_Ide_Fore')
+    transportadora = models.ForeignKey(Transportadora, on_delete=models.CASCADE, db_column='Transportadora_Ide_Trans')
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True, blank=True)
+    
+    class Meta:
+        db_table = 'Pedido'
+        managed = False  # Si la tabla ya existe 
+    
+class DetallePedido(models.Model):
+    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, related_name='detalles')
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField()
+    precio_unitario = models.DecimalField(max_digits=10, decimal_places=2)
 
-# Create your models here.
+    def subtotal(self):
+        return self.precio_unitario * self.cantidad
+
+    class Meta:
+        db_table = 'DetallePedido'
+        managed = False  # Si la tabla ya existe 
+
+    def __str__(self):
+        return f"{self.producto.Name_Prod} x {self.cantidad}"
+# Create your models here(mz)

@@ -46,7 +46,7 @@
 
             <div class="container-add-carro">
 
-                <form action="{% url 'agregar_al_carro'%}" method="POST" class="form-carrito" id="formulario">
+                <form action="{% url 'agregar_al_carro' Productos.id_Prod %}" method="POST" class="form-carrito" id="formulario">
 
                     {% csrf_token %}
                     
