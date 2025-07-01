@@ -233,8 +233,11 @@ def agregar_producto(request,producto_id):
             'mensage_error': 'Debes iniciar sesión para agregar productos al carrito',
             'Productos': Productos,
             'Talla': Tallas.objects.filter(producto=Productos),
+<<<<<<< Updated upstream
             'Precio_original': Precio_Final
+=======
             'Precio_original ': Precio_Final
+>>>>>>> Stashed changes
         })
 
 from decimal import Decimal, ROUND_HALF_UP
