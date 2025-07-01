@@ -234,6 +234,7 @@ def agregar_producto(request,producto_id):
             'Productos': Productos,
             'Talla': Tallas.objects.filter(producto=Productos),
             'Precio_original': Precio_Final
+            'Precio_original ': Precio_Final
         })
 
 from decimal import Decimal, ROUND_HALF_UP
