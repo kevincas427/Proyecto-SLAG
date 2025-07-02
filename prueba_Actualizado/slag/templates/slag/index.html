@@ -42,8 +42,8 @@
           <!-- Derecha: Menú Catálogo -->
           <div class="collapse navbar-collapse justify-content-end" id="navbarNavDarkDropdown">
             <div id="LoginUser">
-              {% if request.session.usuario_id %}
-              <div class="WelcomUser">Bienvenid@ {{ request.session.usuario_nombre }}</div>
+              {% if user.is_authenticated %}
+              <div class="WelcomUser">Bienvenid@ {{ user.nombre }}</div>
               {% else %}
               <div class="LoginUser"><a class="texto-Login" href="{% url "sesion" %}"><img class="icono" src="{% static 'slag/images/person.svg' %} "
                 alt="icono"
@@ -77,7 +77,7 @@
                         <li><a class="dropdown-item" href="">Otros</a></li>
                         <li><hr class="dropdown-divider"></li>
             
-                        {% if request.session.usuario_id %}
+                        {% if user.is_authenticated %}
                           <li><a class="dropdown-item cerrarsecion" href="{% url 'Logout' %}">Cerrar Sesión</a></li>
                         {% endif %}
                         <li><a class="dropdown-item" href="{% url 'nosotros' %}">Sobre nosotros</a></li>
@@ -86,7 +86,7 @@
                     
                   </ul>
                 </div>
-                {% if request.session.usuario_id %}
+                {% if  user.is_authenticated %}
                 <div class="LoginUser"><a class="texto-Login" href="{% url 'carrito' %}"><img class="icono" src="{% static 'slag/images/bag.svg' %} "
                   alt="icono"
                   /></a></div>

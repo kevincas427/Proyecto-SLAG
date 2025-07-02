@@ -1,6 +1,7 @@
-
-
+from django.contrib.auth.base_user import BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin
 from django.db import models
+from django.conf import settings
 
 class Producto(models.Model):
     id_Prod = models.AutoField(primary_key=True)
@@ -18,21 +19,61 @@ class Producto(models.Model):
         return fila
     class Meta:
         db_table = 'producto'
-        managed = False  ## usar tabla producto ya creada 
+        managed = False  # usar tabla producto ya creada 
 
-class Usuario(models.Model):
+class UsuarioManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('El email es obligatorio')
+        email = self.normalize_email(email)
+        usuario = self.model(email=email, **extra_fields)
+        usuario.set_password(password)
+        usuario.save(using=self._db)
+        return usuario
+
+    def create_superuser(self, email, password, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_active', True)  
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('El superusuario debe tener is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('El superusuario debe tener is_superuser=True.')
+
+        return self.create_user(email, password, **extra_fields)
+
+    
+class Usuario(AbstractBaseUser,PermissionsMixin):
     id = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=45,verbose_name='Nombre Usuario')
-    email = models.CharField(max_length=45,verbose_name='Email Usuario')
+    nombre = models.CharField(max_length=45,verbose_name='Nombre Usuario', unique=True)
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=45,verbose_name='Contraseña Usuario')
     telefono = models.CharField(max_length=20,verbose_name="Numero Telefono Usuario")
     direccion = models.TextField(max_length=45,verbose_name="Direccion Residencia Usuario")
     FechaNa = models.DateField(verbose_name="Fecha Nacimiento CLiente")
-    clave = models.CharField(max_length=45,verbose_name='Contraseña Usuario')
     
+    
+    is_active = models.BooleanField(default=True) #  Indica si el usuario está activo. es usado  para permitir o bloquear el inicio de sesió
+    is_staff = models.BooleanField(default=False) # Indica si el usuario tiene acceso al panel de administración (/admin/). Necesita estar en True para eso.
+    is_superuser = models.BooleanField(default=False)
 
+    objects = UsuarioManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['nombre']
+
+    def __str__(self):
+        return self.email
+
+    def has_perm(self, perm, obj=None):
+        return self.is_superuser
+
+    def has_module_perms(self, app_label):
+        return self.is_superuser
     class Meta:
         db_table = 'usuario'
-        managed = False  # usar tabla Usuario ya creada 
+        managed = True
         
 class Categoria(models.Model):
     id_cate = models.AutoField(primary_key=True)
@@ -56,8 +97,12 @@ class Tallas(models.Model):
      
 
 class Carrito(models.Model):
-    usuario_id = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True, blank=True)
+    usuario_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     creado = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        db_table = 'slag_carrito'
+        managed = False  # usar tabla producto ya creada 
+
 
 class CarritoSession: 
        
@@ -156,7 +201,7 @@ class Pedido(models.Model):
     pago = models.ForeignKey(Pago, on_delete=models.CASCADE, db_column='pago_Id_Pago')
     forma_envio = models.ForeignKey(Formas_Envio, on_delete=models.CASCADE, db_column='Formas_Envio_Ide_Fore')
     transportadora = models.ForeignKey(Transportadora, on_delete=models.CASCADE, db_column='Transportadora_Ide_Trans')
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True, blank=True)
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     
     class Meta:
         db_table = 'Pedido'

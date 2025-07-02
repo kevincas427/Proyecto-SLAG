@@ -81,9 +81,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'proyecto',
         'USER': 'root',
-        'PASSWORD': 'kevincas721',
+        'PASSWORD': '',
         'HOST':'127.0.0.1',
-        'PORT':'3309'
+        'PORT':'3306'
     }
 }
 
@@ -93,6 +93,7 @@ LOGIN_URL = '/sesion/'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
+AUTH_USER_MODEL = 'slag.usuario'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -107,6 +108,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+]
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 
@@ -138,8 +142,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'kevinyulian721@gmail.com'
-EMAIL_HOST_PASSWORD = 'gsjz lvof lzlr tsyo' 
+EMAIL_HOST_USER = 'slag4270921@gmail.com'
+EMAIL_HOST_PASSWORD = 'bblb xfqg aoap sbuw' 
 
 
 MERCADO_PAGO_ACCESS_TOKEN = 'APP_USR-4878978036374600-062010-ae1a29714a24a96921b39f0949a52f7d-2509945394'

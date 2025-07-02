@@ -27,8 +27,8 @@ def sesion(request):
                     telefono=request.POST['Celular'],
                     direccion=request.POST['Direccion'],
                     FechaNa=request.POST['Fecha_N'],
-                    clave=request.POST['password2'],
                 )
+                usuario.set_password(request.POST['password2'])
                 usuario.save()
                 request.session['usuario_id'] = usuario.id
                 return redirect("sesion")
@@ -42,16 +42,16 @@ def sesion(request):
             })
 
     elif action == "login":
-        nombre = request.POST['username']
+        correo = request.POST['email']
         clave = request.POST['contraseña']
-        try:
-            usuario = Usuario.objects.get(nombre=nombre, clave=clave)
-            request.session['usuario_id'] = usuario.id
-            request.session['usuario_nombre'] = usuario.nombre
-            return redirect("index")
-        except Usuario.DoesNotExist:
+        usuario = authenticate(username=correo, password=clave)
+        if usuario is not None:
+            login(request, usuario)
+            print("El usuario ha iniciado sesion ")
+            return redirect('index')
+        else:
             return render(request, "slag/sesion.html", {
-                'error': 'Email o usuario incorrecto'
+                'error': 'Email o contraseña incorrectos'
             })
 
 def signout(request):
@@ -132,6 +132,7 @@ def olvido(request):
                 f'tu codigo es: {codigo1} Recuerdalo',
                 'slag4270921@gmail.com',
                 [email],
+
                 fail_silently=False,
             )
             return redirect('codigo')
@@ -143,11 +144,9 @@ def olvido(request):
 
 def Factura(request):
     email = request.POST.get('correo')
-    try:
-        item = ItemCarrito.objects.all()
-        usuario = Usuario.objects.get(email=email)
-    except:
-        pass
+    item = ItemCarrito.objects.all()
+    usuario = Usuario.objects.get(email=email)
+    return render(request,'actura')
 
 def codigo(request):
     if request.method == 'POST':
@@ -157,7 +156,7 @@ def codigo(request):
         email = request.session.get('correo')
         if code_insert == codigo_generado:
             user = Usuario.objects.get(email=email)
-            user.clave = new_password
+            user.set_password(new_password)
             user.save()
             return redirect('sesion')
         else:
@@ -184,7 +183,7 @@ def agregar_producto(request,producto_id):
     Precio_Descuento = Productos.Cost_Prom or 0
     Precio_Final = precio_Original - (precio_Original * Precio_Descuento / 100)
 
-    if request.method == 'POST' and "usuario_id" in request.session:
+    if request.method == 'POST' and request.user.is_authenticated:
         dato = request.POST
         producto_id = dato.get('producto_id')
         cantidad = int(dato.get('cantidad', 1))
@@ -203,7 +202,7 @@ def agregar_producto(request,producto_id):
                 'Talla': Tallas.objects.filter(producto=Productos)
             })
 
-        usuario_id = request.session.get("usuario_id")
+        usuario_id = request.user.id
         usuario = get_object_or_404(Usuario, id=usuario_id)
 
         carro, creado = Carrito.objects.get_or_create(usuario_id=usuario)
@@ -233,18 +232,15 @@ def agregar_producto(request,producto_id):
             'mensage_error': 'Debes iniciar sesión para agregar productos al carrito',
             'Productos': Productos,
             'Talla': Tallas.objects.filter(producto=Productos),
-<<<<<<< Updated upstream
             'Precio_original': Precio_Final
-=======
-            'Precio_original ': Precio_Final
->>>>>>> Stashed changes
+
         })
 
 from decimal import Decimal, ROUND_HALF_UP
 
 def vista_carrito(request):
-    if "usuario_id" in request.session:
-        usuario_id = request.session.get("usuario_id")
+    if request.user.is_authenticated:
+        usuario_id = request.user.id
         usuario = get_object_or_404(Usuario, id=usuario_id)
 
         cart = Carrito.objects.filter(usuario_id=usuario).first()
@@ -280,8 +276,8 @@ def vista_carrito(request):
 
 
 def elimiar_producto(request, item_id):
-    if "usuario_id" in request.session:
-        usuario_id = request.session.get("usuario_id")
+    if request.user.is_authenticated:
+        usuario_id = request.user.id
         usuario = get_object_or_404(Usuario, id=usuario_id)
 
         carrito = Carrito.objects.filter(usuario_id=usuario).first()
@@ -291,7 +287,6 @@ def elimiar_producto(request, item_id):
             item.delete()
 
     return redirect("carrito")
-    
     
 # def iniciar_pago(request):
 #     import pprint
