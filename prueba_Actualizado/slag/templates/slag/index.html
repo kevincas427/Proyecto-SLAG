@@ -120,33 +120,34 @@
         
         <!-- carrousel -->
         <div class="d-flex justify-content-center carrusel">
-          <div id="carouselExampleIndicators" class="carousel slide mx-auto">
-              <div class="carousel-indicators">
-                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-              </div>
-              <div class="carousel-inner">
-                  <div class="carousel-item active">
-                      <img src="{% static 'slag/images/adidas.png' %}" class="d-block w-10 h-auto" alt="...">
-                  </div>
-                  <div class="carousel-item">
-                      <img src="{% static 'slag/images/adidas.png' %}" class="d-block w-10 h-auto" alt="...">
-                  </div>
-                  <div class="carousel-item">
-                      <img src="{% static 'slag/images/adidas.png' %}" class="d-block w-10 h-auto" alt="...">
-                  </div>
-              </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">atras</s>
-              </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">siguiente</span>
-              </button>
-          </div>
+            <div id="carouselExampleIndicators" class="carousel slide mx-auto" data-bs-ride="carousel" data-bs-interval="5000">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{% static 'slag/images/adidas.png' %}" class="img-carrusel" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'slag/images/monastery.webp' %}" class="img-carrusel" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'slag/images/gucci.jpg' %}" class="img-carrusel" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">atras</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">siguiente</span>
+                </button>
+            </div>
         </div>
+
 
         <section>
           <div class=" second-section">
