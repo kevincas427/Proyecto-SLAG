@@ -40,6 +40,7 @@ urlpatterns = [
     path('agregar/<slug:producto_id>',views.agregar_producto, name="agregar_al_carro"),
     path('eliminar/<int:item_id>',views.elimiar_producto, name='eliminar_producto'),
     path('Factura/',views.Factura,name='Factura'),
+    path('pago/',views.pago,name='pago'),
 
 ]
 

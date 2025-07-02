@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
-
+import cloudinary_storage
+import cloudinary.uploader
+import cloudinary.api
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -38,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
+    'cloudinary_storage',
     'django.contrib.humanize',
     'slag',
 ]
@@ -81,9 +85,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'proyecto',
         'USER': 'root',
-        'PASSWORD': 'kevincas721',
+        'PASSWORD': '',
         'HOST':'127.0.0.1',
-        'PORT':'3309'
+        'PORT':'3306'
     }
 }
 
@@ -113,6 +117,13 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dnmybwfa1',
+    'API_KEY': '366542265798627',
+    'API_SECRET': 'G0IuZwWRZbfmYvkI5JlheqVnqcI',
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 # Internationalization
@@ -147,3 +158,8 @@ EMAIL_HOST_PASSWORD = 'bblb xfqg aoap sbuw'
 
 
 MERCADO_PAGO_ACCESS_TOKEN = 'APP_USR-4878978036374600-062010-ae1a29714a24a96921b39f0949a52f7d-2509945394'
+cloudinary.config( 
+  cloud_name = 'dnmybwfa1', 
+  api_key = '366542265798627', 
+  api_secret = 'G0IuZwWRZbfmYvkI5JlheqVnqcI' 
+)
