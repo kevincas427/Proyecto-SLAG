@@ -1,3 +1,6 @@
+* {
+  font-family: 'Amiri', serif;
+}
 
 .vacio{
     justify-content: center;
@@ -66,7 +69,6 @@ hr{
     justify-content: center;
     text-align: center;
     color: #790808;
-    font-family: initial;
     font-weight: bold;
     font-size: 30px;
     padding: 20px;
@@ -85,6 +87,7 @@ hr{
 
 .btn-pago button{
     font-size: 20px;
+    padding-top: 1px;
 }
 
 .btn-pago button:hover{
@@ -102,9 +105,4 @@ hr{
 .info-carro button:hover{
     transition: all 0.3s ease;
     color: red;
-}
-
-section{
-    margin: 20px;
-    border:2px solid red;
 }

@@ -287,39 +287,42 @@ def elimiar_producto(request, item_id):
             item.delete()
 
     return redirect("carrito")
-    
+
+
 def vista_pago(request):
-        if request.user.is_authenticated:
-            usuario_id = request.user.id
-            usuario = get_object_or_404(Usuario, id=usuario_id)
+    if "usuario_id" in request.session:
+        usuario_id = request.session.get("usuario_id")
+        usuario = get_object_or_404(Usuario, id=usuario_id)
 
-            cart = Carrito.objects.filter(usuario_id=usuario).first()
-            items = ItemCarrito.objects.filter(carrito=cart).select_related('producto', 'talla')
+        cart = Carrito.objects.filter(usuario_id=usuario).first()
+        items = ItemCarrito.objects.filter(carrito=cart).select_related('producto', 'talla')
 
-            items_con_descuento = []
-            total_general = Decimal('0.00')
+        items_con_descuento = []
+        total_general = Decimal('0.00')
 
-            for item in items:
-                precio_original = item.producto.prev_prod
-                descuento = item.producto.Cost_Prom or Decimal('0.00')
-                precio_con_descuento = (precio_original - (precio_original * descuento / Decimal('100'))).quantize(Decimal('0.01'))
+        for item in items:
+            precio_original = item.producto.prev_prod
+            descuento = item.producto.Cost_Prom or Decimal('0.00')
+            precio_con_descuento = (precio_original - (precio_original * descuento / Decimal('100'))).quantize(Decimal('0.01'))
 
-                total_item = (precio_con_descuento * item.cantidad).quantize(Decimal('0.01'))
-                total_general += total_item
+            total_item = (precio_con_descuento * item.cantidad).quantize(Decimal('0.01'))
+            total_general += total_item
 
-                items_con_descuento.append({
-                    'item': item,
-                    'precio_unitario': precio_con_descuento,
-                    'total_item': total_item,
-                    'precio_sin_descuento': precio_original,
-                    'descuento_aplicado': descuento
-                })
-
-            total_general = total_general.quantize(Decimal('0.01'))
-
-            return render(request, 'slag/pago.html', {
-                'items': items_con_descuento,
-                'total_general': total_general
+            items_con_descuento.append({
+                'item': item,
+                'precio_unitario': precio_con_descuento,
+                'total_item': total_item,
+                'precio_sin_descuento': precio_original,
+                'descuento_aplicado': descuento
             })
-        else:
-            return redirect('sesion')
+
+        total_general = total_general.quantize(Decimal('0.01'))
+
+        return render(request, 'slag/pago.html', {
+            'items': items_con_descuento,
+            'total_general': total_general
+        })
+    else:
+        return redirect('sesion')
+
+

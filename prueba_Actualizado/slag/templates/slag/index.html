@@ -11,6 +11,8 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="{% static "slag/css/layout.css" %}">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
@@ -20,7 +22,7 @@
     <title>{% block title %} Pagina Principal | SLAG {% endblock %}</title>
   
   <body>
-    <header id="arriba" class="navbar navbar-expand-lg fixed-top encabezado">
+    <header  class="navbar navbar-expand-lg fixed-top encabezado">
         <div class="container-fluid d-flex justify-content-between align-items-center div">
           
           <!-- Izquierda: Logo -->
@@ -101,7 +103,7 @@
       
 
     <!-- main -->
-     <main>
+     <main id='inicio'>
         {% block content %}
 
         <!-- tarjetas -->
@@ -120,33 +122,33 @@
         
         <!-- carrousel -->
         <div class="d-flex justify-content-center carrusel">
-            <div id="carouselExampleIndicators" class="carousel slide mx-auto" data-bs-ride="carousel" data-bs-interval="5000">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                </div>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="{% static 'slag/images/adidas.png' %}" class="img-carrusel" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'slag/images/monastery.webp' %}" class="img-carrusel" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'slag/images/gucci.jpg' %}" class="img-carrusel" alt="...">
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">atras</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">siguiente</span>
-                </button>
-            </div>
-        </div>
+          <div id="carouselExampleIndicators" class="carousel slide carousel-fade mx-auto" data-bs-ride="carousel" data-bs-interval="3000">              <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              </div>
+              <div class="carousel-inner">
+                  <div class="carousel-item active">
+                      <img src="{% static 'slag/images/adidas.png' %}" class="img-carrusel" alt="...">
+                  </div>
+                  <div class="carousel-item">
+                      <img src="{% static 'slag/images/monastery.webp' %}" class="img-carrusel" alt="...">
+                  </div>
+                  <div class="carousel-item ">
+                      <img src="{% static 'slag/images/gucci.jpg' %}" class="img-carrusel" alt="...">
+                  </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">atras</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">siguiente</span>
+              </button>
+          </div>
+      </div>
+
 
 
         <section>
@@ -197,7 +199,7 @@
           role="tablist"
         >
           <li class="nav-item" role="presentation">
-            <button
+            <button 
               class="nav-link"
               id="home-tab"
               data-bs-toggle="tab"
@@ -277,7 +279,6 @@
                 <!-- Tarjeta 1 -->
                 <div class="col">
                   <div class="card h-100">
-                    <img src="{% static 'slag/images/tiger.jpeg' %}" class="card-img-top" alt="..." />
                     <div class="card-body">
                       <h5 class="card-title">Kevin Yulian Castaño Pïneda</h5>
                       <p class="card-text">
@@ -311,7 +312,6 @@
                 <!-- Tarjeta 2 -->
                 <div class="col">
                   <div class="card h-100">
-                    <img src="{% static 'slag/images/piglet.jpeg' %}" class="card-img-top" alt="..." />
                     <div class="card-body">
                       <h5 class="card-title">Kevin Alejandro Ramirez Reina</h5>
                       <p class="card-text">
@@ -345,7 +345,6 @@
                 <!-- Tarjeta 3 -->
                 <div class="col">
                   <div class="card h-100">
-                    <img src="{% static 'slag/images/burro.jpg' %}" class="card-img-top" alt="..." />
                     <div class="card-body">
                       <h5 class="card-title">Johan Fabian Oviedo Alfonso</h5>
                       <p class="card-text">
@@ -374,7 +373,6 @@
                 <!-- Tarjeta 4 -->
                 <div class="col">
                   <div class="card h-100">
-                    <img src="{% static 'slag/images/poh.jpg' %}" class="card-img-top" alt="..." />
                     <div class="card-body">
                       <h5 class="card-title">Jossie Alejandro Lozada Ardila</h5>
                       <p class="card-text">
@@ -442,5 +440,7 @@
         </p>
       </div>
     </footer>
-  </body>
+    <script src='{% static "slag/js/index.js" %}'></script>
+    </body>
+
 </html>
