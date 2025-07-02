@@ -287,76 +287,42 @@ def elimiar_producto(request, item_id):
             item.delete()
 
     return redirect("carrito")
-    
-    
-# def iniciar_pago(request):
-#     import pprint
-#     try:
-#         if "usuario_id" not in request.session:
-#             return redirect('sesion')
-
-#         usuario_id = request.session.get("usuario_id")
-#         usuario = get_object_or_404(Usuario, id=usuario_id)
-
-#         carrito = Carrito.objects.filter(usuario_id=usuario).first()
-#         if not carrito:
-#             return render(request, 'slag/carrito.html', {
-#                 'mensaje': 'Tu carrito está vacío'
-#             })
-
-#         items = ItemCarrito.objects.filter(carrito=carrito).select_related('producto')
-#         if not items:
-#             return render(request, 'slag/carrito.html', {
-#                 'mensaje': 'No hay productos en el carrito'
-#             })
-
-#         sdk = mercadopago.SDK(settings.MERCADO_PAGO_ACCESS_TOKEN)
-
-#         items_data = []
-#         for item in items:
-#             items_data.append({
-#                 "title": item.producto.Name_Prod,
-#                 "quantity": int(item.cantidad),
-#                 "unit_price": float(item.producto.prev_prod),
-#                 "currency_id": "COP"
-#             })
-
-#         preference_data = {
-#             "items": items_data,
-#             "back_urls": {
-#                 "success": request.build_absolute_uri('/pago/exito/'),
-#                 "failure": request.build_absolute_uri('/pago/fallido/'),
-#                 "pending": request.build_absolute_uri('/pago/pendiente/')
-#             },
-#             "auto_return": "approved"
-#         }
-
-#         preference_response = sdk.preference().create(preference_data)
-#         pprint.pprint(preference_response)
-#         preference = preference_response.get("response", {})
-
-#         if "init_point" in preference:
-#             return redirect(preference["init_point"])
-#         else:
-#             return render(request, 'slag/errorpago.html', {
-#                 "error": preference.get("message", "No se pudo generar el pago"),
-#                 "detalles": preference
-#             })
-
-#     except Exception as e:
-#         return render(request, 'slag/errorpago.html', {
-#             'error': str(e)
-#         })
 
 
+def vista_pago(request):
+    if "usuario_id" in request.session:
+        usuario_id = request.session.get("usuario_id")
+        usuario = get_object_or_404(Usuario, id=usuario_id)
 
-# def pagoexitoso(request):
-#     carrito = CarritoSession(request)
-#     carrito.limpiar()
-#     return render(request, 'slag/exito.html')
+        cart = Carrito.objects.filter(usuario_id=usuario).first()
+        items = ItemCarrito.objects.filter(carrito=cart).select_related('producto', 'talla')
 
-# def pagofallido(request):
-#     return render (request, 'slag/errorpago.html')
+        items_con_descuento = []
+        total_general = Decimal('0.00')
 
-# def pagopendiente(request):
-#     return render(request, 'slag/pendiente.html')
+        for item in items:
+            precio_original = item.producto.prev_prod
+            descuento = item.producto.Cost_Prom or Decimal('0.00')
+            precio_con_descuento = (precio_original - (precio_original * descuento / Decimal('100'))).quantize(Decimal('0.01'))
+
+            total_item = (precio_con_descuento * item.cantidad).quantize(Decimal('0.01'))
+            total_general += total_item
+
+            items_con_descuento.append({
+                'item': item,
+                'precio_unitario': precio_con_descuento,
+                'total_item': total_item,
+                'precio_sin_descuento': precio_original,
+                'descuento_aplicado': descuento
+            })
+
+        total_general = total_general.quantize(Decimal('0.01'))
+
+        return render(request, 'slag/pago.html', {
+            'items': items_con_descuento,
+            'total_general': total_general
+        })
+    else:
+        return redirect('sesion')
+
+

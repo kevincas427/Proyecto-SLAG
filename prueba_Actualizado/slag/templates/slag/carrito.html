@@ -65,15 +65,11 @@
 </div>
 
 <div class="btn-pago">
-    <a href="#">
+    <a href="{% url 'pago' %}">
         <button type="button" class="boton-comprar">Realizar compra</button>
     </a>
 </div>
 <section>
-    <div class="precio-total">
-        <h1>Total: ${{ total_general|intcomma }}</h1>
-    </div>
-    
     {% else %}
     <div class="msg-vacio">
         <h2 class="msg-vacio">Tu carrito está vacío</h2>

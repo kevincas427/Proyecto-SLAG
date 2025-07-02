@@ -23,22 +23,22 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     # path('admin_tools_stats/', include('admin_tools_stats.urls')),
-    path('admin/', admin.site.urls),
+    path('Admin/', admin.site.urls),
     path('', views.index, name="index"),
-    path('dama', views.dama, name="dama"),
-    path('caballero', views.caballero, name="caballero"),
-    path('sesion/',views.sesion, name='sesion'),
-    path('logout/',views.signout,name='Logout'),
-    path('nosotros/',views.nosotros,name='nosotros'),
-    path('generic/',views.generic,name='generic'),
-    path('elements/',views.elements,name='elements'),
-    path('olvido/',views.olvido,name='Olvido'),
-    path('codigo/',views.codigo,name='codigo'),
+    path('Dama', views.dama, name="dama"),
+    path('Caballero', views.caballero, name="caballero"),
+    path('Sesion/',views.sesion, name='sesion'),
+    path('Logout/',views.signout,name='Logout'),
+    path('Mosotros/',views.nosotros,name='nosotros'),
+    path('Generic/',views.generic,name='generic'),
+    path('Elements/',views.elements,name='elements'),
+    path('Olvido/',views.olvido,name='Olvido'),
+    path('Codigo/',views.codigo,name='codigo'),
     path('Detalle/<slug:pk>',views.detalle,name="Detalle"),    
-    path('carrito/',views.vista_carrito, name="carrito"),
-    path('agregar/<slug:producto_id>',views.agregar_producto, name="agregar_al_carro"),
-    path('eliminar/<int:item_id>',views.elimiar_producto, name='eliminar_producto'),
-
+    path('Carrito/',views.vista_carrito, name="carrito"),
+    path('Agregar/<slug:producto_id>',views.agregar_producto, name="agregar_al_carro"),
+    path('Eliminar/<int:item_id>',views.elimiar_producto, name='eliminar_producto'),
+    path('Pago/',views.vista_pago, name="pago")
 ]
 
 
