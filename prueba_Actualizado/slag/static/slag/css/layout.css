@@ -2,6 +2,21 @@ body{
   padding-top: 80px;
   background-color: #e4e1de;
 }
+
+@media (max-width: 576px) {
+  .titulo {
+    font-size: 30px;
+    text-align: center;
+  }
+  .btn-overlay {
+    width: 80%;
+    font-size: 14px;
+  }
+  .icono {
+    height: 24px;
+  }
+}
+
 .encabezado {
   background-color: #ffffff3f;
 }
@@ -208,3 +223,4 @@ h5{
   color: #3f1111;
 
 }
+
