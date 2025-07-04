@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from slag.models import *
+from datetime import date, timedelta
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -194,7 +195,18 @@ def Factura(request):
         })
 
     total_general = total_general.quantize(Decimal('0.01'))
-
+    pago = Pago.objects.first()  # usa el primer método de pago disponible
+    forma_envio = Formas_Envio.objects.first()  # igual
+    transportadora = Transportadora.objects.first()  # igual
+    
+    pedido = Pedido.objects.create(
+        fecha_pedido=date.today(),
+        fecha_entrega=(date.today() + timedelta(days=3)).strftime("%Y-%m-%d"),
+        pago=pago,
+        forma_envio=forma_envio,
+        transportadora=transportadora,
+        usuario= request.user
+    )
     # Renderizo el HTML y lo mando por correo
     html_factura = render_to_string("slag/Factura.html",{
             'items': items_con_descuento,
@@ -225,6 +237,8 @@ def pago(request):
     usuario = request.user
     cart = Carrito.objects.filter(usuario_id=usuario).first()
     items = ItemCarrito.objects.filter(carrito=cart).select_related('producto', 'talla')
+    Forma_Envio = Formas_Envio.objects.all()
+    Productos = Producto.objects.all()
 
     items_con_descuento = []
     total_general = Decimal('0.00')
@@ -244,12 +258,15 @@ def pago(request):
             'precio_sin_descuento': precio_original,
             'descuento_aplicado': descuento
         })
-    for item in items:
-        item_final -= item.cantidad  # ??? esto no parece tener propósito
+    print(Forma_Envio)          # Para ver el queryset
+    print(Forma_Envio.count())  # Para ver cuántos registros tiene
+    for f in Forma_Envio:
+        print(f.nom_Fore) 
 
     return render(request, 'slag/pago.html',{
+        'Forma_Envio' : Forma_Envio,
         'items': items_con_descuento,
-        'total_general': total_general
+        'total_general': total_general,
     })
 
 # Donde se ingresa el código de recuperación y se cambia la contraseña

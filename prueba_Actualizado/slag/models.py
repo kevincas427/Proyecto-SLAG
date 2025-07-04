@@ -184,18 +184,34 @@ class ItemCarrito(models.Model):
     def subtotal(self):
         return self.producto.prev_prod * self.cantidad
 class Pago(models.Model):
-    id_Pago = models.IntegerField(primary_key=True,max_length=11, db_column='Id_Pago')
+    id_Pago = models.AutoField(primary_key=True)
     nom_metpa = models.CharField(max_length=45, db_column='nom_metpa')
-    
+    def __str__(self):
+        return self.nom_metpa
+    class Meta:
+        db_table = 'Pago'
+        managed = False  # Si la tabla ya existe 
 class Formas_Envio(models.Model):
-    ide_Fore = models.IntegerField(primary_key=True,max_length=11, db_column='Ide_Fore')
-    nom_Fore = models.CharField(max_length=45, db_column='Nom_Fore')
+    Ide_Fore = models.AutoField(primary_key=True)
+    Nom_Fore = models.CharField(max_length=45, db_column='Nom_Fore')
+    
+    def __str__(self):
+        return self.Nom_Fore
+    class Meta:
+        db_table = 'formas_envio'
+        managed = False  # Si la tabla ya existe 
     
 class Transportadora(models.Model):
-    ide_Trans = models.IntegerField(primary_key=True,max_length=11, db_column='Ide_Trans')
+    ide_Trans = models.IntegerField(primary_key=True, db_column='Ide_Trans')
     nom_Trans = models.CharField(max_length=45, db_column='Nom_Trans')
     Tel_Trans = models.CharField(max_length=45, db_column='Tel_Trans')
     Dir_Trans = models.CharField(max_length=45, db_column='Dir_Trans')
+    
+    def __str__(self):
+        return self.nom_Trans
+    class Meta:
+        db_table = 'transportadora'
+        managed = False  # Si la tabla ya existe 
     
 class Pedido(models.Model):
     id = models.AutoField(primary_key=True, db_column='Id_Pedi')
@@ -205,7 +221,8 @@ class Pedido(models.Model):
     forma_envio = models.ForeignKey(Formas_Envio, on_delete=models.CASCADE, db_column='Formas_Envio_Ide_Fore')
     transportadora = models.ForeignKey(Transportadora, on_delete=models.CASCADE, db_column='Transportadora_Ide_Trans')
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
-    
+    def __str__(self):
+        return  "Pedido: " + str(self.usuario)
     class Meta:
         db_table = 'Pedido'
         managed = False  # Si la tabla ya existe 

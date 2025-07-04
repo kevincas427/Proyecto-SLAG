@@ -33,4 +33,6 @@ admin.site.register(ItemCarrito)
 admin.site.register(Pedido)
 admin.site.register(DetallePedido)
 admin.site.register(Transportadora)
+admin.site.register(Formas_Envio)
+admin.site.register(Pago)
 # Register your models here.

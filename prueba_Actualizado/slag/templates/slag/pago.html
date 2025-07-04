@@ -12,7 +12,7 @@
         <!-- Contacto -->
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+          <input type="email" class="form-control" id="email" placeholder="Ingresa tu email" value="{{ user.email }}">
           <div class="form-check mt-2">
             <input class="form-check-input" type="checkbox" id="offersCheck">
             <label class="form-check-label" for="offersCheck">
@@ -34,7 +34,7 @@
 
         <div class="row g-3">
           <div class="col-md-6">
-            <input type="text" class="form-control" placeholder="Primer Nombre" required>
+            <input type="text" class="form-control" placeholder="Nombre"  value="{{ user.nombre }}"  required>
           </div>
           <div class="col-md-6">
             <input type="text" class="form-control" placeholder="Apellido" required>
@@ -46,7 +46,7 @@
         </div>
 
         <div class="mb-3">
-          <input type="text" class="form-control" placeholder="Direccion" required>
+          <input type="text" class="form-control" placeholder="Direccion" value="{{ user.direccion }}"  required>
         </div>
 
         <div class="mb-3">
@@ -66,18 +66,24 @@
         </div>
 
         <div class="mb-3 mt-3">
-          <input type="tel" class="form-control" placeholder="Telefono">
+          <input type="tel" class="form-control" placeholder="telefono" value="{{ user.telefono }}"> 
         </div>
 
         <!-- Método de envío -->
         <h4 class="mt-5 mb-3">Método de envío</h4>
         <div class="border p-3 rounded mb-4">
           <div class="d-flex justify-content-between">
-            <span>Mensajería exprés (4–6 días hábiles)</span>
+            <span>Mensajeria Expres (1-3 dias Habiles)</span>
             <strong>GRATIS</strong>
           </div>
         </div>
-
+        {% comment %} {% for i in Forma_Envio %}
+          <div class="border p-3 rounded mb-4">
+          <div class="d-flex justify-content-between">
+            <p>{{i.Nom_Fore}}</p>
+            <strong>GRATIS</strong>
+          </div>
+        {%endfor%} {% endcomment %}
         <!-- Impuestos -->
         <h4 class="mb-3">Derechos e impuestos</h4>
         <div class="mb-2">
