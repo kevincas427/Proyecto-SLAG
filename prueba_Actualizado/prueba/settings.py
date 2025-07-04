@@ -15,7 +15,10 @@ import os
 import cloudinary_storage
 import cloudinary.uploader
 import cloudinary.api
-Build paths inside the project like this: BASE_DIR / 'subdir'.
+import certifi
+
+os.environ['SSL_CERT_FILE'] = certifi.where()
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -88,9 +91,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'proyecto',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'kevincas721',
         'HOST':'127.0.0.1',
-        'PORT':'3306'
+        'PORT':'3309'
     }
 }
 CSRF_TRUSTED_ORIGINS = [
@@ -154,7 +157,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Configuración de correo electrónico
-EMAIL_BACKEND = 'slag.backends.CustomEmailBackend'
+EMAIL_BACKEND = 'slag.backends.NoVerifyEmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
@@ -163,8 +166,8 @@ EMAIL_HOST_PASSWORD = 'bblb xfqg aoap sbuw'
 
 
 # MERCADO_PAGO_ACCESS_TOKEN = 'APP_USR-4878978036374600-062010-ae1a29714a24a96921b39f0949a52f7d-2509945394'
-# cloudinary.config( 
-#   cloud_name = 'dnmybwfa1', 
-#   api_key = '366542265798627', 
-#   api_secret = 'G0IuZwWRZbfmYvkI5JlheqVnqcI' 
-# )
+cloudinary.config( 
+    cloud_name = 'dnmybwfa1', 
+    api_key = '366542265798627', 
+    api_secret = 'G0IuZwWRZbfmYvkI5JlheqVnqcI' 
+)

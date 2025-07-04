@@ -1,9 +1,7 @@
-# slag/backends.py
-from django.core.mail.backends.smtp import EmailBackend
 import ssl
-import certifi
+from django.core.mail.backends.smtp import EmailBackend
 
-class CustomEmailBackend(EmailBackend):
+class NoVerifyEmailBackend(EmailBackend):
     def open(self):
-        self.ssl_context = ssl.create_default_context(cafile=certifi.where())
+        self.ssl_context = ssl._create_unverified_context()
         return super().open()

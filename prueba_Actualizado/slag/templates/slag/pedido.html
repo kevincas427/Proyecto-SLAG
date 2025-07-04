@@ -1,0 +1,52 @@
+{% comment %} {% extends "slag/index.html" %} {% load static %} {% load humanize %} 
+{% block title %} DETALLE PEDIDO | SLAG {% endblock %} 
+{% block content %} 
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Detalle del Pedido | SLAG</title>
+    <link rel="stylesheet" href="{% static 'slag/css/detalle_pedido.css' %}">
+  </head>
+  <body>
+    <div class="container-detalle">
+      <h2>Detalle del Pedido</h2>
+      <div class="pedido-info">
+        <p><strong>Número de pedido:</strong> {{ pedido.id }}</p>
+        <p><strong>Fecha:</strong> {{ pedido.fecha }}</p>
+        <p><strong>Estado:</strong> {{ pedido.estado }}</p>
+      </div>
+
+      <div class="productos-lista">
+        <h3>Productos</h3>
+        {% for i in items %}
+          <div class="producto">
+            <img src="{{ i.item.producto.Imagen.url }}" alt="{{ i.item.producto.Name_Prod }}" class="img-producto"/>
+            <div class="producto-detalle">
+              <h4>{{ i.item.producto.Name_Prod }}</h4>
+              <p>Cantidad: {{ i.item.cantidad }}</p>
+              <p>Precio unitario: ${{ item.producto.Precio }}</p>
+              <p>Total: ${{ i.item.total_general }}</p>
+            </div>
+          </div>
+        {% empty %}
+          <p>No hay productos en este pedido.</p>
+        {% endfor %}
+      </div>
+
+      <div class="totales">
+        <p><strong>Subtotal:</strong> ${{ pedido.subtotal }}</p>
+        <p><strong>Envío:</strong> ${{ pedido.envio }}</p>
+        <p><strong>Total:</strong> <span class="total-final">${{ pedido.total }}</span></p>
+      </div>
+
+      <div class="acciones">
+        <a href="{% url 'index' %}" class="btn-volver">Volver a la tienda</a>
+      </div>
+    </div>
+
+    <script src="{% static 'slag/js/detalle_pedido.js' %}"></script>
+  </body>
+</html>
+{% endblock %} {% endcomment %}

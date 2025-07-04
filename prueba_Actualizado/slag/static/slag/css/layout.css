@@ -245,3 +245,64 @@ style
   z-index: 1;
 }
 
+.subtotal{
+  background-color: white;
+  border: none;
+  padding: 5px ;
+  border-radius: 5px;
+  color: #333;
+
+}
+
+h3 {
+  position: relative;
+  display: inline-block;
+  color: #333;
+}
+
+.subtotal::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background-color: #3cdd5f;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.subtotal:hover::after {
+  transform: scaleX(1);
+  border: 2px solid #3cdd5f;
+}
+
+.btn-hover-fill {
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s ease;
+  z-index: 1;
+}
+
+.btn-hover-fill::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #dc3545; /* Color de fondo en hover */
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.btn-hover-fill:hover::before {
+  transform: scaleX(1);
+}
+
+.btn-hover-fill:hover {
+  color: white !important;
+}

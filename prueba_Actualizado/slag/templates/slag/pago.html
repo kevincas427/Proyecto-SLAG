@@ -159,13 +159,15 @@
 
             <form method="POST" action="{% url 'eliminar_producto' i.item.id %}">
               {% csrf_token %}
-              <button type="submit" class="btn btn-sm btn-outline-danger mt-2">
+              <button type="submit" class="btn btn-sm btn-outline-danger mt-2 btn-hover-fill">
                 <i class="bi bi-trash"></i> Remover
               </button>
             </form>
           </div>
         </div>
         {% endfor %}
+            <h3 class="subtotal">Total general: ${{ total_general|intcomma }}</h3>
+
       </div>
       {% else %}
         <p>No hay productos en el carrito.</p>
