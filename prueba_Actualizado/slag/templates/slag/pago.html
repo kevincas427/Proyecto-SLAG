@@ -6,7 +6,7 @@
     <!-- Columna izquierda: formulario -->
     <div class="col-md-7">
       <h4 class="mb-4">Contact</h4>
-      <form method="POST" action="#">
+      <form method="POST" action="{% url 'Factura' %}">
         {% csrf_token %}
 
         <!-- Contacto -->
@@ -16,15 +16,15 @@
           <div class="form-check mt-2">
             <input class="form-check-input" type="checkbox" id="offersCheck">
             <label class="form-check-label" for="offersCheck">
-              Quiero recibir notificaciones y ofertas
+              Envíame un correo electrónico con noticias y ofertas.
             </label>
           </div>
         </div>
 
         <!-- Entrega -->
-        <h4 class="mt-5 mb-4">Direccion</h4>
+        <h4 class="mt-5 mb-4">Entrega</h4>
         <div class="mb-3">
-          <label class="form-label">Country/Region</label>
+          <label class="form-label">País/Región</label>
           <select class="form-select" required>
             <option selected>Colombia</option>
             <option>USA</option>
@@ -34,15 +34,15 @@
 
         <div class="row g-3">
           <div class="col-md-6">
-            <input type="text" class="form-control" placeholder="Primer nombre" required>
+            <input type="text" class="form-control" placeholder="Primer Nombre" required>
           </div>
           <div class="col-md-6">
-            <input type="text" class="form-control" placeholder="Segundo nombre">
+            <input type="text" class="form-control" placeholder="Apellido" required>
           </div>
         </div>
 
         <div class="mb-3 mt-3">
-          <input type="text" class="form-control" placeholder="Apellidos" required>
+          <input type="text" class="form-control" placeholder="Compañia (opcional)">
         </div>
 
         <div class="mb-3">
@@ -50,7 +50,7 @@
         </div>
 
         <div class="mb-3">
-          <input type="text" class="form-control" placeholder="Apartamento, edificio, etc. (opcional)">
+          <input type="text" class="form-control" placeholder="Apartamento, suite, etc. (opcional)">
         </div>
 
         <div class="row g-3">
@@ -58,53 +58,50 @@
             <input type="text" class="form-control" placeholder="Ciudad" required>
           </div>
           <div class="col-md-3">
-            <input type="text" class="form-control" placeholder="Providencia" required>
+            <input type="text" class="form-control" placeholder="Provincia" required>
           </div>
           <div class="col-md-3">
-            <input type="text" class="form-control" placeholder="Codigo postal" required>
+            <input type="text" class="form-control" placeholder="Codigo Postal" required>
           </div>
         </div>
 
-        
         <div class="mb-3 mt-3">
-            <input type="tel" class="form-control" placeholder="Telefono">
+          <input type="tel" class="form-control" placeholder="Telefono">
         </div>
-        
-
 
         <!-- Método de envío -->
-        <h4 class="mt-5 mb-3">Metodo de Envio</h4>
+        <h4 class="mt-5 mb-3">Método de envío</h4>
         <div class="border p-3 rounded mb-4">
           <div class="d-flex justify-content-between">
-            <span>Mensajeria Express (4–6 dias habiles)</span>
-            <strong>Gratis</strong>
+            <span>Mensajería exprés (4–6 días hábiles)</span>
+            <strong>GRATIS</strong>
           </div>
         </div>
 
         <!-- Impuestos -->
-        <h4 class="mb-3">Deberes e impuestos</h4>
+        <h4 class="mb-3">Derechos e impuestos</h4>
         <div class="mb-2">
           <div class="form-check">
             <input class="form-check-input" type="radio" name="taxes" id="included" checked>
             <label class="form-check-label" for="included">
-              Pagar ahora (sin cargos adicionales al entregar)
+              Pagar ahora (Sin cargos adicionales al momento de la entrega)
             </label>
           </div>
           <div class="form-check mt-1">
             <input class="form-check-input" type="radio" name="taxes" id="excluded">
             <label class="form-check-label" for="excluded">
-              Pagar al recibir(pueden aplicarse cargos adicionales)
+              Pago contra entrega (pueden aplicarse cargos adicionales)
             </label>
           </div>
         </div>
 
         <!-- Método de pago -->
         <h4 class="mt-5 mb-3">Pago</h4>
-        <p class="text-muted small">Todas las transacciones son seguras y estan encriptadas.</p>
+        <p class="text-muted small">Todas las transacciones son seguras y encriptadas.</p>
         <div class="form-check">
           <input class="form-check-input" type="radio" name="payment" id="credit" checked>
           <label class="form-check-label" for="credit">
-            Tarjeta de credito o debito
+            Tarjeta de crédito o débito
           </label>
         </div>
 
@@ -116,7 +113,9 @@
 
         <!-- Botón -->
         <div class="mt-5 text-end">
-          <button type="submit" class="btn btn-dark">Continue to Payment</button>
+           <a href="{% url 'Factura' %}">
+                <button type="submit"  url=""class="btn btn-dark">Continuar con el pago</button>
+           </a>
         </div>
       </form>
     </div>
@@ -167,9 +166,6 @@
           </div>
         </div>
         {% endfor %}
-        <div class="precio-total">
-            <h4>Total: ${{ total_general|intcomma }}</h4>
-        </div>
       </div>
       {% else %}
         <p>No hay productos en el carrito.</p>
@@ -177,5 +173,4 @@
     </div>
   </div>
 </div>
-
 {% endblock %} 

@@ -12,11 +12,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
-import certifi
-
-os.environ['SSL_CERT_FILE'] = certifi.where()
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+import cloudinary_storage
+import cloudinary.uploader
+import cloudinary.api
+Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -29,7 +28,10 @@ SECRET_KEY = 'django-insecure-)(li25s&ii@hcl#7g1%%mu!l*&!azj&!k!f(fi57r$4tf2jc@j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost', '127.0.0.1', '.ngrok-free.app'
+]
+
 
 
 # Application definition
@@ -41,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
+    'cloudinary_storage',
     'django.contrib.humanize',
     'slag',
 ]
@@ -84,12 +88,14 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'proyecto',
         'USER': 'root',
-        'PASSWORD': 'kevincas721',
+        'PASSWORD': '',
         'HOST':'127.0.0.1',
-        'PORT':'3309'
+        'PORT':'3306'
     }
 }
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://12d4-179-1-217-88.ngrok-free.app",
+]
 # configuracion de login
 
 LOGIN_URL = '/sesion/'
@@ -116,6 +122,13 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dnmybwfa1',
+    'API_KEY': '366542265798627',
+    'API_SECRET': 'G0IuZwWRZbfmYvkI5JlheqVnqcI',
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 # Internationalization
@@ -149,3 +162,9 @@ EMAIL_HOST_USER = 'slag4270921@gmail.com'
 EMAIL_HOST_PASSWORD = 'bblb xfqg aoap sbuw' 
 
 
+# MERCADO_PAGO_ACCESS_TOKEN = 'APP_USR-4878978036374600-062010-ae1a29714a24a96921b39f0949a52f7d-2509945394'
+# cloudinary.config( 
+#   cloud_name = 'dnmybwfa1', 
+#   api_key = '366542265798627', 
+#   api_secret = 'G0IuZwWRZbfmYvkI5JlheqVnqcI' 
+# )
